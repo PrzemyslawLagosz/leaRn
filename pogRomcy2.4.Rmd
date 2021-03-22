@@ -1,0 +1,233 @@
+---
+title: "pogRomcy2.4"
+author: "Przemyslaw Lagosz"
+date: "22 03 2021"
+output: html_document
+---
+# Modelowanie danych jakościowych
+
+```{r Ustawienie opcji globalnych}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+## 18. Tabele 2x2  
+
+```{r Tabele 2x2 }
+library(PogromcyDanych)
+
+#Wyswietlenie danych
+diagnoza[1:6, c("imie_2011", "wiek2013", "plec", "eduk4_2013", "gp29")]
+
+#Tablica kontyngencji
+table(diagnoza$plec, diagnoza$gp29)
+
+#Tablica kontyngencji z warosciami NA
+table(diagnoza$plec, diagnoza$gp29, useNA = "always")
+
+#Tablica kontyngencji z sumami
+plecSens <- table(diagnoza$plec, diagnoza$gp29)
+addmargins(plecSens)
+
+# frakcje w wierszach
+prop.table(plecSens, 1)
+
+# frakcje w całej tabeli
+prop.table(plecSens)
+
+#Przypisanie frakcji w wierszach do zmiennej
+frakcje <- prop.table(plecSens, 1)
+
+frakcje 
+
+# SZANSE CZYLI STOSUNEK P/1-P. Stosunek ze wystąpi do tego ze nie wystąpi
+
+szanse <- frakcje[,1]/frakcje[,2]
+
+# W przeciwieństwie do prawdopodobieństwa, szansa może przyjmować wartości większe od 1.
+# 
+# Policzmy szanse, że kobieta lub mężczyzna odpowie Przyjemności na pytanie o to co ważniejsze.
+# szanse
+
+#ILORAZ SZANS MEZCZYZNA/KOBIETA
+
+# W przykładzie dla Diagnozy Społecznej, iloraz szans wynosi 1.4312, co oznacza, że szansa, że 
+# dla losowo wylosowanego mężczyzny, szansa że odpowie Przyjemności jest o 43% większa niż u kobiety.
+
+szanse[1] / szanse[2]
+
+
+mosaicplot(plecSens, main="Odpowiedzi na pytanie o to co ważne w życiu")
+```
+
+Kolejne kolumny tego zbioru danych opisują takie cechy jak: mutacja genu P53, płeć pacjenta, informację czy pacjent wciąż żyje, informacja ile dni po operacji doszło do zgonu oraz informacja czy w okresie jednego roku pojawił się guz / przerzuty.  
+
+```{r Tabele 2x2 2}
+##################   TCGA_BRCA  #############
+
+head(TCGA_BRCA)
+
+# Yes/no okresla czy wsytapil przezut
+
+(przerzuty_przezycia <- table(TCGA_BRCA$czy.nowy.guz,
+                              TCGA_BRCA$czy.zyje))
+
+mosaicplot(przerzuty_przezycia)
+
+(frakcje <- prop.table(przerzuty_przezycia, 1))
+
+# Szanse na zgon
+(szanse <- frakcje[,1]/frakcje[,2])
+
+frakcje[,1]
+
+## Iloraz szans wynosi 0.049, co znaczy, że w grupie badanych szansa na zgon osób bez przerzutów to mniej niż 5% szansy na zgon osób z przerzutami. Równoważnie można powiedzieć, że osoby z przerzutami mają szansę na zgon 1.15 (prawie 24 razy większe).
+
+# bez przerzutów do przerzutów
+szanse[1] / szanse[2]
+
+# z przerzutami do bez przerzutów
+szanse[2] / szanse[1]
+```
+
+### Czy przerzuty pogarszają rokowanie?  
+
+Iloraz szans równy 23 wydaje się byś istotnie większy niż 1 (co jak wiemy, oznacza brak zależności).  
+
+Aby przetestować czy ta zależność pomiędzy przerzutami a przeżyciem jest istotna statystyczna można przeprowadzić test.  
+
+Dla tabel 2 na 2 najbardziej popularnym rozwiązaniem jest użycie testu Fishera. Podobnie jak dla testu dla regresji i testu dla średnich (które omawialiśmy cztery odcinki wcześniej), też test Fishera opiera się na badaniu, jak często przypadkowo iloraz byłby większy niż obserwowany (przy założeniu że tyle samo osób ma przerzuty i tyle samo osób umiera).  
+
+Czyli p-wartość wyznaczona w tym teście odpowiada prawdopodobieństwu, że obserwowany iloraz szans jest większy niż obserwowany w sytuacji gdyby pomiędzy zmiennymi nie było żadnych zależności.  
+
+W tym przykładzie p-wartość jest rzędu $2∗10^(−15)$, tak więc gdyby zmienne nie były zależne, byłoby nieprawdopodobne by zaobserwować tak duży iloraz szans.  
+
+```{r Tabele 2x2 3}
+fisher.test(przerzuty_przezycia)
+
+#####################   ZADANIA   ##########################
+
+# 1.  W zbiorze danych diagnoza wiek respondenta jest w zmiennej o nazwie wiek2013.
+# Wyznacz zależność pomiędzy wiekiem podzielonym na dwie grupy, poniżej i powyżej 30 roku życia, 
+# a odpowiedziami na pytanie o to co w życiu ważne.
+
+head(diagnoza$wiek2013)
+
+diagnoza <- diagnoza %>%
+  mutate(Czy.po.30 = ifelse(wiek2013 >= 30, "Po 30", "Przed 30"))
+
+cowazne <- table(diagnoza$gp29, diagnoza$Czy.po.30)
+
+prop.table(cowazne,2)
+
+
+# 2. W zbiorze danych TCGA_BRCA w drugiej kolumnie jest płeć pacjenta. Wyznacz zależność 
+# pomiędzy zmiennymi plec a czy.zyje. Przetestuj tą zależność testem Fishera.
+
+
+plec_zycie <- table(TCGA_BRCA$plec, TCGA_BRCA$czy.zyje)
+plec_zycie
+
+fisher.test(plec_zycie)
+
+################# ALTERNATYWNIE ##################
+
+# 1.  W zbiorze danych diagnoza wiek respondenta jest w zmiennej o nazwie wiek2013.
+# Wyznacz zależność pomiędzy wiekiem podzielonym na dwie grupy, poniżej i powyżej 30 roku życia, 
+# a odpowiedziami na pytanie o to co w życiu ważne.
+
+tab <- table(diagnoza$gp29,
+             cut(diagnoza$wiek2013, c(0, 30, 100)))
+tab
+prop.table(tab, 2)
+chisq.test(tab)
+
+# 2. W zbiorze danych TCGA_BRCA w drugiej kolumnie jest płeć pacjenta. Wyznacz zależność 
+# pomiędzy zmiennymi plec a czy.zyje. Przetestuj tą zależność testem Fishera.
+
+table(TCGA_BRCA$czy.zyje,
+      TCGA_BRCA$TP53)
+fisher.test(table(TCGA_BRCA$czy.zyje,
+                  TCGA_BRCA$TP53), 2)
+```
+
+## 19. Tabele 2xp
+
+```{r Tabele 2xp}
+# Wykształcenie VS wartośći
+table(diagnoza$eduk4_2013, diagnoza$gp29)
+
+# Wykształcenie VS wartośći
+(edukacjaTab <- table(droplevels(diagnoza$eduk4_2013), diagnoza$gp29))
+
+# Podział na 4 grupy wiekowe
+diagnoza$wiek2013_4g <- cut(diagnoza$wiek2013, c(0, 25, 40, 60, 110))
+
+# Przedstawienie tabeli
+table(diagnoza$wiek2013_4g)
+
+# Wiek VS wartośći
+wiekTab <- table(diagnoza$wiek2013_4g, diagnoza$gp29)
+wiekTab
+
+# Wykształcenie VS wartosći - FRAKCJE
+prop.table(edukacjaTab, 1)
+
+# Wiek VS wartosći - FRAKCJE
+prop.table(wiekTab, 1)
+
+mosaicplot(edukacjaTab, las=2, main="Edukacja vs. co jest ważne w życiu")
+
+mosaicplot(wiekTab, las=2, main="Wiek vs. co jest ważne w życiu")
+
+# Pytanie dotyczy odpowiedzi na pytanie Niektórzy są więcej warci od innych
+
+wiekPodziwiam <- table(diagnoza$gp54_13, diagnoza$wiek2013_4)
+wiekPodziwiam
+
+# zależnosć przedstawiona graficznie
+mosaicplot(t(wiekPodziwiam), las=2,
+           col=c("red4","red1","pink","grey80","lightgreen","green1","green4"),
+           main="Podziwiam ludzi, którzy mają drogie domy, samochody i ubrania")
+```
+### Czy jest zależność?  
+
+Aby sprawdzić, czy pomiędzy parą zmiennych jakościowych jest zależność, można wykonać test $X^2$.  
+
+Sprawdza on na ile obserwowana tabela częstości jest daleka od takiej, którą byśmy obserwowali, gdyby zmienne nie były zależne.  
+
+Test $X^2$ wykonuje się funkcją `chisq.test()`. Wynikiem  *p-wartość* dla hipotezy o niezależności. Małe p-wartości (zwyczajowo poniżej *0.05*) interpretuje się jako przesłanki o zależności pomiędzy zmiennymi.  
+
+Z wyniku funkcji `chisq.test()` można też odczytać, jak wyglądają obie porównywane tabele.  
+
+W polu `$observed` znajduje się tabela częstości obserwowana w danych.  
+A w polu `$expected` znajduje się tabela częstości oczekiwanych, gdyby nie było żadnej zależności.  
+
+```{r Tabele 2xp cz2}
+wiekPodziwiam <- table(diagnoza$gp54_13, diagnoza$wiek2013_4)
+chisq.test(wiekPodziwiam)
+
+chisq.test(wiekPodziwiam)$observed
+chisq.test(wiekPodziwiam)$expected
+
+#o ile procent rozni sie expected od observed
+100 - (chisq.test(wiekPodziwiam)$observed/chisq.test(wiekPodziwiam)$expected)*100
+
+
+
+############################## ZADANIA #####################################
+
+# W zbiorze danych TCGA_BRCA zbadaj czy jest i jaka jest zależność pomiędzy
+
+# przeżyciami (kolumna czy.zyje a mutacjami TP53),
+
+table(TCGA_BRCA$czy.zyje, TCGA_BRCA$TP53)
+
+# płcią a mutacjami TP53,
+
+table(TCGA_BRCA$plec, TCGA_BRCA$TP53)
+
+# płcią a zmienną czy.zyje.
+
+table(TCGA_BRCA$plec, TCGA_BRCA$czy.zyje)
+```
+

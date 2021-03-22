@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Przemyslaw Lagosz" />
+
+
+<title>pogRomcy2.4</title>
+
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Notebook</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fas fa-home"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Spatial Objects
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="learn_maps.html">Pierwsze mapy - NAUKA</a>
+    </li>
+    <li class="dropdown-header">Mapa Polski</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    pogRomcy
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">SEZON 1</li>
+    <li>
+      <a href="pogRomcy1.2.html">Odczytywanie, zapisywanie i indeksowanie danych</a>
+    </li>
+    <li>
+      <a href="pogRomcy1.3.html">Instrukcje sterujące, pętle, warunki i funkcje</a>
+    </li>
+    <li>
+      <a href="pogRomcy1.4.html">Podstawowe typy danych i ich statystyki opisowe</a>
+    </li>
+    <li>
+      <a href="pogRomcy1.5.html">Przetwarzanie potokowe danych</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">SEZON 2</li>
+    <li>
+      <a href="pogRomcy2.2.html">Jak zrobić wykres w pakiecie ggplot2?</a>
+    </li>
+    <li>
+      <a href="pogRomcy2.3.html">Modelowanie danych ilościowych</a>
+    </li>
+    <li>
+      <a href="pogRomcy2.4.html">Modelowanie danych jakościowych</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:&lt;przemyslawlagosz1@gmail.com&gt;">
+    <span class="fas fa-envelope"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/PrzemyslawLagosz/learn-R">Git</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">pogRomcy2.4</h1>
+<h4 class="author">Przemyslaw Lagosz</h4>
+<h4 class="date">22 03 2021</h4>
+
+</div>
+
+
+<div id="modelowanie-danych-jakościowych" class="section level1">
+<h1>Modelowanie danych jakościowych</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">warning =</span> <span class="cn">FALSE</span>, <span class="at">message =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div id="tabele-2x2" class="section level2">
+<h2>18. Tabele 2x2</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PogromcyDanych)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Wyswietlenie danych</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>diagnoza[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="fu">c</span>(<span class="st">&quot;imie_2011&quot;</span>, <span class="st">&quot;wiek2013&quot;</span>, <span class="st">&quot;plec&quot;</span>, <span class="st">&quot;eduk4_2013&quot;</span>, <span class="st">&quot;gp29&quot;</span>)]</span></code></pre></div>
+<pre><code>##   imie_2011 wiek2013      plec                    eduk4_2013           gp29
+## 1  WERONIKA        4   kobieta                          &lt;NA&gt;           &lt;NA&gt;
+## 2    ERNEST       13 mężczyzna zasadnicze zawodowe/gimanzjum POCZUCIE SENSU
+## 3    SYLWIA       23   kobieta           wyższe i policealne   PRZYJEMNOSCI
+## 4   MARIOLA       27   kobieta           wyższe i policealne POCZUCIE SENSU
+## 5    WACŁAW       78 mężczyzna           podstawowe i niższe POCZUCIE SENSU
+## 6     PIOTR       48 mężczyzna zasadnicze zawodowe/gimanzjum POCZUCIE SENSU</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Tablica kontyngencji</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(diagnoza<span class="sc">$</span>plec, diagnoza<span class="sc">$</span>gp29)</span></code></pre></div>
+<pre><code>##            
+##             PRZYJEMNOSCI POCZUCIE SENSU
+##   mężczyzna         5114           6544
+##   kobieta           5144           9421</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Tablica kontyngencji z warosciami NA</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(diagnoza<span class="sc">$</span>plec, diagnoza<span class="sc">$</span>gp29, <span class="at">useNA =</span> <span class="st">&quot;always&quot;</span>)</span></code></pre></div>
+<pre><code>##            
+##             PRZYJEMNOSCI POCZUCIE SENSU &lt;NA&gt;
+##   mężczyzna         5114           6544 6697
+##   kobieta           5144           9421 5501
+##   &lt;NA&gt;                 0              0   40</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Tablica kontyngencji z sumami</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plecSens <span class="ot">&lt;-</span> <span class="fu">table</span>(diagnoza<span class="sc">$</span>plec, diagnoza<span class="sc">$</span>gp29)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">addmargins</span>(plecSens)</span></code></pre></div>
+<pre><code>##            
+##             PRZYJEMNOSCI POCZUCIE SENSU   Sum
+##   mężczyzna         5114           6544 11658
+##   kobieta           5144           9421 14565
+##   Sum              10258          15965 26223</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># frakcje w wierszach</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(plecSens, <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>##            
+##             PRZYJEMNOSCI POCZUCIE SENSU
+##   mężczyzna    0.4386687      0.5613313
+##   kobieta      0.3531754      0.6468246</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># frakcje w całej tabeli</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(plecSens)</span></code></pre></div>
+<pre><code>##            
+##             PRZYJEMNOSCI POCZUCIE SENSU
+##   mężczyzna    0.1950196      0.2495519
+##   kobieta      0.1961637      0.3592648</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Przypisanie frakcji w wierszach do zmiennej</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>frakcje <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(plecSens, <span class="dv">1</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>frakcje </span></code></pre></div>
+<pre><code>##            
+##             PRZYJEMNOSCI POCZUCIE SENSU
+##   mężczyzna    0.4386687      0.5613313
+##   kobieta      0.3531754      0.6468246</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SZANSE CZYLI STOSUNEK P/1-P. Stosunek ze wystąpi do tego ze nie wystąpi</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>szanse <span class="ot">&lt;-</span> frakcje[,<span class="dv">1</span>]<span class="sc">/</span>frakcje[,<span class="dv">2</span>]</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># W przeciwieństwie do prawdopodobieństwa, szansa może przyjmować wartości większe od 1.</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Policzmy szanse, że kobieta lub mężczyzna odpowie Przyjemności na pytanie o to co ważniejsze.</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># szanse</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#ILORAZ SZANS MEZCZYZNA/KOBIETA</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># W przykładzie dla Diagnozy Społecznej, iloraz szans wynosi 1.4312, co oznacza, że szansa, że </span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># dla losowo wylosowanego mężczyzny, szansa że odpowie Przyjemności jest o 43% większa niż u kobiety.</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>szanse[<span class="dv">1</span>] <span class="sc">/</span> szanse[<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## mężczyzna 
+##  1.431243</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(plecSens, <span class="at">main=</span><span class="st">&quot;Odpowiedzi na pytanie o to co ważne w życiu&quot;</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.4_files/figure-html/Tabele%202x2-1.png" width="672" /></p>
+<p>Kolejne kolumny tego zbioru danych opisują takie cechy jak: mutacja genu P53, płeć pacjenta, informację czy pacjent wciąż żyje, informacja ile dni po operacji doszło do zgonu oraz informacja czy w okresie jednego roku pojawił się guz / przerzuty.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="do">##################   TCGA_BRCA  #############</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(TCGA_BRCA)</span></code></pre></div>
+<pre><code>##                TP53   plec czy.zyje dni.do.smierci czy.nowy.guz
+## 1         Wild type female     live             NA           no
+## 2             Other female     live             NA         &lt;NA&gt;
+## 3         Wild type female     live             NA           no
+## 4         Wild type female     live             NA           no
+## 5 Missense_Mutation female     dead           1009         &lt;NA&gt;
+## 6         Wild type female     live             NA           no</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Yes/no okresla czy wsytapil przezut</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>(przerzuty_przezycia <span class="ot">&lt;-</span> <span class="fu">table</span>(TCGA_BRCA<span class="sc">$</span>czy.nowy.guz,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                              TCGA_BRCA<span class="sc">$</span>czy.zyje))</span></code></pre></div>
+<pre><code>##      
+##       dead live
+##   no    17  342
+##   yes   23   20</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(przerzuty_przezycia)</span></code></pre></div>
+<p><img src="pogRomcy2.4_files/figure-html/Tabele%202x2%202-1.png" width="672" /></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>(frakcje <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(przerzuty_przezycia, <span class="dv">1</span>))</span></code></pre></div>
+<pre><code>##      
+##             dead       live
+##   no  0.04735376 0.95264624
+##   yes 0.53488372 0.46511628</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Szanse na zgon</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>(szanse <span class="ot">&lt;-</span> frakcje[,<span class="dv">1</span>]<span class="sc">/</span>frakcje[,<span class="dv">2</span>])</span></code></pre></div>
+<pre><code>##        no       yes 
+## 0.0497076 1.1500000</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>frakcje[,<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>##         no        yes 
+## 0.04735376 0.53488372</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Iloraz szans wynosi 0.049, co znaczy, że w grupie badanych szansa na zgon osób bez przerzutów to mniej niż 5% szansy na zgon osób z przerzutami. Równoważnie można powiedzieć, że osoby z przerzutami mają szansę na zgon 1.15 (prawie 24 razy większe).</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># bez przerzutów do przerzutów</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>szanse[<span class="dv">1</span>] <span class="sc">/</span> szanse[<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>##       no 
+## 0.043224</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># z przerzutami do bez przerzutów</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>szanse[<span class="dv">2</span>] <span class="sc">/</span> szanse[<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>##      yes 
+## 23.13529</code></pre>
+<div id="czy-przerzuty-pogarszają-rokowanie" class="section level3">
+<h3>Czy przerzuty pogarszają rokowanie?</h3>
+<p>Iloraz szans równy 23 wydaje się byś istotnie większy niż 1 (co jak wiemy, oznacza brak zależności).</p>
+<p>Aby przetestować czy ta zależność pomiędzy przerzutami a przeżyciem jest istotna statystyczna można przeprowadzić test.</p>
+<p>Dla tabel 2 na 2 najbardziej popularnym rozwiązaniem jest użycie testu Fishera. Podobnie jak dla testu dla regresji i testu dla średnich (które omawialiśmy cztery odcinki wcześniej), też test Fishera opiera się na badaniu, jak często przypadkowo iloraz byłby większy niż obserwowany (przy założeniu że tyle samo osób ma przerzuty i tyle samo osób umiera).</p>
+<p>Czyli p-wartość wyznaczona w tym teście odpowiada prawdopodobieństwu, że obserwowany iloraz szans jest większy niż obserwowany w sytuacji gdyby pomiędzy zmiennymi nie było żadnych zależności.</p>
+<p>W tym przykładzie p-wartość jest rzędu <span class="math inline">\(2∗10^(−15)\)</span>, tak więc gdyby zmienne nie były zależne, byłoby nieprawdopodobne by zaobserwować tak duży iloraz szans.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(przerzuty_przezycia)</span></code></pre></div>
+<pre><code>## 
+##  Fisher&#39;s Exact Test for Count Data
+## 
+## data:  przerzuty_przezycia
+## p-value = 2.155e-15
+## alternative hypothesis: true odds ratio is not equal to 1
+## 95 percent confidence interval:
+##  0.0186201 0.1006088
+## sample estimates:
+## odds ratio 
+##  0.0439938</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">#####################   ZADANIA   ##########################</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1.  W zbiorze danych diagnoza wiek respondenta jest w zmiennej o nazwie wiek2013.</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Wyznacz zależność pomiędzy wiekiem podzielonym na dwie grupy, poniżej i powyżej 30 roku życia, </span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># a odpowiedziami na pytanie o to co w życiu ważne.</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(diagnoza<span class="sc">$</span>wiek2013)</span></code></pre></div>
+<pre><code>## [1]  4 13 23 27 78 48</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>diagnoza <span class="ot">&lt;-</span> diagnoza <span class="sc">%&gt;%</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Czy.po.30 =</span> <span class="fu">ifelse</span>(wiek2013 <span class="sc">&gt;=</span> <span class="dv">30</span>, <span class="st">&quot;Po 30&quot;</span>, <span class="st">&quot;Przed 30&quot;</span>))</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>cowazne <span class="ot">&lt;-</span> <span class="fu">table</span>(diagnoza<span class="sc">$</span>gp29, diagnoza<span class="sc">$</span>Czy.po<span class="fl">.30</span>)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(cowazne,<span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##                 
+##                      Po 30  Przed 30
+##   PRZYJEMNOSCI   0.3693104 0.4810201
+##   POCZUCIE SENSU 0.6306896 0.5189799</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. W zbiorze danych TCGA_BRCA w drugiej kolumnie jest płeć pacjenta. Wyznacz zależność </span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># pomiędzy zmiennymi plec a czy.zyje. Przetestuj tą zależność testem Fishera.</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>plec_zycie <span class="ot">&lt;-</span> <span class="fu">table</span>(TCGA_BRCA<span class="sc">$</span>plec, TCGA_BRCA<span class="sc">$</span>czy.zyje)</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>plec_zycie</span></code></pre></div>
+<pre><code>##         
+##          dead live
+##   female  121  868
+##   male      0   10</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(plec_zycie)</span></code></pre></div>
+<pre><code>## 
+##  Fisher&#39;s Exact Test for Count Data
+## 
+## data:  plec_zycie
+## p-value = 0.6195
+## alternative hypothesis: true odds ratio is not equal to 1
+## 95 percent confidence interval:
+##  0.3080771       Inf
+## sample estimates:
+## odds ratio 
+##        Inf</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="do">################# ALTERNATYWNIE ##################</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1.  W zbiorze danych diagnoza wiek respondenta jest w zmiennej o nazwie wiek2013.</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Wyznacz zależność pomiędzy wiekiem podzielonym na dwie grupy, poniżej i powyżej 30 roku życia, </span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="co"># a odpowiedziami na pytanie o to co w życiu ważne.</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(diagnoza<span class="sc">$</span>gp29,</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>             <span class="fu">cut</span>(diagnoza<span class="sc">$</span>wiek2013, <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="dv">100</span>)))</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>tab</span></code></pre></div>
+<pre><code>##                 
+##                  (0,30] (30,100]
+##   PRZYJEMNOSCI     2636     7616
+##   POCZUCIE SENSU   2891    13062</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(tab, <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##                 
+##                     (0,30]  (30,100]
+##   PRZYJEMNOSCI   0.4769314 0.3683142
+##   POCZUCIE SENSU 0.5230686 0.6316858</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(tab)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
+## 
+## data:  tab
+## X-squared = 215.58, df = 1, p-value &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. W zbiorze danych TCGA_BRCA w drugiej kolumnie jest płeć pacjenta. Wyznacz zależność </span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co"># pomiędzy zmiennymi plec a czy.zyje. Przetestuj tą zależność testem Fishera.</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(TCGA_BRCA<span class="sc">$</span>czy.zyje,</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>      TCGA_BRCA<span class="sc">$</span>TP53)</span></code></pre></div>
+<pre><code>##       
+##        Missense_Mutation Other Wild type
+##   dead                27    16        78
+##   live               141   109       628</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(<span class="fu">table</span>(TCGA_BRCA<span class="sc">$</span>czy.zyje,</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>                  TCGA_BRCA<span class="sc">$</span>TP53), <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## 
+##  Fisher&#39;s Exact Test for Count Data
+## 
+## data:  table(TCGA_BRCA$czy.zyje, TCGA_BRCA$TP53)
+## p-value = 0.1902
+## alternative hypothesis: two.sided</code></pre>
+</div>
+</div>
+<div id="tabele-2xp" class="section level2">
+<h2>19. Tabele 2xp</h2>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wykształcenie VS wartośći</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(diagnoza<span class="sc">$</span>eduk4_2013, diagnoza<span class="sc">$</span>gp29)</span></code></pre></div>
+<pre><code>##                                
+##                                 PRZYJEMNOSCI POCZUCIE SENSU
+##   BD/ND/FALA                               0              0
+##   podstawowe i niższe                   1872           2898
+##   zasadnicze zawodowe/gimanzjum         3662           4885
+##   średnie                               2983           4770
+##   wyższe i policealne                   1707           3370</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wykształcenie VS wartośći</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>(edukacjaTab <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">droplevels</span>(diagnoza<span class="sc">$</span>eduk4_2013), diagnoza<span class="sc">$</span>gp29))</span></code></pre></div>
+<pre><code>##                                
+##                                 PRZYJEMNOSCI POCZUCIE SENSU
+##   podstawowe i niższe                   1872           2898
+##   zasadnicze zawodowe/gimanzjum         3662           4885
+##   średnie                               2983           4770
+##   wyższe i policealne                   1707           3370</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Podział na 4 grupy wiekowe</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>diagnoza<span class="sc">$</span>wiek2013_4g <span class="ot">&lt;-</span> <span class="fu">cut</span>(diagnoza<span class="sc">$</span>wiek2013, <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">110</span>))</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Przedstawienie tabeli</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(diagnoza<span class="sc">$</span>wiek2013_4g)</span></code></pre></div>
+<pre><code>## 
+##   (0,25]  (25,40]  (40,60] (60,110] 
+##    11049     7770    10414     9051</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wiek VS wartośći</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>wiekTab <span class="ot">&lt;-</span> <span class="fu">table</span>(diagnoza<span class="sc">$</span>wiek2013_4g, diagnoza<span class="sc">$</span>gp29)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>wiekTab</span></code></pre></div>
+<pre><code>##           
+##            PRZYJEMNOSCI POCZUCIE SENSU
+##   (0,25]           1816           1887
+##   (25,40]          2378           3296
+##   (40,60]          3429           5673
+##   (60,110]         2629           5098</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wykształcenie VS wartosći - FRAKCJE</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(edukacjaTab, <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>##                                
+##                                 PRZYJEMNOSCI POCZUCIE SENSU
+##   podstawowe i niższe              0.3924528      0.6075472
+##   zasadnicze zawodowe/gimanzjum    0.4284544      0.5715456
+##   średnie                          0.3847543      0.6152457
+##   wyższe i policealne              0.3362222      0.6637778</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wiek VS wartosći - FRAKCJE</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(wiekTab, <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>##           
+##            PRZYJEMNOSCI POCZUCIE SENSU
+##   (0,25]      0.4904132      0.5095868
+##   (25,40]     0.4191047      0.5808953
+##   (40,60]     0.3767304      0.6232696
+##   (60,110]    0.3402355      0.6597645</code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(edukacjaTab, <span class="at">las=</span><span class="dv">2</span>, <span class="at">main=</span><span class="st">&quot;Edukacja vs. co jest ważne w życiu&quot;</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.4_files/figure-html/Tabele%202xp-1.png" width="672" /></p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(wiekTab, <span class="at">las=</span><span class="dv">2</span>, <span class="at">main=</span><span class="st">&quot;Wiek vs. co jest ważne w życiu&quot;</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.4_files/figure-html/Tabele%202xp-2.png" width="672" /></p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pytanie dotyczy odpowiedzi na pytanie Niektórzy są więcej warci od innych</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>wiekPodziwiam <span class="ot">&lt;-</span> <span class="fu">table</span>(diagnoza<span class="sc">$</span>gp54_13, diagnoza<span class="sc">$</span>wiek2013_4)</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>wiekPodziwiam</span></code></pre></div>
+<pre><code>##                   
+##                    (0,25] (25,40] (40,60] (60,110]
+##   ZDECYDOWANIE TAK    333     398     612      505
+##   TAK                 665    1147    2156     1927
+##   RACZEJ TAK          583     872    1498     1266
+##   ANI TAK, ANI NIE    718    1093    1729     1640
+##   RACZEJ NIE          364     588     951      755
+##   NIE                 651    1124    1688     1368
+##   ZDECYDOWANIE NIE    406     464     477      254</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># zależnosć przedstawiona graficznie</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(<span class="fu">t</span>(wiekPodziwiam), <span class="at">las=</span><span class="dv">2</span>,</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;red4&quot;</span>,<span class="st">&quot;red1&quot;</span>,<span class="st">&quot;pink&quot;</span>,<span class="st">&quot;grey80&quot;</span>,<span class="st">&quot;lightgreen&quot;</span>,<span class="st">&quot;green1&quot;</span>,<span class="st">&quot;green4&quot;</span>),</span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">main=</span><span class="st">&quot;Podziwiam ludzi, którzy mają drogie domy, samochody i ubrania&quot;</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.4_files/figure-html/Tabele%202xp-3.png" width="672" /> ### Czy jest zależność?</p>
+<p>Aby sprawdzić, czy pomiędzy parą zmiennych jakościowych jest zależność, można wykonać test <span class="math inline">\(X^2\)</span>.</p>
+<p>Sprawdza on na ile obserwowana tabela częstości jest daleka od takiej, którą byśmy obserwowali, gdyby zmienne nie były zależne.</p>
+<p>Test <span class="math inline">\(X^2\)</span> wykonuje się funkcją <code>chisq.test()</code>. Wynikiem <em>p-wartość</em> dla hipotezy o niezależności. Małe p-wartości (zwyczajowo poniżej <em>0.05</em>) interpretuje się jako przesłanki o zależności pomiędzy zmiennymi.</p>
+<p>Z wyniku funkcji <code>chisq.test()</code> można też odczytać, jak wyglądają obie porównywane tabele.</p>
+<p>W polu <code>$observed</code> znajduje się tabela częstości obserwowana w danych.<br />
+A w polu <code>$expected</code> znajduje się tabela częstości oczekiwanych, gdyby nie było żadnej zależności.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>wiekPodziwiam <span class="ot">&lt;-</span> <span class="fu">table</span>(diagnoza<span class="sc">$</span>gp54_13, diagnoza<span class="sc">$</span>wiek2013_4)</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(wiekPodziwiam)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  wiekPodziwiam
+## X-squared = 418.81, df = 18, p-value &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(wiekPodziwiam)<span class="sc">$</span>observed</span></code></pre></div>
+<pre><code>##                   
+##                    (0,25] (25,40] (40,60] (60,110]
+##   ZDECYDOWANIE TAK    333     398     612      505
+##   TAK                 665    1147    2156     1927
+##   RACZEJ TAK          583     872    1498     1266
+##   ANI TAK, ANI NIE    718    1093    1729     1640
+##   RACZEJ NIE          364     588     951      755
+##   NIE                 651    1124    1688     1368
+##   ZDECYDOWANIE NIE    406     464     477      254</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(wiekPodziwiam)<span class="sc">$</span>expected</span></code></pre></div>
+<pre><code>##                   
+##                      (0,25]   (25,40]   (40,60]  (60,110]
+##   ZDECYDOWANIE TAK 262.0677  400.5691  641.8545  543.5087
+##   TAK              835.9790 1277.7893 2047.4743 1733.7574
+##   RACZEJ TAK       598.3028  914.5027 1465.3594 1240.8350
+##   ANI TAK, ANI NIE 734.5837 1122.8073 1799.1377 1523.4713
+##   RACZEJ NIE       376.9350  576.1432  923.1869  781.7349
+##   NIE              685.0915 1047.1587 1677.9217 1420.8282
+##   ZDECYDOWANIE NIE 227.0403  347.0298  556.0655  470.8644</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co">#o ile procent rozni sie expected od observed</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span> <span class="sc">-</span> (<span class="fu">chisq.test</span>(wiekPodziwiam)<span class="sc">$</span>observed<span class="sc">/</span><span class="fu">chisq.test</span>(wiekPodziwiam)<span class="sc">$</span>expected)<span class="sc">*</span><span class="dv">100</span></span></code></pre></div>
+<pre><code>##                   
+##                         (0,25]     (25,40]     (40,60]    (60,110]
+##   ZDECYDOWANIE TAK -27.0664013   0.6413565   4.6512921   7.0852025
+##   TAK               20.4525432  10.2355949  -5.3004687 -11.1458825
+##   RACZEJ TAK         2.5577075   4.6476265  -2.2274776  -2.0280658
+##   ANI TAK, ANI NIE   2.2575663   2.6547084   3.8984061  -7.6488914
+##   RACZEJ NIE         3.4316367  -2.0579634  -3.0127301   3.4199450
+##   NIE                4.9761954  -7.3380799  -0.6006442   3.7181263
+##   ZDECYDOWANIE NIE -78.8229131 -33.7060925  14.2187433  46.0566569</code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="do">############################## ZADANIA #####################################</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="co"># W zbiorze danych TCGA_BRCA zbadaj czy jest i jaka jest zależność pomiędzy</span></span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="co"># przeżyciami (kolumna czy.zyje a mutacjami TP53),</span></span>
+<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(TCGA_BRCA<span class="sc">$</span>czy.zyje, TCGA_BRCA<span class="sc">$</span>TP53)</span></code></pre></div>
+<pre><code>##       
+##        Missense_Mutation Other Wild type
+##   dead                27    16        78
+##   live               141   109       628</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># płcią a mutacjami TP53,</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(TCGA_BRCA<span class="sc">$</span>plec, TCGA_BRCA<span class="sc">$</span>TP53)</span></code></pre></div>
+<pre><code>##         
+##          Missense_Mutation Other Wild type
+##   female               168   125       696
+##   male                   0     0        10</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># płcią a zmienną czy.zyje.</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(TCGA_BRCA<span class="sc">$</span>plec, TCGA_BRCA<span class="sc">$</span>czy.zyje)</span></code></pre></div>
+<pre><code>##         
+##          dead live
+##   female  121  868
+##   male      0   10</code></pre>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
