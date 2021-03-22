@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Przemyslaw Lagosz" />
+
+
+<title>pogRomcy 1.4</title>
+
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Notebook</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fas fa-home"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Spatial Objects
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Mapa Polski</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    pogRomcy
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">SEZON 1</li>
+    <li>
+      <a href="pogRomcy1.2.html">Odczytywanie, zapisywanie i indeksowanie danych</a>
+    </li>
+    <li>
+      <a href="pogRomcy1.3.html">Instrukcje sterujące, pętle, warunki i funkcje</a>
+    </li>
+    <li>
+      <a href="pogRomcy1.4.html">Podstawowe typy danych i ich statystyki opisowe</a>
+    </li>
+    <li>
+      <a href="pogRomcy1.5.html">Przetwarzanie potokowe danych</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">SEZON 2</li>
+    <li>
+      <a href="pogRomcy2.2.html">Jak zrobić wykres w pakiecie ggplot2?</a>
+    </li>
+    <li>
+      <a href="pogRomcy2.3.html">Modelowanie danych ilościowych</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:&lt;przemyslawlagosz1@gmail.com&gt;">
+    <span class="fas fa-envelope"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/PrzemyslawLagosz/learn-R">Git</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">pogRomcy 1.4</h1>
+<h4 class="author">Przemyslaw Lagosz</h4>
+<h4 class="date">18 03 2021</h4>
+
+</div>
+
+
+<div id="podstawowe-typy-danych-i-ich-statystyki-opisowe" class="section level1">
+<h1>Podstawowe typy danych i ich statystyki opisowe <br></h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">warning =</span> <span class="cn">FALSE</span>, <span class="at">message =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Wgranie bibliotek</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PogromcyDanych)</span></code></pre></div>
+<div id="cechy-ilościowe" class="section level2">
+<h2>11. Cechy ilościowe</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PogromcyDanych)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Warunek logiczny tworzy wektor T/F</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#sum traktuje T jak 1, N jak 0, Czyli ile razy TRUE wystąpi</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(auta2012<span class="sc">$</span>Cena.w.PLN <span class="sc">&lt;</span> <span class="dv">5000</span>)</span></code></pre></div>
+<pre><code>## [1] 18559</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(auta2012)</span></code></pre></div>
+<pre><code>##  [1] &quot;Cena&quot;                         &quot;Waluta&quot;                      
+##  [3] &quot;Cena.w.PLN&quot;                   &quot;Brutto.netto&quot;                
+##  [5] &quot;KM&quot;                           &quot;kW&quot;                          
+##  [7] &quot;Marka&quot;                        &quot;Model&quot;                       
+##  [9] &quot;Wersja&quot;                       &quot;Liczba.drzwi&quot;                
+## [11] &quot;Pojemnosc.skokowa&quot;            &quot;Przebieg.w.km&quot;               
+## [13] &quot;Rodzaj.paliwa&quot;                &quot;Rok.produkcji&quot;               
+## [15] &quot;Kolor&quot;                        &quot;Kraj.aktualnej.rejestracji&quot;  
+## [17] &quot;Kraj.pochodzenia&quot;             &quot;Pojazd.uszkodzony&quot;           
+## [19] &quot;Skrzynia.biegow&quot;              &quot;Status.pojazdu.sprowadzonego&quot;
+## [21] &quot;Wyposazenie.dodatkowe&quot;</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>auta <span class="ot">&lt;-</span> auta2012</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(auta2012<span class="sc">$</span>Rok.produkcji)</span></code></pre></div>
+<pre><code>## [1] 2003.404</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2012</span> <span class="sc">-</span> <span class="fu">median</span>(auta2012<span class="sc">$</span>Rok.produkcji)</span></code></pre></div>
+<pre><code>## [1] 8</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(auta2012)</span></code></pre></div>
+<pre><code>##       Cena              Waluta         Cena.w.PLN       Brutto.netto   
+##  Min.   :     174   PLN    :181844   Min.   :     400   brutto:191989  
+##  1st Qu.:   10900   CZK    : 19070   1st Qu.:   10900   netto : 15613  
+##  Median :   21500   EUR    :  5407   Median :   19900                  
+##  Mean   :   54929   USD    :   658   Mean   :   35755                  
+##  3rd Qu.:   44900   HUF    :   611   3rd Qu.:   37471                  
+##  Max.   :22230000   CHF    :     5   Max.   :11111111                  
+##                     (Other):     7                                     
+##        KM                kW                     Marka            Model       
+##  Min.   :    1.0   Min.   :    1.00   Volkswagen   : 22826   Passat :  6883  
+##  1st Qu.:   90.0   1st Qu.:   66.00   Opel         : 19092   Astra  :  6348  
+##  Median :  115.0   Median :   85.00   Ford         : 17717   Golf   :  6096  
+##  Mean   :  127.4   Mean   :   93.69   Renault      : 17498   Focus  :  5691  
+##  3rd Qu.:  140.0   3rd Qu.:  103.00   Audi         : 12851   A4     :  4280  
+##  Max.   :21754.0   Max.   :16000.00   Mercedes-Benz: 10945   Mondeo :  4252  
+##  NA&#39;s   :27069     NA&#39;s   :27069      (Other)      :106673   (Other):174052  
+##      Wersja      Liczba.drzwi Pojemnosc.skokowa Przebieg.w.km      
+##         :97447      :  5716   Min.   :    10    Min.   :        1  
+##  II     :19946   2/3: 31674   1st Qu.:  1586    1st Qu.:    85000  
+##  I      :12391   4/5:170212   Median :  1896    Median :   140000  
+##  III    : 9225                Mean   :  1944    Mean   :   147167  
+##  IV     : 4295                3rd Qu.:  2000    3rd Qu.:   180000  
+##  B      : 3775                Max.   :151000    Max.   :999999999  
+##  (Other):60523                NA&#39;s   :6165      NA&#39;s   :39559      
+##                 Rodzaj.paliwa    Rok.produkcji                 Kolor      
+##  benzyna               : 81694   Min.   :1900   srebrny-metallic  :40626  
+##  benzyna+LPG           : 10684   1st Qu.:2000   czarny-metallic   :29129  
+##  etanol                :    28   Median :2004                     :25997  
+##  hybryda               :   183   Mean   :2003   niebieski-metallic:12584  
+##  naped elektryczny     :    55   3rd Qu.:2007   szary-metallic    :10834  
+##  olej napedowy (diesel):114958   Max.   :2012   granatowy-metallic:10756  
+##                                                 (Other)           :77676  
+##  Kraj.aktualnej.rejestracji Kraj.pochodzenia Pojazd.uszkodzony
+##          :103809                   :89064       :195099       
+##  Polska  : 91010            Niemcy :49877    Tak: 12503       
+##  Niemcy  :  6744            Polska :31324                     
+##  Francja :  2052            Francja: 8909                     
+##  Belgia  :   849            Czechy : 6161                     
+##  Holandia:   813            Belgia : 5713                     
+##  (Other) :  2325            (Other):16554                     
+##      Skrzynia.biegow                           Status.pojazdu.sprowadzonego
+##              :  6697                                         :131275       
+##  automatyczna: 33888   do sprowadzenia                       :  2703       
+##  manualna    :167017   przygotowany do rejestracji / oplacony: 28596       
+##                        sprowadzony / nieoplacony             : 12295       
+##                        sprowadzony / zarejestrowany          : 32733       
+##                                                                            
+##                                                                            
+##                                                                                                                                                       Wyposazenie.dodatkowe
+##                                                                                                                                                                  :  7982   
+##  ABS, el. szyby, el. lusterka, klimatyzacja, centralny zamek, poduszka powietrzna, radio / CD, wspomaganie kierownicy, immobiliser                               :  1090   
+##  ABS, el. szyby, el. lusterka, klimatyzacja, centralny zamek, poduszka powietrzna, radio / CD, wspomaganie kierownicy, immobiliser, komputer                     :  1018   
+##  ABS, el. szyby, klimatyzacja, centralny zamek, poduszka powietrzna, radio / CD, wspomaganie kierownicy, immobiliser                                             :   718   
+##  ABS, el. szyby, el. lusterka, klimatyzacja, centralny zamek, poduszka powietrzna, radio / CD, wspomaganie kierownicy, immobiliser, welurowa tapicerka           :   645   
+##  ABS, el. szyby, el. lusterka, klimatyzacja, centralny zamek, autoalarm, poduszka powietrzna, radio / CD, wspomaganie kierownicy, immobiliser, welurowa tapicerka:   571   
+##  (Other)                                                                                                                                                         :195578</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(auta2012<span class="sc">$</span>Pojemnosc.skokowa, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 1896</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(auta2012<span class="sc">$</span>Przebieg.w.km)</span></code></pre></div>
+<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max.      NA&#39;s 
+##         1     85000    140000    147167    180000 999999999     39559</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(auta2012<span class="sc">$</span>Przebieg.w.km, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">range =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p><img src="pogRomcy1.4_files/figure-html/Cechy ilościowe-1.png" width="672" /></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#usuwa wartosci NA pzy filtrowaniu</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>auta <span class="ot">&lt;-</span> auta2012 <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Przebieg.w.km <span class="sc">&lt;</span> <span class="dv">1000000</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(auta<span class="sc">$</span>Przebieg.w.km)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       1   85000  140000  132905  180000  972000</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(auta<span class="sc">$</span>Przebieg.w.km, <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">range =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p><img src="pogRomcy1.4_files/figure-html/Cechy ilościowe-2.png" width="672" /></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ZOSTAWIA wartosci NA</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>auta2012wybrane <span class="ot">&lt;-</span> auta2012[auta2012<span class="sc">$</span>Przebieg.w.km <span class="sc">&lt;</span> <span class="dv">1000000</span>, ] </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(auta2012wybrane<span class="sc">$</span>Przebieg.w.km)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##       1   85000  140000  132905  180000  972000   39559</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(auta2012wybrane<span class="sc">$</span>Przebieg.w.km, <span class="at">col =</span> <span class="st">&quot;skyblue&quot;</span>, <span class="at">breaks =</span> <span class="dv">100</span>)</span></code></pre></div>
+<p><img src="pogRomcy1.4_files/figure-html/Cechy ilościowe-3.png" width="672" /></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(auta2012wybrane<span class="sc">$</span>Przebieg.w.km, auta2012wybrane<span class="sc">$</span>Cena, </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch=</span><span class="st">&quot;.&quot;</span>, <span class="at">log=</span><span class="st">&quot;xy&quot;</span>,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Przebieg w km&quot;</span>,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Cena&quot;</span>)</span></code></pre></div>
+<p><img src="pogRomcy1.4_files/figure-html/Cechy ilościowe-4.png" width="672" /></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">###################################### ZADANIA ###########################################</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Przedstaw graficznie za pomocą wykresu pudełko-wąsy oraz histogramu rozkład cechy Cena.w.PLN.</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>auta_box <span class="ot">&lt;-</span> auta2012wybrane[auta2012wybrane<span class="sc">$</span>Cena <span class="sc">&lt;</span> <span class="dv">100000</span>, ]</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(auta_box<span class="sc">$</span>Cena.w.PLN, <span class="at">range =</span> <span class="dv">0</span>, <span class="at">horizontal =</span> T, <span class="at">xlab=</span> <span class="st">&quot;Cena&quot;</span>)</span></code></pre></div>
+<p><img src="pogRomcy1.4_files/figure-html/Cechy ilościowe-5.png" width="672" /></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(auta_box<span class="sc">$</span>Cena.w.PLN, <span class="fl">0.95</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>##      95% 
+## 66773.18</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Zwróć uwagę, że pojedyncze auta o bardzo wysokich cenach, powodują że wykres jest mało czytelny.</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Oczyść te dane, pozostawiają tylko auta o cenie poniżej 100 tys. pln. Następnie przedstaw </span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co">#rozkład cen aut w segmencie aut do 100 tys. pln.</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Aut w jakiej cenie jest najwięcej wśród zebranych ogłoszeń?</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(auta_box<span class="sc">$</span>Cena.w.PLN, <span class="at">col =</span> <span class="st">&quot;skyblue&quot;</span>, <span class="at">breaks =</span> <span class="dv">100</span>)</span></code></pre></div>
+<p><img src="pogRomcy1.4_files/figure-html/Cechy ilościowe-6.png" width="672" /></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mode</span>(auta_box<span class="sc">$</span>Cena.w.PLN)</span></code></pre></div>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.max</span>(<span class="fu">table</span>(<span class="fu">cut</span>(auta_box<span class="sc">$</span>Cena.w.PLN, <span class="dv">1000</span>)))</span></code></pre></div>
+<pre><code>## (1.257e+04,1.3e+04] 
+##                  29</code></pre>
+</div>
+<div id="cechy-jakościowe" class="section level2">
+<h2>12. Cechy jakościowe</h2>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PogromcyDanych)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># pokazuje strukture DF</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(auta2012)</span></code></pre></div>
+<pre><code>## Rows: 207,602
+## Columns: 21
+## $ Cena                         &lt;dbl&gt; 49900, 88000, 86000, 25900, 55900, 45900,~
+## $ Waluta                       &lt;fct&gt; PLN, PLN, PLN, PLN, PLN, PLN, PLN, PLN, P~
+## $ Cena.w.PLN                   &lt;dbl&gt; 49900, 88000, 86000, 25900, 55900, 45900,~
+## $ Brutto.netto                 &lt;fct&gt; brutto, brutto, brutto, brutto, netto, ne~
+## $ KM                           &lt;dbl&gt; 140, 156, 150, 163, NA, 150, 115, 115, 68~
+## $ kW                           &lt;dbl&gt; 103, 115, 110, 120, NA, 110, 85, 85, 50, ~
+## $ Marka                        &lt;fct&gt; Kia, Mitsubishi, Chevrolet, Volvo, Merced~
+## $ Model                        &lt;fct&gt; Carens, Outlander, Captiva, S80, Sprinter~
+## $ Wersja                       &lt;fct&gt; , , , , , , , Mk2, , , Mk4, IV, E38, VI, ~
+## $ Liczba.drzwi                 &lt;fct&gt; 4/5, 4/5, 4/5, 4/5, 4/5, 4/5, 4/5, 4/5, 4~
+## $ Pojemnosc.skokowa            &lt;dbl&gt; 1991, 2179, 1996, 2400, 2200, 2200, 2000,~
+## $ Przebieg.w.km                &lt;dbl&gt; 41000, 46500, 8000, 200000, 169400, 14110~
+## $ Rodzaj.paliwa                &lt;fct&gt; olej napedowy (diesel), olej napedowy (di~
+## $ Rok.produkcji                &lt;dbl&gt; 2008, 2008, 2009, 2003, 2007, 2004, 2006,~
+## $ Kolor                        &lt;fct&gt; , , , srebrny-metallic, bialy, bordowy-me~
+## $ Kraj.aktualnej.rejestracji   &lt;fct&gt; Polska, Polska, Polska, Polska, , , Polsk~
+## $ Kraj.pochodzenia             &lt;fct&gt; , , , Wlochy, , , Polska, Polska, Polska,~
+## $ Pojazd.uszkodzony            &lt;fct&gt; , , , , , , , , , , , , , , , , , , , , ,~
+## $ Skrzynia.biegow              &lt;fct&gt; manualna, manualna, manualna, manualna, m~
+## $ Status.pojazdu.sprowadzonego &lt;fct&gt; , , , sprowadzony / zarejestrowany, , , ,~
+## $ Wyposazenie.dodatkowe        &lt;fct&gt; &quot;ABS, el. lusterka, klimatyzacja, alufelg~</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### SPRAWDZENIE ILE Ktore kolumny to Factory ########</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(auta2012)) {</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">class</span>(auta2012[,i]) <span class="sc">==</span> <span class="st">&quot;factor&quot;</span>){</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    f <span class="ot">&lt;-</span> f<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  }<span class="cf">else</span>{</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    n <span class="ot">&lt;-</span> n<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">which</span>(<span class="fu">sapply</span>(auta2012, class) <span class="sc">==</span> <span class="st">&quot;factor&quot;</span>))</span></code></pre></div>
+<pre><code>##  [1] &quot;Waluta&quot;                       &quot;Brutto.netto&quot;                
+##  [3] &quot;Marka&quot;                        &quot;Model&quot;                       
+##  [5] &quot;Wersja&quot;                       &quot;Liczba.drzwi&quot;                
+##  [7] &quot;Rodzaj.paliwa&quot;                &quot;Kolor&quot;                       
+##  [9] &quot;Kraj.aktualnej.rejestracji&quot;   &quot;Kraj.pochodzenia&quot;            
+## [11] &quot;Pojazd.uszkodzony&quot;            &quot;Skrzynia.biegow&quot;             
+## [13] &quot;Status.pojazdu.sprowadzonego&quot; &quot;Wyposazenie.dodatkowe&quot;</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>(waluty <span class="ot">&lt;-</span> <span class="fu">table</span>(auta2012<span class="sc">$</span>Waluta))</span></code></pre></div>
+<pre><code>## 
+##    CHF    CZK    EEK    EUR    GBP    HUF    PLN    USD 
+##      5  19070      2   5407      5    611 181844    658</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>frakcje <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(waluty)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="do">####################Zamiana frakcji na procenty #############</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>procenty <span class="ot">&lt;-</span> frakcje<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Zaokrongla do 2 miejsc po przecinku</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(procenty, <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## 
+##   CHF   CZK   EEK   EUR   GBP   HUF   PLN   USD 
+##  0.00  9.19  0.00  2.60  0.00  0.29 87.59  0.32</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">round</span>(procenty, <span class="at">digits =</span> <span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## 
+##   CHF   EEK   GBP   HUF   USD   EUR   CZK   PLN 
+##  0.00  0.00  0.00  0.29  0.32  2.60  9.19 87.59</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">round</span>(procenty, <span class="at">digits =</span> <span class="dv">2</span>), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## 
+##   PLN   CZK   EUR   USD   HUF   CHF   EEK   GBP 
+## 87.59  9.19  2.60  0.32  0.29  0.00  0.00  0.00</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(auta2012<span class="sc">$</span>Marka))</span></code></pre></div>
+<pre><code>## 
+##           DKW           LTI        Maruti        Morgan    Shuanghuan 
+##             1             1             1             1             1 
+##       Zastawa    Brilliance      DeLorean        Kaipan           NSU 
+##             1             2             2             2             2 
+##        Tavria          Yugo          DFSK      Galloper        Grecav 
+##             2             2             3             3             3 
+##      Mahindra      Moskwicz          Nysa       Piaggio           Aro 
+##             3             3             3             3             4 
+##       Bugatti        Tarpan       Triumph        Saturn       Santana 
+##             4             4             4             5             7 
+##         Scion      Vauxhall       Maybach         Tatra           Gaz 
+##             7             8             9            10            11 
+##           GMC         Lotus          Ltuk        Proton      Wartburg 
+##            11            11            11            12            12 
+##         Wolga        Syrena      Warszawa      Microcar       Mercury 
+##            12            13            13            14            16 
+##        Austin      Plymouth   Rolls-Royce    Oldsmobile       Trabant 
+##            17            19            19            20            21 
+##                         Uaz         Buick   Lamborghini   AstonMartin 
+##            24            27            29            29            35 
+##       Bentley      Maserati         Aixam          Tata         Acura 
+##            39            43            50            52            59 
+##       Pontiac          Lada        Hummer         Isuzu            MG 
+##            64            71            86            87            92 
+##       Ferrari       Polonez          Inny     SsangYong      Infiniti 
+##            96           120           126           189           190 
+##       Lincoln      Cadillac      Daihatsu         Dacia         Smart 
+##           198           212           222           411           440 
+##          Mini         Lexus        Lancia         Dodge        Jaguar 
+##           447           555           580           663           697 
+##          Saab       Porsche         Rover        Subaru     Chevrolet 
+##           825           937           964          1038          1261 
+##          Jeep        Daewoo     LandRover      Chrysler     AlfaRomeo 
+##          1276          1304          1409          1852          2142 
+##           Kia        Suzuki       Hyundai    Mitsubishi         Honda 
+##          2614          2851          3531          3786          3833 
+##         Volvo        Nissan         Mazda          Seat       Citroen 
+##          4167          4947          5013          5447          7345 
+##        Toyota          Fiat         Skoda       Peugeot           BMW 
+##          7614          7825          8457          9843         10126 
+## Mercedes-Benz          Audi       Renault          Ford          Opel 
+##         10945         12851         17498         17717         19092 
+##    Volkswagen 
+##         22826</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Spradenie ile procent samochod?w uzywa benzyny</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>((<span class="fu">prop.table</span>(<span class="fu">table</span>(auta2012<span class="sc">$</span>Rodzaj.paliwa))<span class="sc">*</span><span class="dv">100</span>), <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## 
+##                benzyna            benzyna+LPG                 etanol 
+##                  39.35                   5.15                   0.01 
+##                hybryda      naped elektryczny olej napedowy (diesel) 
+##                   0.09                   0.03                  55.37</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Jaki procent aut je?dzi na benzynie?</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span><span class="fu">prop.table</span>(<span class="fu">table</span>(auta2012<span class="sc">$</span>Rodzaj.paliwa))[<span class="st">&quot;benzyna&quot;</span>]</span></code></pre></div>
+<pre><code>##  benzyna 
+## 39.35126</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>posortowane_waluty <span class="ot">&lt;-</span> <span class="fu">sort</span>(waluty)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(posortowane_waluty, <span class="at">horiz =</span> <span class="cn">TRUE</span>, <span class="at">las=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="pogRomcy1.4_files/figure-html/Cechy jakościowe-1.png" width="672" /></p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Posortowany kraj pochodzenia</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>posortowane_kraj <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">table</span>(auta2012<span class="sc">$</span>Kraj.pochodzenia))</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(posortowane_kraj, <span class="at">horiz =</span> <span class="cn">TRUE</span>, <span class="at">las=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="pogRomcy1.4_files/figure-html/Cechy jakościowe-2.png" width="672" /></p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Nazwa najpopularniejszej marki</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">which.max</span>(<span class="fu">table</span>(auta2012<span class="sc">$</span>Marka)))</span></code></pre></div>
+<pre><code>## [1] &quot;Volkswagen&quot;</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Tabela czestoci</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(auta2012<span class="sc">$</span>Kraj.pochodzenia, auta2012<span class="sc">$</span>Waluta)</span></code></pre></div>
+<pre><code>##                    
+##                       CHF   CZK   EEK   EUR   GBP   HUF   PLN   USD
+##                         0  5096     2  3619     4   543 79437   363
+##   Austria               0   522     0    26     0     0  1439     0
+##   Belgia                0   373     0   356     0     0  4984     0
+##   Bulgaria              0     0     0     0     0     0     3     0
+##   Chorwacja             0     0     0     0     0     0     1     0
+##   Czechy                0  6099     0     0     0     0    62     0
+##   Dania                 0    30     0   177     0     0   379     0
+##   Estonia               0     1     0     0     0     0     6     0
+##   Francja               0   987     0    37     0     0  7885     0
+##   Grecja                0     0     0     0     0     0     4     0
+##   Hiszpania             0    23     0    35     0     0   260     0
+##   Holandia              0    81     0   145     0     0  3512     0
+##   Irlandia              0     0     0     1     0     1    25     0
+##   Islandia              0     0     0     0     0     0     3     0
+##   Kanada                0     6     0     1     0     0    94     1
+##   Litwa                 0     0     0     0     0     0    10     0
+##   lotwa                 0     0     0     0     0     0     3     0
+##   Luksemburg            0    13     0     0     0     0   308     0
+##   Monako                0     0     0     0     0     0     2     0
+##   Niemcy                1  4194     0   977     0     3 44701     1
+##   Norwegia              0     0     0     0     0     0    12     0
+##   Polska                1     1     0    12     0     0 31309     1
+##   Rosja                 0     1     0     0     0     0    12     0
+##   Rumunia               0     1     0     0     0     0     3     0
+##   Slowacja              0    36     0     4     0     0    15     0
+##   Stany Zjednoczone     0   150     0     4     0     1  2771   291
+##   Szwajcaria            3   159     0     2     0     0  1348     1
+##   Szwecja               0     7     0     0     0     0   148     0
+##   Ukraina               0     1     0     0     0     0     5     0
+##   Wegry                 0     0     0     0     0    63     3     0
+##   Wielka Brytania       0    14     0     0     1     0  1208     0
+##   Wlochy                0  1275     0    11     0     0  1892     0</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="do">###################################### ZADANIA ###########################################</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co">#W zbiorze danych auta2012 podziel zmienne Rok.produkcji na przedzia?y 1900-1990,</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="co">#1991-1995, 1996-2000, 2001-2005, 2006-2010, 2011-2012, a zmienn? Przebieg.w.km na </span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="co">#przedzia?y 0-1000, 1001-10 000, 10 001-100 000, 100 001 - 1000 000, 1000 000 - 10 000 000.</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="co"># `right =` okresla z ktorej storny przedzialy domkniete</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>auta2012<span class="sc">$</span>przedzily_Rok.Produkcji <span class="ot">&lt;-</span> <span class="fu">cut</span>(auta2012<span class="sc">$</span>Rok.produkcji, <span class="fu">c</span>(<span class="dv">1900</span>,<span class="dv">1990</span>,<span class="dv">1995</span>,<span class="dv">2000</span>,<span class="dv">2005</span>,<span class="dv">2010</span>,<span class="dv">2012</span>), <span class="at">right =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(auta2012<span class="sc">$</span>przedzily_Rok.Produkcji)</span></code></pre></div>
+<pre><code>## 
+## [1900,1990) [1990,1995) [1995,2000) [2000,2005) [2005,2010) [2010,2012) 
+##        2119        7079       36674       67704       67386       25996</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>auta2012<span class="sc">$</span>przedzialu_Przebieg.w.km <span class="ot">&lt;-</span> <span class="fu">cut</span>(auta2012<span class="sc">$</span>Przebieg.w.km, <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1000</span>,<span class="dv">10000</span>,<span class="dv">100000</span>, <span class="dv">1000000</span>, <span class="dv">10000000</span>))</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(auta2012<span class="sc">$</span>przedzialu_Przebieg.w.km)</span></code></pre></div>
+<pre><code>## 
+##     (0,1e+03] (1e+03,1e+04] (1e+04,1e+05] (1e+05,1e+06] (1e+06,1e+07] 
+##          4001          4748         43349        115871            68</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Wyznacz tabel? liczebno?ci dla tych dw?ch nowych zmiennych.</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>tabela_podukcja_przebieg <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="sc">~</span>przedzialu_Przebieg.w.km <span class="sc">+</span> przedzily_Rok.Produkcji, auta2012)</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>tabela_podukcja_przebieg</span></code></pre></div>
+<pre><code>##                         przedzily_Rok.Produkcji
+## przedzialu_Przebieg.w.km [1900,1990) [1990,1995) [1995,2000) [2000,2005)
+##            (0,1e+03]              34         106         446         606
+##            (1e+03,1e+04]          29           6          29          30
+##            (1e+04,1e+05]         350         242        1433        6464
+##            (1e+05,1e+06]         699        3954       26361       51395
+##            (1e+06,1e+07]           3          11          19          26
+##                         przedzily_Rok.Produkcji
+## przedzialu_Przebieg.w.km [2005,2010) [2010,2012)
+##            (0,1e+03]             416        2333
+##            (1e+03,1e+04]         632        4014
+##            (1e+04,1e+05]       27474        7386
+##            (1e+05,1e+06]       33365          97
+##            (1e+06,1e+07]           9           0</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Przedstaw tą tabelę graficznie.</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(tabela_podukcja_przebieg, <span class="at">las=</span><span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">&quot;Przebieg w km&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Rocznik&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Tytuł&quot;</span>, <span class="at">color =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="pogRomcy1.4_files/figure-html/Cechy jakościowe-3.png" width="672" /></p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="do">############################ ROZWIAZANIE Z POGROMCOW ##################### </span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Kategoryzacja</span></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>auta2012<span class="sc">$</span>Rok.produkcjiKat <span class="ot">&lt;-</span> <span class="fu">cut</span>(auta2012<span class="sc">$</span>Rok.produkcji, <span class="fu">c</span>(<span class="dv">1900</span>, <span class="fl">1990.5</span>, <span class="fl">1995.5</span>, <span class="fl">2000.5</span>, <span class="fl">2005.5</span>, <span class="fl">2010.5</span>, <span class="fl">2012.5</span>))</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(auta2012<span class="sc">$</span>Rok.produkcjiKat)</span></code></pre></div>
+<pre><code>## 
+## (1900,1990] (1990,1996] (1996,2000] (2000,2006] (2006,2010] (2010,2012] 
+##        2672        9854       46133       68324       62554       18062</code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tablica liczebnoci</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="do">## To wywala ogromna tabele bo przebieg w km nie jest podzielony na przedzialy i dla kazdego 1km wyznacza tabele</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>przebiegRok <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="sc">~</span>Rok.produkcjiKat <span class="sc">+</span> przedzialu_Przebieg.w.km, auta2012)</span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres tablicy liczebno?ci</span></span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(przebiegRok, <span class="at">las=</span><span class="dv">2</span>, <span class="at">color=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="pogRomcy1.4_files/figure-html/Cechy jakościowe-4.png" width="672" /></p>
+</div>
+<div id="cechy-logiczne" class="section level2">
+<h2>13. Cechy logiczne</h2>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PogromcyDanych)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(auta2012)</span></code></pre></div>
+<pre><code>##  [1] &quot;Cena&quot;                         &quot;Waluta&quot;                      
+##  [3] &quot;Cena.w.PLN&quot;                   &quot;Brutto.netto&quot;                
+##  [5] &quot;KM&quot;                           &quot;kW&quot;                          
+##  [7] &quot;Marka&quot;                        &quot;Model&quot;                       
+##  [9] &quot;Wersja&quot;                       &quot;Liczba.drzwi&quot;                
+## [11] &quot;Pojemnosc.skokowa&quot;            &quot;Przebieg.w.km&quot;               
+## [13] &quot;Rodzaj.paliwa&quot;                &quot;Rok.produkcji&quot;               
+## [15] &quot;Kolor&quot;                        &quot;Kraj.aktualnej.rejestracji&quot;  
+## [17] &quot;Kraj.pochodzenia&quot;             &quot;Pojazd.uszkodzony&quot;           
+## [19] &quot;Skrzynia.biegow&quot;              &quot;Status.pojazdu.sprowadzonego&quot;
+## [21] &quot;Wyposazenie.dodatkowe&quot;        &quot;przedzily_Rok.Produkcji&quot;     
+## [23] &quot;przedzialu_Przebieg.w.km&quot;     &quot;Rok.produkcjiKat&quot;</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Sprawdzenie co jest factorem</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">which</span>(<span class="fu">sapply</span>(auta2012, class) <span class="sc">==</span> <span class="st">&quot;factor&quot;</span>))</span></code></pre></div>
+<pre><code>##  [1] &quot;Waluta&quot;                       &quot;Brutto.netto&quot;                
+##  [3] &quot;Marka&quot;                        &quot;Model&quot;                       
+##  [5] &quot;Wersja&quot;                       &quot;Liczba.drzwi&quot;                
+##  [7] &quot;Rodzaj.paliwa&quot;                &quot;Kolor&quot;                       
+##  [9] &quot;Kraj.aktualnej.rejestracji&quot;   &quot;Kraj.pochodzenia&quot;            
+## [11] &quot;Pojazd.uszkodzony&quot;            &quot;Skrzynia.biegow&quot;             
+## [13] &quot;Status.pojazdu.sprowadzonego&quot; &quot;Wyposazenie.dodatkowe&quot;       
+## [15] &quot;przedzily_Rok.Produkcji&quot;      &quot;przedzialu_Przebieg.w.km&quot;    
+## [17] &quot;Rok.produkcjiKat&quot;</code></pre>
+<p>Funkcja <code>outer()</code> jako argumenty przyjmuje dwa wektory a następnie dla każdej pary wartości z pierwszego i drugiego wektora stosuje funkcję, która jest trzecim argumentem. Kolejne dwie linie dodają nazwy wierszy i kolumn, tak by na koniec wyprodukować ładnie wyglądającą tabliczkę logicznego dodawania. Jeżeli którykolwiek z argumentów ma wartość logicznej prawdy to wynikiem lub jest logiczna prawda.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>(TRUE_FALSE_NA <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">NA</span>))</span></code></pre></div>
+<pre><code>## [1]  TRUE FALSE    NA</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>tabliczka_dodawania <span class="ot">&lt;-</span> <span class="fu">outer</span>(TRUE_FALSE_NA, TRUE_FALSE_NA, <span class="st">&quot;|&quot;</span>)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(tabliczka_dodawania) <span class="ot">&lt;-</span> TRUE_FALSE_NA</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tabliczka_dodawania) <span class="ot">&lt;-</span> TRUE_FALSE_NA</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>tabliczka_dodawania</span></code></pre></div>
+<pre><code>##       TRUE FALSE &lt;NA&gt;
+## TRUE  TRUE  TRUE TRUE
+## FALSE TRUE FALSE   NA
+## &lt;NA&gt;  TRUE    NA   NA</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>tabliczka_mnozenia <span class="ot">&lt;-</span> <span class="fu">outer</span>(TRUE_FALSE_NA, TRUE_FALSE_NA, <span class="st">&quot;&amp;&quot;</span>)</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(tabliczka_mnozenia) <span class="ot">&lt;-</span> TRUE_FALSE_NA</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tabliczka_mnozenia) <span class="ot">&lt;-</span> TRUE_FALSE_NA</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>tabliczka_mnozenia</span></code></pre></div>
+<pre><code>##        TRUE FALSE  &lt;NA&gt;
+## TRUE   TRUE FALSE    NA
+## FALSE FALSE FALSE FALSE
+## &lt;NA&gt;     NA FALSE    NA</code></pre>
+<p>Warto zwrócić uwagę na wynik (TRUE | NA). Wynikiem jest wartość TRUE, poinieważ bez znaczenia czy wartość nieokreślona okazałaby się prawdziwa czy fałszywa, jej logiczna suma z wartością TRUE dałoby wartość TRUE. Na podobnej zasadzie FALSE &amp; NA zwraca wartość FALSE.</p>
+<p>W programie R występują również dłuższe postacie operatorów | i &amp; czyli || i &amp;&amp;. Pomiędzy formą dłuższą i krótszą występują dwie różnice. Forma krótsza pracuje na wektorach i wykonuje operacje element wektora po elemencie, podczas gdy forma dłuższa wykonuje operacje jedynie na pierwszych elementach wektorów i jako wynik zwraca jednoelementową wartość TRUE lub FALSE. Druga różnica dotyczy zaawansowanych zastosowań, długa forma nie wykonuje ewaluacji prawego argumentu, jeżeli nie jest to niezbędne.</p>
+<p>Przykładowo pierwsza linia poniższego przykładu wykona się poprawnie, ponieważ do określenia wyniku nie potrzebna jest ewaluacja funkcji cat(). Drugi przykład wykona funkcję cat() oraz zasygnalizuje błąd, ponieważ nie sposób wyniku funckji cat() logicznie dodać do wartości TRUE.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="cn">TRUE</span> <span class="sc">||</span> <span class="fu">cat</span>(<span class="st">&quot;Jestem tutaj !!!&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="cn">TRUE</span> <span class="sc">|</span> <span class="fu">cat</span>(<span class="st">&quot;Jestem tutaj !!!&quot;</span>)</span></code></pre></div>
+<pre><code>## Jestem tutaj !!!</code></pre>
+<pre><code>## logical(0)</code></pre>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Czy starszy niz 5 lat?</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>starszyNiz5Lat <span class="ot">&lt;-</span> auta2012<span class="sc">$</span>Rok.produkcji <span class="sc">&lt;</span> <span class="dv">2007</span></span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(starszyNiz5Lat)</span></code></pre></div>
+<pre><code>## starszyNiz5Lat
+##  FALSE   TRUE 
+##  66703 140899</code></pre>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(starszyNiz5Lat)) <span class="sc">*</span> <span class="dv">100</span></span></code></pre></div>
+<pre><code>## starszyNiz5Lat
+##    FALSE     TRUE 
+## 32.13023 67.86977</code></pre>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="do">###################################### ZADANIA ###########################################</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Sprawdź ile samochodów zarejestrowanych w Polsce ma cenę ofertową poniżej 2 000 pln..</span></span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a>auta2012 <span class="ot">&lt;-</span> auta2012</span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a>zarejestrowany_polska <span class="ot">&lt;-</span> auta2012<span class="sc">$</span>Kraj.aktualnej.rejestracji <span class="sc">==</span> <span class="st">&quot;Polska&quot;</span></span>
+<span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a>cena2000 <span class="ot">&lt;-</span> auta2012<span class="sc">$</span>Cena <span class="sc">&lt;</span> <span class="dv">2000</span></span>
+<span id="cb86-8"><a href="#cb86-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-9"><a href="#cb86-9" aria-hidden="true" tabindex="-1"></a>polska_i_cena <span class="ot">&lt;-</span> zarejestrowany_polska <span class="sc">&amp;</span> cena2000</span>
+<span id="cb86-10"><a href="#cb86-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-11"><a href="#cb86-11" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(zarejestrowany_polska)</span></code></pre></div>
+<pre><code>## zarejestrowany_polska
+##  FALSE   TRUE 
+## 116592  91010</code></pre>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(cena2000)</span></code></pre></div>
+<pre><code>## cena2000
+##  FALSE   TRUE 
+## 203302   4300</code></pre>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(polska_i_cena)</span></code></pre></div>
+<pre><code>## polska_i_cena
+##  FALSE   TRUE 
+## 205582   2020</code></pre>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(zarejestrowany_polska, cena2000)</span></code></pre></div>
+<pre><code>##                      cena2000
+## zarejestrowany_polska  FALSE   TRUE
+##                 FALSE 114312   2280
+##                 TRUE   88990   2020</code></pre>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sprawdź jaki procent samochodów ma silniki o pojemności ponad 1500 cm3 oraz jest napędzanych olejem napędowym.</span></span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>pojemnosc_i_naped <span class="ot">&lt;-</span> auta2012<span class="sc">$</span>Pojemnosc.skokowa <span class="sc">&gt;</span> <span class="dv">1500</span> <span class="sc">&amp;</span> auta2012<span class="sc">$</span>Rodzaj.paliwa <span class="sc">==</span> <span class="st">&quot;olej napedowy (diesel)&quot;</span></span>
+<span id="cb94-4"><a href="#cb94-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-5"><a href="#cb94-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(pojemnosc_i_naped)</span></code></pre></div>
+<pre><code>## pojemnosc_i_naped
+##  FALSE   TRUE 
+## 104122  99860</code></pre>
+</div>
+<div id="napisy" class="section level2">
+<h2>14. Napisy</h2>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PogromcyDanych)</span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>koty_ptaki<span class="sc">$</span>habitat_napis <span class="ot">&lt;-</span> <span class="fu">as.character</span>(koty_ptaki<span class="sc">$</span>habitat)</span>
+<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-5"><a href="#cb96-5" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(koty_ptaki<span class="sc">$</span>habitat_napis <span class="sc">==</span> <span class="st">&quot;Azja&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] 1 2 6</code></pre>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(koty_ptaki<span class="sc">$</span>habitat_napis <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Azja&quot;</span>, <span class="st">&quot;Afryka&quot;</span>))</span></code></pre></div>
+<pre><code>## [1]  1  2  4  5  6 10</code></pre>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="do">### KT?RE ZAWIERA LITERE &#39;A&#39; </span><span class="al">###</span></span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Wyrzuca nazwy</span></span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;A&quot;</span>, koty_ptaki<span class="sc">$</span>habitat_napis, <span class="at">value =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Azja&quot;    &quot;Azja&quot;    &quot;Ameryka&quot; &quot;Afryka&quot;  &quot;Afryka&quot;  &quot;Azja&quot;    &quot;Ameryka&quot;
+## [8] &quot;Afryka&quot;</code></pre>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Wyrzuca indeksy</span></span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;A&quot;</span>, koty_ptaki<span class="sc">$</span>habitat_napis)</span></code></pre></div>
+<pre><code>## [1]  1  2  3  4  5  6  7 10</code></pre>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### []  vs [[]] ####</span></span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>list_data <span class="ot">&lt;-</span></span>
+<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;Jan&quot;</span>, <span class="st">&quot;Feb&quot;</span>, <span class="st">&quot;Mar&quot;</span>), <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">9</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">8</span>), <span class="at">nrow =</span> <span class="dv">2</span>),</span>
+<span id="cb104-5"><a href="#cb104-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">list</span>(<span class="st">&quot;green&quot;</span>, <span class="fl">12.3</span>))</span>
+<span id="cb104-6"><a href="#cb104-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-7"><a href="#cb104-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(list_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;1st Quarter&quot;</span>, <span class="st">&quot;A_Matrix&quot;</span>, <span class="st">&quot;A Inner list&quot;</span>)</span>
+<span id="cb104-8"><a href="#cb104-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-9"><a href="#cb104-9" aria-hidden="true" tabindex="-1"></a>list_data[[<span class="st">&quot;A_Matrix&quot;</span>]]</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    3    5   -2
+## [2,]    9    1    8</code></pre>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="do">####</span></span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>daty <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;2014-01-01&quot;</span>, <span class="st">&quot;2015-03-15&quot;</span>, <span class="st">&quot;2010-12-01&quot;</span>)</span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Wybiera znaki 1-4</span></span>
+<span id="cb106-5"><a href="#cb106-5" aria-hidden="true" tabindex="-1"></a><span class="fu">substr</span>(daty, <span class="dv">1</span>, <span class="dv">4</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;2014&quot; &quot;2015&quot; &quot;2010&quot;</code></pre>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="do">####</span></span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>zdanie <span class="ot">&lt;-</span></span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;W Szczebrzeszynie chrz?szcz brzmi w trzcinie&quot;</span>,</span>
+<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Z?b zupa z?bowa d?b zupa d?bowa&quot;</span>)</span>
+<span id="cb108-5"><a href="#cb108-5" aria-hidden="true" tabindex="-1"></a>(podzielony <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(zdanie, <span class="st">&quot; &quot;</span>))</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;W&quot;               &quot;Szczebrzeszynie&quot; &quot;chrz?szcz&quot;       &quot;brzmi&quot;          
+## [5] &quot;w&quot;               &quot;trzcinie&quot;       
+## 
+## [[2]]
+## [1] &quot;Z?b&quot;    &quot;zupa&quot;   &quot;z?bowa&quot; &quot;d?b&quot;    &quot;zupa&quot;   &quot;d?bowa&quot;</code></pre>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Wyznacz indeksy wierszy w zbiorze danych koty_ptaki, w kt?rych gatunek zawiera du?? lub ma?? liter? S.</span></span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a>koty_ptaki<span class="sc">$</span>gatunek_napisy <span class="ot">&lt;-</span> <span class="fu">as.character</span>(koty_ptaki<span class="sc">$</span>gatunek)</span>
+<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="at">pattern =</span> <span class="st">&quot;S&quot;</span>,</span>
+<span id="cb110-5"><a href="#cb110-5" aria-hidden="true" tabindex="-1"></a>     koty_ptaki<span class="sc">$</span>gatunek_napisy,</span>
+<span id="cb110-6"><a href="#cb110-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1]  1  2  4  8  9 11</code></pre>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Wyznacz wszystkie wiersze, w kt?rych opisano jaki? gatunek soko?a.</span></span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="at">pattern =</span> <span class="st">&quot;Sokol&quot;</span>, koty_ptaki<span class="sc">$</span>gatunek_napisy)</span></code></pre></div>
+<pre><code>## [1] 8 9</code></pre>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="do">### paste </span><span class="al">###</span></span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>litery <span class="ot">&lt;-</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb114-4"><a href="#cb114-4" aria-hidden="true" tabindex="-1"></a>cyfry  <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb114-5"><a href="#cb114-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-6"><a href="#cb114-6" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(litery, cyfry, <span class="st">&quot;.&quot;</span>)</span></code></pre></div>
+<pre><code>##  [1] &quot;A 1 .&quot;  &quot;B 2 .&quot;  &quot;C 3 .&quot;  &quot;D 4 .&quot;  &quot;E 5 .&quot;  &quot;F 6 .&quot;  &quot;G 7 .&quot;  &quot;H 8 .&quot; 
+##  [9] &quot;I 9 .&quot;  &quot;J 10 .&quot;</code></pre>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(litery, cyfry, <span class="st">&quot;.&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;-&quot;</span>)</span></code></pre></div>
+<pre><code>##  [1] &quot;A-1-.&quot;  &quot;B-2-.&quot;  &quot;C-3-.&quot;  &quot;D-4-.&quot;  &quot;E-5-.&quot;  &quot;F-6-.&quot;  &quot;G-7-.&quot;  &quot;H-8-.&quot; 
+##  [9] &quot;I-9-.&quot;  &quot;J-10-.&quot;</code></pre>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>auta2012<span class="sc">$</span>MarkaModel <span class="ot">&lt;-</span></span>
+<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste</span>(auta2012<span class="sc">$</span>Marka, auta2012<span class="sc">$</span>Model, <span class="at">sep =</span> <span class="st">&quot;: &quot;</span>)</span>
+<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a>statystykiMarkiModelu <span class="ot">&lt;-</span></span>
+<span id="cb118-5"><a href="#cb118-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>(<span class="fu">table</span>(auta2012<span class="sc">$</span>MarkaModel), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb118-6"><a href="#cb118-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-7"><a href="#cb118-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(statystykiMarkiModelu, <span class="dv">25</span>)</span></code></pre></div>
+<pre><code>## 
+## Volkswagen: Passat        Opel: Astra   Volkswagen: Golf        Ford: Focus 
+##               6883               6348               6096               5691 
+##           Audi: A4       Ford: Mondeo     Skoda: Octavia       Opel: Vectra 
+##               4280               4252               3954               3815 
+##    Renault: Megane    Renault: Scenic    Renault: Laguna           Audi: A6 
+##               3759               3546               3288               3045 
+##        Opel: Corsa   Volkswagen: Polo       Skoda: Fabia      Renault: Clio 
+##               3029               2714               2643               2469 
+##       Opel: Zafira       Peugeot: 307       Ford: Fiesta       Peugeot: 206 
+##               2040               1904               1879               1863 
+##           Audi: A3           BMW: 320       Honda: Civic        Seat: Ibiza 
+##               1810               1791               1703               1581 
+##      Toyota: Yaris 
+##               1552</code></pre>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="do">################  Sprawdzenie czy meskie imiona koncza sie na A, ^ to zaprzeczenie ##############z#######</span></span>
+<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb120-3"><a href="#cb120-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(imiona_warszawa<span class="sc">$</span>plec <span class="sc">==</span> <span class="st">&quot;M&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a>imiona_chlopcow <span class="ot">&lt;-</span> imiona_warszawa[imiona_warszawa<span class="sc">$</span>plec <span class="sc">==</span> <span class="st">&quot;M&quot;</span>,]</span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a>tylko_imiona <span class="ot">&lt;-</span> <span class="fu">unique</span>(imiona_chlopcow<span class="sc">$</span>imie)</span>
+<span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-5"><a href="#cb122-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="at">pattern =</span> <span class="st">&quot;a$&quot;</span>, tylko_imiona, <span class="at">value =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Kosma&quot;  &quot;Nikita&quot;</code></pre>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a>imiona_dziewczat <span class="ot">&lt;-</span> imiona_warszawa[imiona_warszawa<span class="sc">$</span>plec <span class="sc">==</span> <span class="st">&quot;K&quot;</span>,]</span>
+<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>same_imiona      <span class="ot">&lt;-</span> <span class="fu">unique</span>(imiona_dziewczat<span class="sc">$</span>imie)</span>
+<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;[^a]$&quot;</span>, same_imiona, <span class="at">value =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>##  [1] &quot;Abigail&quot;  &quot;Berenike&quot; &quot;Carmen&quot;   &quot;Chloe&quot;    &quot;Esmee&quot;    &quot;Gwen&quot;    
+##  [7] &quot;Inez&quot;     &quot;Ingrid&quot;   &quot;Karin&quot;    &quot;Lili&quot;     &quot;Lilli&quot;    &quot;Mercedes&quot;
+## [13] &quot;Miriam&quot;   &quot;Naomi&quot;    &quot;Nel&quot;      &quot;Nelly&quot;    &quot;Nicole&quot;   &quot;Nike&quot;    
+## [19] &quot;Nikol&quot;    &quot;Nikole&quot;   &quot;Noemi&quot;    &quot;Rachel&quot;   &quot;Sindi&quot;</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="do">##### ZAMIANA mienn? jako?ciow? chcemy przekszta?ci? na zmienn? liczbow? #############</span></span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="fl">5.5</span>)</span>
+<span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a>(fx <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(x))</span></code></pre></div>
+<pre><code>## [1] 2   4   5.5
+## Levels: 2 4 5.5</code></pre>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Uwaga! Program R nie wie że to są napisy, a zmienną jakościową zamienia na kolejne liczby całkowite.</span></span>
+<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(fx)</span></code></pre></div>
+<pre><code>## [1] 1 2 3</code></pre>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Dziala</span></span>
+<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(<span class="fu">as.character</span>(fx))</span></code></pre></div>
+<pre><code>## [1] 2.0 4.0 5.5</code></pre>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="do">###################################### ZADANIA ###########################################</span></span>
+<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Sprawdz ile samochodów ma zainstalowany autoalarm (oznaczony jako ?autoalarm?)</span></span>
+<span id="cb132-4"><a href="#cb132-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-5"><a href="#cb132-5" aria-hidden="true" tabindex="-1"></a>auta2012<span class="sc">$</span>Wyposazenie.dodatkowe_napisy <span class="ot">&lt;-</span> <span class="fu">as.character</span>(auta2012<span class="sc">$</span>Wyposazenie.dodatkowe)</span>
+<span id="cb132-6"><a href="#cb132-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-7"><a href="#cb132-7" aria-hidden="true" tabindex="-1"></a>autoalarm <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">grepl</span>(<span class="at">pattern =</span> <span class="st">&quot;autoalarm&quot;</span>,<span class="at">x =</span> auta2012<span class="sc">$</span>Wyposazenie.dodatkowe_napisy))</span>
+<span id="cb132-8"><a href="#cb132-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-9"><a href="#cb132-9" aria-hidden="true" tabindex="-1"></a>autoalarm_procenty <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">prop.table</span>(autoalarm)<span class="sc">*</span><span class="dv">100</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb132-10"><a href="#cb132-10" aria-hidden="true" tabindex="-1"></a>autoalarm_procenty</span></code></pre></div>
+<pre><code>## 
+## FALSE  TRUE 
+## 55.95 44.05</code></pre>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Sprawd? ile samochod?w ma lakier w metalicznym kolorze (oznaczony jako ?metallic?)</span></span>
+<span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-3"><a href="#cb134-3" aria-hidden="true" tabindex="-1"></a>auta2012<span class="sc">$</span>Kolor_napisy <span class="ot">&lt;-</span> <span class="fu">as.character</span>(auta2012<span class="sc">$</span>Kolor)</span>
+<span id="cb134-4"><a href="#cb134-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-5"><a href="#cb134-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(auta2012<span class="sc">$</span>Kolor_napisy), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## 
+##      srebrny-metallic       czarny-metallic                       
+##                 40626                 29129                 25997 
+##    niebieski-metallic        szary-metallic    granatowy-metallic 
+##                 12584                 10834                 10756 
+##      zielony-metallic                 bialy    grafitowy-metallic 
+##                 10148                  9977                  9481 
+##              czerwony                czarny             granatowy 
+##                  7465                  5924                  4057 
+##             niebieski      bordowy-metallic        zloty-metallic 
+##                  4037                  3981                  3122 
+##               srebrny     czerwony-metallic               zielony 
+##                  2553                  2426                  2027 
+##      brezowy-metallic       bezowy-metallic        bialy-metallic 
+##                  1988                  1924                  1542 
+##    fioletowy-metallic     wilniowy-metallic                 zolty 
+##                  1101                  1006                   960 
+##               bordowy                 szary             grafitowy 
+##                   742                   730                   542 
+## pomaralczowy-metallic                bezowy        zolty-metallic 
+##                   459                   296                   231 
+##                 zloty             fioletowy              wisniowy 
+##                   219                   207                   193 
+##               brezowy          pomaralczowy       rozowy-metallic 
+##                   141                   120                    62 
+##                rozowy 
+##                    15</code></pre>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="co">#141400 Aut jest w lakierze matallic</span></span>
+<span id="cb136-2"><a href="#cb136-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">grepl</span>(<span class="at">pattern =</span> <span class="st">&quot;metallic&quot;</span>, <span class="at">x =</span> auta2012<span class="sc">$</span>Kolor_napisy, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre><code>## 
+##  FALSE   TRUE 
+##  66202 141400</code></pre>
+</div>
+<div id="daty" class="section level2">
+<h2>15. Daty</h2>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="do">###### Tworzenie dat ###########</span></span>
+<span id="cb138-2"><a href="#cb138-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-3"><a href="#cb138-3" aria-hidden="true" tabindex="-1"></a><span class="fu">as.Date</span>(<span class="st">&quot;2015-02-22&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;2015-02-22&quot;</code></pre>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.Date</span>(<span class="st">&quot;02/22/2015&quot;</span>, <span class="at">format =</span> <span class="st">&quot;%m/%d/%Y&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;2015-02-22&quot;</code></pre>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.Date</span>(<span class="st">&quot;February 2, 2015&quot;</span>, <span class="at">format =</span> <span class="st">&quot;%B %d, %Y&quot;</span>) <span class="co"># dzia?a dla angielskoj?zycznej wersji R</span></span></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Aby uzyska? dok?adn? pomoc dotycz?c? oznacze? w formatowaniu daty nale?y otworzy? </span></span>
+<span id="cb144-2"><a href="#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="co">#plik pomocy instrukcj? ?strptime.</span></span>
+<span id="cb144-3"><a href="#cb144-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-4"><a href="#cb144-4" aria-hidden="true" tabindex="-1"></a><span class="do">######### as.POSIXct XXXXXXXXXXXXXX</span></span>
+<span id="cb144-5"><a href="#cb144-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-6"><a href="#cb144-6" aria-hidden="true" tabindex="-1"></a>(czas1 <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="st">&quot;2015-02-13 12:56:26&quot;</span>))</span></code></pre></div>
+<pre><code>## [1] &quot;2015-02-13 12:56:26 CET&quot;</code></pre>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a>(czas2 <span class="ot">&lt;-</span> <span class="fu">as.POSIXlt</span>(<span class="st">&quot;14022015 12:56:26&quot;</span>, <span class="at">format =</span> <span class="st">&quot;%d%m%Y %H:%M:%S&quot;</span>))</span></code></pre></div>
+<pre><code>## [1] &quot;2015-02-14 12:56:26 CET&quot;</code></pre>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a>czas2 <span class="sc">-</span> czas1</span></code></pre></div>
+<pre><code>## Time difference of 1 days</code></pre>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>() <span class="sc">-</span> czas1</span></code></pre></div>
+<pre><code>## Time difference of 2228.86 days</code></pre>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="do">###################################### ZADANIA ###########################################</span></span>
+<span id="cb152-2"><a href="#cb152-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb152-3"><a href="#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb152-4"><a href="#cb152-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb152-5"><a href="#cb152-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Używając odpowiedniego formatowania zamień napis 01-15-2015 10:20:59 na obiekt klasy POSIXct.</span></span>
+<span id="cb152-6"><a href="#cb152-6" aria-hidden="true" tabindex="-1"></a>(<span class="fu">as.POSIXct</span>(<span class="st">&quot;14022015 12:56:26&quot;</span>, <span class="at">format =</span> <span class="st">&quot;%d%m%Y %H:%M:%S&quot;</span>))</span></code></pre></div>
+<pre><code>## [1] &quot;2015-02-14 12:56:26 CET&quot;</code></pre>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">as.POSIXct</span>(<span class="st">&quot;15012015 12:56:26&quot;</span>, <span class="at">format =</span> <span class="st">&quot;%d%m%Y %H:%M:%S&quot;</span>))</span></code></pre></div>
+<pre><code>## [1] &quot;2015-01-15 12:56:26 CET&quot;</code></pre>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dmy_hms</span>(<span class="st">&quot;01152015 10:20:59&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Oblicz liczbę dni pomiędzy 1 września 1945 roku a 8 maja 1945.</span></span>
+<span id="cb158-2"><a href="#cb158-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-3"><a href="#cb158-3" aria-hidden="true" tabindex="-1"></a>czas1 <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="st">&quot;1945-09-01&quot;</span>)</span>
+<span id="cb158-4"><a href="#cb158-4" aria-hidden="true" tabindex="-1"></a>czas2 <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="st">&quot;1945-05-08&quot;</span>)</span>
+<span id="cb158-5"><a href="#cb158-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-6"><a href="#cb158-6" aria-hidden="true" tabindex="-1"></a>czas1 <span class="sc">-</span> czas2</span></code></pre></div>
+<pre><code>## Time difference of 116 days</code></pre>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sprawdź jaki dzień tygodnia będzie za 100 dni od dziś</span></span>
+<span id="cb160-2"><a href="#cb160-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-3"><a href="#cb160-3" aria-hidden="true" tabindex="-1"></a><span class="fu">wday</span>(<span class="fu">today</span>() <span class="sc">+</span> <span class="fu">days</span>(<span class="dv">100</span>), <span class="at">label =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] śr\\.
+## Levels: niedz\\. &lt; pon\\. &lt; wt\\. &lt; śr\\. &lt; czw\\. &lt; pt\\. &lt; sob\\.</code></pre>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wday</span>(<span class="fu">today</span>(), <span class="at">label =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] pon\\.
+## Levels: niedz\\. &lt; pon\\. &lt; wt\\. &lt; śr\\. &lt; czw\\. &lt; pt\\. &lt; sob\\.</code></pre>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

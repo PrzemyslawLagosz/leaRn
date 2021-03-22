@@ -1,0 +1,351 @@
+---
+title: "pogRomcy2.2"
+author: "Przemyslaw Lagosz"
+date: "19-03-2021"
+output: html_document
+---
+# Jak zrobić wykres w pakiecie ggplot2?
+
+```{r Ustawienie opcji globalnych}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+## 7. Podstawy ggplot2
+```{r Wgranie bibliotek}
+library(PogromcyDanych)
+library(grid)
+library(gridExtra)
+library(ggthemes)
+```
+
+
+```{r Podstawy ggplot2}
+
+
+plot(koty_ptaki$waga, koty_ptaki$predkosc)
+
+ggplot(koty_ptaki, aes(x=waga, y=predkosc)) +
+  geom_point()
+
+#
+ggplot(koty_ptaki, aes(x=waga, y=predkosc, color=druzyna)) +
+  geom_point(size=5) 
+
+#
+ggplot(koty_ptaki, aes(x=waga, y=predkosc, color=druzyna, 
+                       shape=druzyna, size=druzyna)) +
+  geom_point() 
+
+
+### BRZYDKI WYKRES WYJSCIOWY
+ggplot(koty_ptaki, aes(x= waga, y=predkosc, label=gatunek)) +
+  geom_text()
+
+
+###
+ggplot(koty_ptaki, aes(x= waga, y=predkosc, label=gatunek)) +
+  geom_text(hjust=-0.1) + 
+  geom_point() + xlim(0,350)
+
+ggplot(koty_ptaki, aes(x=waga, y=predkosc, label=gatunek)) +
+  geom_text(hjust=-0.1, aes(color=druzyna)) + 
+  geom_point() + xlim(0,350)
+
+#### wykres liniowy
+ggplot(WIG, aes(x=Data, y=Kurs.zamkniecia)) + 
+  geom_line()
+
+###
+colnames(WIG)
+
+ggplot(WIG, aes(x=Data, ymin=Kurs.minimalny, ymax=Kurs.maksymalny)) + 
+  geom_ribbon()
+
+######################### ZADANIA ####################################
+
+#1.
+colnames(koty_ptaki)
+ggplot(data = koty_ptaki, aes(x= zywotnosc, y= waga, shape = druzyna, label = gatunek)) +
+  geom_point() + 
+  geom_text(aes(color = druzyna), hjust = -0.2) +
+  xlim(12,55)
+```
+
+## 8. Podsumowania danych  
+
+```{r Podsumowania danych }
+skody <- auta2012 %>%
+  filter(Marka == 'Skoda', Model == 'Octavia') %>%
+  select(Marka, Model, Rok.produkcji, Cena.w.PLN, Rodzaj.paliwa)
+
+ggplot(skody, aes(x=Rok.produkcji, y = Cena.w.PLN)) +
+  #se=FALSE nie pokazuje standart error (szare)
+  geom_smooth(se=FALSE)
+
+
+# method określa jak ma być rysowany wykres. tu Linear Model
+ggplot(skody, aes(x=Rok.produkcji, y=Cena.w.PLN)) + 
+  geom_smooth(se=FALSE, method="lm", formula=y~poly(x,2)) + 
+  geom_point()
+
+#Przekształcenie osi Y na skale logarytmiczną10
+ggplot(skody, aes(x=Rok.produkcji, y = Cena.w.PLN)) + 
+  geom_point() + 
+  geom_smooth(se=FALSE, size=5) + 
+  coord_trans(y = "log10")
+```
+
+Inną użyteczną opcją geometrii `geom_smooth()` jest możliwość zmiany funkcji wygładzającej.  
+Do wyboru jest między innymi *regresja liniowa* (parametr `method="lm"`)  
+*Regresja logistyczna i modele uogólnione* (parametr `method="glm"`)  
+*Regresja odporna* (parametr `method="rlm"`)  
+funkcje *lokalnie wygładzające* (parametr `method="gam"` lub `method="loess"`).  
+
+W poniższym przykładzie dodajemy trend kwadratowy do opisu zależności pomiędzy zmiennymi.  
+Argumentem *formula=y~poly(x,2)* określamy *trend kwadratowy*.  
+Argumentem `method="lm"` określamy sposób liczenia współczynników dla tego trendu.
+
+```{r Podsumowania danych 2}
+# porownanie trendów
+ggplot(skody, aes(x=Rok.produkcji, y = Cena.w.PLN)) + 
+  geom_point() + 
+  geom_smooth(se=FALSE, size=3) +
+  geom_smooth(method="lm", formula=y~poly(x,2), se=FALSE, size=3, color="green") +
+  geom_smooth(method="lm", se=FALSE, size=3, color="red") 
+
+#
+
+skody <- auta2012 %>%
+  filter(Marka == 'Skoda', Rok.produkcji==2007) %>%
+  select(Marka, Model, Rok.produkcji, Cena.w.PLN, Rodzaj.paliwa)
+
+ggplot(skody, aes(x=Model, y = Cena.w.PLN)) + 
+  geom_boxplot()
+
+# zmień kolejność modeli z alfabetycznego na związnaego z połówkową ceną
+# `reorder()` sortuje wektor model po funkcji `mediana` z wektoru Cena.w.PLN
+
+skody$Model <- reorder(skody$Model, skody$Cena.w.PLN, median)
+# ta sama instrukcja, prezentuje teraz inny - czytelniejszy wykres
+ggplot(skody, aes(x=Model, y = Cena.w.PLN)) + 
+  geom_boxplot()
+
+#Kolorki
+ggplot(skody, aes(x=Model, y = Cena.w.PLN, fill=Model)) + 
+  geom_boxplot()
+
+#
+ggplot(skody, aes(x=Cena.w.PLN, fill=Model)) + 
+  geom_histogram(color='white')
+
+#
+ggplot(skody, aes(x=Model, fill=Rodzaj.paliwa)) + 
+  geom_bar()
+
+#
+ggplot(skody, aes(x=Model, fill=Rodzaj.paliwa)) + 
+  geom_bar(position="fill")
+
+### Wyznaczenie ramki z dokadna liczebnoscia
+skody %>% 
+  group_by(Model, Rodzaj.paliwa) %>%
+  summarise(liczba = n()) %>%
+  arrange(-liczba)
+
+
+################# zadania lekcja 8 ####################
+
+#1. Wybierz samochody marki Volkswagen model Passat a następnie narysuj jak 
+#średnia cena zależy od roku produkcji za pomocą geometrii geom_smooth().
+
+VW_Passat <- auta2012 %>%
+  filter(Marka == "Volkswagen",
+         Model == "Passat")
+
+ggplot(data = VW_Passat, aes(x = Rok.produkcji, y = Cena.w.PLN)) +
+  geom_smooth()
+
+#2. Wybierz samochody marki Volkswagen, narysuj jak średnia cena zależy od roku 
+#produkcji, różnymi kolorami przedstaw różne modele Volkswagena.
+
+VW <- auta2012 %>%
+  filter(Marka == "Volkswagen",
+         Model == c("Beetle","Golf","Lupo","Passat","Scirocco"))
+
+ggplot(data = VW, aes(x = Rok.produkcji, y = Cena.w.PLN, color = Model)) +
+  geom_boxplot()
+
+volkswagen <- auta2012 %>%
+  filter(Marka == 'Volkswagen',
+         Model %in% c('Passat', 'Golf', 'Polo', 'Sharan'),
+         Rok.produkcji > 1990,
+         Rok.produkcji < 2012) %>%
+  select(Marka, Model, Rok.produkcji, Cena.w.PLN, Rodzaj.paliwa)
+
+ggplot(volkswagen, aes(x=Rok.produkcji, y=Cena.w.PLN, color=Model)) + 
+  geom_smooth(se=FALSE)
+
+#3. Wybierz pięcioletnie auta marki Volkswagen i za pomocą wykresu ramka - wąsy 
+#przedstaw jak cena auta zależy od modelu.
+VW_5 <- auta2012 %>%
+  filter(Marka == "Volkswagen",
+         Rok.produkcji == 2007)
+
+ggplot(VW_5, aes(x= Model, y= Cena.w.PLN)) + 
+  geom_boxplot(aes(fill = Model))
+
+# To samo tylko mniejsza liczba modeli
+volkswagen <- auta2012 %>%
+  filter(Marka == 'Volkswagen', Rok.produkcji == 2007, Model %in% c('Passat', 'Golf', 'Polo', 'Sharan')) %>%
+  select(Marka, Model, Rok.produkcji, Cena.w.PLN, Rodzaj.paliwa)
+
+ggplot(volkswagen, aes(x=Model, y=Cena.w.PLN)) + 
+  geom_boxplot(aes(fill = Model))
+
+#4. Dla wybranych pięcioletnich aut marki Volkswagen przedstaw w podziale na 
+#modele jaka część aut ma silnik diesla.
+
+VW_5 <- VW_5 %>%
+   filter(Model %in% c('Passat', 'Golf', 'Polo', 'Sharan'))
+
+ggplot(VW_5, aes(x= Rodzaj.paliwa, fill = Model)) + 
+  geom_bar(position = "fill")
+
+ggplot(VW_5, aes(x= Model, fill = Rodzaj.paliwa)) + 
+  geom_bar(position = "fill")
+```
+
+## 9. Praca nad detalami
+```{r Praca nad detalami}
+# wykres podstawowy
+ggplot(koty_ptaki, aes(x=waga, y=predkosc, shape=druzyna)) +
+  geom_point(size=5)
+
+## z dodatkami :)
+
+ggplot(koty_ptaki, aes(x=waga, y=predkosc, shape=druzyna)) +
+  geom_point(size=5) + 
+  # wi?kszy i czytelny tytu?
+  ggtitle("Lżejszym łatwiej szybko biegać!") + theme(plot.title = element_text(size=20)) + 
+  # opisy osi
+  xlab("Waga [kg]") + ylab("Prędkość [km/h]") + 
+  # tytuł w legendzie i pozycja
+  scale_shape_discrete(name="Koty czy Ptaki?") + theme(legend.position="top") + 
+  # dodatkowe napisy na wykresie
+  geom_text(data=koty_ptaki[c(6,8),], aes(label=gatunek), hjust=-0.2)
+
+
+### kolejny wykres
+
+ggplot(koty_ptaki, aes(x=waga, y=predkosc, shape=druzyna, color=druzyna)) +
+  geom_point(size=5) +
+  # określamy kształty poszczególnych grup K/P oraz etykiety w legndzie
+  scale_shape_manual(values=c("K", "P"), breaks=c("Kot", "Ptak")) +
+  # określamy kolory ręcznie (ciemnoniebieski i ciemnoczerwony)
+  scale_color_manual(values=c("blue3", "red3"), breaks=c("Kot", "Ptak")) +
+  # dla osi OY usuwany marginesy poza zakresem 0-200
+  scale_y_continuous(limits=c(0,200), expand=c(0,0)) 
+
+
+### kolejny
+
+ggplot(koty_ptaki, aes(x=waga, y=predkosc, size=zywotnosc, color=zywotnosc)) +
+  geom_point() +
+  # zmiana zakresu wartości dla wielkosci punkt?w
+  scale_size_continuous(range=c(5,10), limits=c(10,50)) +
+  # zmiana skali kolorów ( podaje się dwa skrajne kolory)
+  scale_color_gradient(low="gold", high="red4")
+
+
+### i kolejny
+
+ggplot(koty_ptaki, aes(x=waga, y=predkosc, shape=druzyna)) +
+  geom_point(size=5) +
+  # zmiana napisów w legendzie dotycz?cych mapowania na kształt
+  scale_shape_manual(values=c("K", "P"), 
+                     labels=c("Du?e Koty", "W?ciek?e Ptaki"), 
+                     name="Jakie \n to \n zwierze?") +
+  # dodanie szarego tła, większego tytu?u oraz zmiana po?o?enia legendy
+  # 0.8, 0.8 to wspołrzędne gdzie ma pojawić się legenda
+  theme(legend.background = element_rect(color="red", fill="grey95"), 
+        legend.title = element_text(size=15), 
+        legend.position=c(0.8,0.8)) 
+
+
+#### KILKA WYKRESOW OBOK SIEBIE #####
+library(grid)
+pl_waga <- ggplot(koty_ptaki, aes(x=waga, y=predkosc)) +
+  geom_point(size=5)
+
+# x i y to środek zaarysowanego obszaru
+# rysujemy wykres w kwadracie o szerokości i wysokości 0.5 ekranu, 
+# w lewym górnym rogu 
+print(pl_waga + ggtitle("Wykres 1"), 
+      vp=viewport(x=0.25, y = 0.75, width=0.5, height=0.5))
+# rysujemy wykres w kwadracie o szerokości i wysokości 0.5 ekranu, 
+# w lewym dolnym rogu 
+print(pl_waga + ggtitle("Wykres 2"), 
+      vp=viewport(x=0.25, y = 0.25, width=0.5, height=0.5))
+# rysujemy wykres w prostokącie o szerokości 0.5 a wysokości pełnego ekranu, 
+# po prawej stronie
+print(pl_waga + ggtitle("Wykres 3"), 
+      vp=viewport(x=0.75, y = 0.5, width=0.5, height=1))
+
+
+## Argument vp= pozwala na narysowanie wykresu w dowolnym miejscu na ekranie.
+
+pushViewport(viewport(layout = grid.layout(2,2)))
+# rysujemy w kom?rce o wsp??rz?dnych 1x1
+print(pl_waga + ggtitle("Wykres 1"),
+      vp = viewport(layout.pos.row=1, layout.pos.col=1))
+# rysujemy w kom?rce o wsp??rz?dnych 2x1
+print(pl_waga + ggtitle("Wykres 2"),
+      vp = viewport(layout.pos.row=2, layout.pos.col=1))
+# rysujemy w kom?rce o wsp??rz?dnych 1:2x2
+print(pl_waga + ggtitle("Wykres 3"),
+      vp = viewport(layout.pos.row=1:2, layout.pos.col=2))
+
+# Najprostsyz sposób
+library(gridExtra)
+
+grid.arrange( pl_waga + ggtitle("Wykres 1"), 
+              pl_waga + ggtitle("Wykres 2"), 
+              pl_waga + ggtitle("Wykres 3"),
+              ncol=2)
+
+###### zadania lekcja 9 ############
+
+colnames(VW_Passat)
+library(ggthemes)
+
+#1. Podobnie jak w poprzednim odcinku, wybierz samochody marki Volkswagen model Passat a następnie narysuj jak średnia cena zależy od roku produkcji za pomocą geometrii geom_smooth(). Następnie zobacz jak ten wykres będzie wyglądał z motywami theme_bw(), theme_excel() i theme_economist().
+
+add_tys<- function(x) { 
+  output <- paste0(x, " tys.") 
+  return(output) 
+}
+
+VW_Passat <- auta2012 %>%
+  filter(Marka == "Volkswagen",
+         Model == "Passat")
+
+ggplot(data = VW_Passat, aes(x= Rok.produkcji, y= Cena.w.PLN))+
+  geom_smooth(se = FALSE)+
+  labs(x= "Rok prdukcji",
+       y= "Cena [PLN]",
+       title= "Cena a rok produkcji",
+       subtitle = "VW Passat")+
+  ggthemes::theme_clean()+
+  #DODAJE TYS DO KAZDEJ WARTOSCI NA OSI Y
+  scale_y_continuous(labels = scales::number_format(suffix = " tys."))
+
+#2. Zmień poniższy wykres, zamieniając skalę kolorów na od zielonego do czerwonego, kropki zamień na kwadraty a do wykresu dodaj tytuł (i odpowiednie etykiety osi).
+
+ggplot(koty_ptaki, aes(x=waga, y=predkosc, size=zywotnosc, color=zywotnosc)) +
+  geom_point(shape = 15)+
+  scale_color_gradient(low = "green3", high = "red3")+
+  labs(title= "Waga vs Predkosc na tle zywotnosci", xlab= "Waga [kg]", ylab= "Predkosc [km/h]")
+
+               
+```
+

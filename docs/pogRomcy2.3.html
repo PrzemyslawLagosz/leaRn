@@ -1,0 +1,2643 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Przemyslaw Lagosz" />
+
+
+<title>pogRomcy2.3</title>
+
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/detect-resize-0.5.3/jquery.resize.js"></script>
+<link href="site_libs/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet" />
+<script src="site_libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/d3-3.5.2/d3.min.js"></script>
+<script src="site_libs/vega-1.4.3/vega.min.js"></script>
+<script src="site_libs/lodash-2.2.1/lodash.min.js"></script>
+<script>var lodash = _.noConflict();</script>
+<link href="site_libs/ggvis-0.4.7/css/ggvis.css" rel="stylesheet" />
+<script src="site_libs/ggvis-0.4.7/js/ggvis.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Notebook</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fas fa-home"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Spatial Objects
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Mapa Polski</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    pogRomcy
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">SEZON 1</li>
+    <li>
+      <a href="pogRomcy1.2.html">Odczytywanie, zapisywanie i indeksowanie danych</a>
+    </li>
+    <li>
+      <a href="pogRomcy1.3.html">Instrukcje sterujące, pętle, warunki i funkcje</a>
+    </li>
+    <li>
+      <a href="pogRomcy1.4.html">Podstawowe typy danych i ich statystyki opisowe</a>
+    </li>
+    <li>
+      <a href="pogRomcy1.5.html">Przetwarzanie potokowe danych</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">SEZON 2</li>
+    <li>
+      <a href="pogRomcy2.2.html">Jak zrobić wykres w pakiecie ggplot2?</a>
+    </li>
+    <li>
+      <a href="pogRomcy2.3.html">Modelowanie danych ilościowych</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:&lt;przemyslawlagosz1@gmail.com&gt;">
+    <span class="fas fa-envelope"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/PrzemyslawLagosz/learn-R">Git</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">pogRomcy2.3</h1>
+<h4 class="author">Przemyslaw Lagosz</h4>
+<h4 class="date">19-03-2021</h4>
+
+</div>
+
+
+<div id="modelowanie-danych-ilościowych" class="section level1">
+<h1>Modelowanie danych ilościowych</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">warning =</span> <span class="cn">FALSE</span>, <span class="at">message =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Wgranie bibliotek</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PogromcyDanych)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<div id="wprowadzenie-do-modelowania" class="section level2">
+<h2>11. Wprowadzenie do modelowania</h2>
+<p>Materiały o modelowaniu, zostały podzielone na następujące odcinki</p>
+<p>Wprowadzający do eksploracji danych</p>
+<ul>
+<li>eksploracja danych</li>
+</ul>
+<p>Dwa odcinki poświęcone analizie trendu</p>
+<ul>
+<li>zmienne ilościowe - analiza trendu<br />
+</li>
+<li>zmienne ilościowe - testowanie trendu</li>
+</ul>
+<p>Odcinek poświęcony analizie średnich</p>
+<ul>
+<li>zmienne ilościowe - porównanie dwóch grup</li>
+</ul>
+<p>Dwa odcinki poświęcone regresji liniowej, przedziałowej i multiplikatywnej</p>
+<ul>
+<li>zmienne ilościowe - regresja liniowa<br />
+</li>
+<li>zmienne ilościowe - regresja przedziałowo liniowa</li>
+</ul>
+<p>Dwa odcinki poświęcone zmiennym jakościowym</p>
+<ul>
+<li>zmienne jakościowe - tabele 2x2<br />
+</li>
+<li>zmienne jakościowe - tabele kontyngencji</li>
+</ul>
+</div>
+<div id="eksploracja-danych" class="section level2">
+<h2>12. Eksploracja danych</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wielkość danych i kilka pierwszych wierszy</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(serialeIMDB)</span></code></pre></div>
+<pre><code>## [1] 20122     8</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(serialeIMDB)</span></code></pre></div>
+<pre><code>##   id       serial                         nazwa sezon odcinek ocena glosow
+## 1  1 Breaking Bad                         Pilot     1       1   8.7   9357
+## 2  2 Breaking Bad           Cat&#39;s in the Bag...     1       2   8.2   6506
+## 3  3 Breaking Bad ...And the Bag&#39;s in the River     1       3   8.3   6176
+## 4  4 Breaking Bad                    Cancer Man     1       4   7.9   5796
+## 5  5 Breaking Bad                   Gray Matter     1       5   7.9   5664
+## 6  6 Breaking Bad      Crazy Handful of Nothin&#39;     1       6   8.7   6521
+##      imdbId
+## 1 tt0903747
+## 2 tt0903747
+## 3 tt0903747
+## 4 tt0903747
+## 5 tt0903747
+## 6 tt0903747</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wartości zmiennych jakościowych</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>(serialeIMDB<span class="sc">$</span>serial),<span class="dv">10</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>##  [1] &quot;Breaking Bad&quot;                 &quot;Cosmos: A Space-Time Odyssey&quot;
+##  [3] &quot;Planet Earth&quot;                 &quot;Game of Thrones&quot;             
+##  [5] &quot;True Detective&quot;               &quot;The Wire&quot;                    
+##  [7] &quot;Sherlock&quot;                     &quot;Cosmos&quot;                      
+##  [9] &quot;The Sopranos&quot;                 &quot;Leyla ile Mecnun&quot;</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># jak wyznaczyć tabelę liczebności i jak posortowaś</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>tabela <span class="ot">&lt;-</span> <span class="fu">table</span>(serialeIMDB<span class="sc">$</span>serial)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(tabela, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>,<span class="dv">15</span>)</span></code></pre></div>
+<pre><code>## 
+## The Daily Show with Jon Stewart              The Colbert Report 
+##                            1814                            1067 
+##                      Doctor Who                       One Piece 
+##                             819                             679 
+##                   Dragon Ball Z                    The Simpsons 
+##                             589                             564 
+##               Naruto: Shippuden                        Top Gear 
+##                             397                             276 
+##                     MythBusters                      South Park 
+##                             258                             257 
+##                         M*A*S*H          The Andy Griffith Show 
+##                             251                             249 
+##                      Family Guy                         Friends 
+##                             240                             238 
+##        Whose Line Is It Anyway? 
+##                             214</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Tworzy wektor z ideksami gdzie  serial == &quot;The Office&quot;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(serialeIMDB<span class="sc">$</span>serial <span class="sc">==</span> <span class="st">&quot;The Office&quot;</span>)</span></code></pre></div>
+<pre><code>##   [1] 5899 5900 5901 5902 5903 5904 5905 5906 5907 5908 5909 5910 5911 5912 5913
+##  [16] 5914 5915 5916 5917 5918 5919 5920 5921 5922 5923 5924 5925 5926 5927 5928
+##  [31] 5929 5930 5931 5932 5933 5934 5935 5936 5937 5938 5939 5940 5941 5942 5943
+##  [46] 5944 5945 5946 5947 5948 5949 5950 5951 5952 5953 5954 5955 5956 5957 5958
+##  [61] 5959 5960 5961 5962 5963 5964 5965 5966 5967 5968 5969 5970 5971 5972 5973
+##  [76] 5974 5975 5976 5977 5978 5979 5980 5981 5982 5983 5984 5985 5986 5987 5988
+##  [91] 5989 5990 5991 5992 5993 5994 5995 5996 5997 5998 5999 6000 6001 6002 6003
+## [106] 6004 6005 6006 6007 6008 6009 6010 6011 6012 6013 6014 6015 6016 6017 6018
+## [121] 6019 6020 6021 6022 6023 6024 6025 6026 6027 6028 6029 6030 6031 6032 6033
+## [136] 6034 6035 6036 6037 6038 6039 6040 6041 6042 6043 6044 6045 6046 6047 6048
+## [151] 6049 6050 6051 6052 6053 6054 6055 6056 6057 6058 6059 6060 6061 6062 6063
+## [166] 6064 6065 6066 6067 6068 6069 6070 6071 6072 6073 6074 6075 6076 6077 6078
+## [181] 6079 6080 6081 6082 6083 6084 6085 9227 9228 9229 9230 9231 9232 9233 9234
+## [196] 9235 9236 9237 9238 9239 9240</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>serialeIMDB<span class="sc">$</span>serial[<span class="dv">5902</span>]</span></code></pre></div>
+<pre><code>## [1] The Office
+## 198 Levels: Breaking Bad Cosmos: A Space-Time Odyssey ... The Good Wife</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wybieramy tylko dane dotyczące serialu Breaking Bad</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>BreakingBad <span class="ot">&lt;-</span> <span class="fu">filter</span>(serialeIMDB, serial <span class="sc">==</span> <span class="st">&quot;Breaking Bad&quot;</span>) </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># o ilu odcinkach dost?pna jest informacja dla tego serialu? </span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(BreakingBad)</span></code></pre></div>
+<pre><code>## [1] 62  8</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># różne sposoby oglądania informacji o odcinkach</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>BreakingBad<span class="sc">$</span>ocena</span></code></pre></div>
+<pre><code>##  [1]  8.7  8.2  8.3  7.9  7.9  8.7  8.4  8.1  8.7  7.9  7.8  7.8  8.3  8.2  8.5
+## [16]  8.5  8.0  8.2  8.6  8.6  8.0  8.1  7.8  7.7  8.0  8.6  9.0  8.1  7.8  7.4
+## [31]  7.9  8.9  9.1  8.6  7.8  7.6  8.1  8.1  7.8  8.2  8.6  8.2  9.1  9.2  8.8
+## [46]  9.7  8.8  8.4  8.4  8.3  9.3  8.5  9.0  9.2  9.0  8.7  9.2  8.6  9.6 10.0
+## [61]  9.4  9.9</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(BreakingBad<span class="sc">$</span>ocena)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Eksploracja%20danych-1.png" width="672" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(BreakingBad<span class="sc">$</span>ocena)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Eksploracja%20danych-2.png" width="672" /></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sortowanie danych</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(BreakingBad, ocena) <span class="sc">%&gt;%</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, serial, nazwa, sezon, odcinek, ocena, glosow)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>,<span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##    id       serial             nazwa sezon odcinek ocena glosow
+## 1  30 Breaking Bad               Fly     3      10   7.4   7737
+## 2  36 Breaking Bad        Open House     4       3   7.6   4762
+## 3  24 Breaking Bad       Green Light     3       4   7.7   4561
+## 4  11 Breaking Bad              Down     2       4   7.8   4932
+## 5  12 Breaking Bad          Breakage     2       5   7.8   4855
+## 6  23 Breaking Bad            I.F.T.     3       3   7.8   4613
+## 7  29 Breaking Bad        Kafkaesque     3       9   7.8   4591
+## 8  35 Breaking Bad Thirty-Eight Snub     4       2   7.8   4853
+## 9  39 Breaking Bad          Cornered     4       6   7.8   4716
+## 10  4 Breaking Bad        Cancer Man     1       4   7.9   5796</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># podsumowanie danych o ocenach</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(BreakingBad<span class="sc">$</span>ocena)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   7.400   8.025   8.400   8.481   8.800  10.000</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres pudełkowy</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(BreakingBad<span class="sc">$</span>ocena )</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Eksploracja%20danych-3.png" width="672" /></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres pudełkowy dla grup</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>BreakingBad<span class="sc">$</span>sezon <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(BreakingBad<span class="sc">$</span>sezon)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(BreakingBad<span class="sc">$</span>ocena <span class="sc">~</span> BreakingBad<span class="sc">$</span>sezon)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Eksploracja%20danych-4.png" width="672" /></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># histogram a więc pełna informacja o rozkładzie</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(BreakingBad<span class="sc">$</span>ocena, <span class="dv">10</span>, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Eksploracja%20danych-5.png" width="672" /></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># kiedy histogram zdradza dodatkowe informacje</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>TheShield <span class="ot">&lt;-</span> <span class="fu">filter</span>(serialeIMDB, serial <span class="sc">==</span> <span class="st">&quot;The Shield&quot;</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(TheShield<span class="sc">$</span>ocena, <span class="dv">10</span>, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Eksploracja%20danych-6.png" width="672" /></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(TheShield<span class="sc">$</span>ocena, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>, <span class="at">range =</span> <span class="dv">10</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Eksploracja%20danych-7.png" width="672" /></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### ZADANIE #####</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>Friday_Night_Lights <span class="ot">&lt;-</span> <span class="fu">filter</span>(serialeIMDB, serial <span class="sc">==</span> <span class="st">&quot;Friday Night Lights&quot;</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(Friday_Night_Lights)</span></code></pre></div>
+<pre><code>## [1] 76  8</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(Friday_Night_Lights, <span class="fu">sum</span>(glosow))</span></code></pre></div>
+<pre><code>##   sum(glosow)
+## 1       16659</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(BreakingBad, <span class="fu">sum</span>(glosow))</span></code></pre></div>
+<pre><code>##   sum(glosow)
+## 1      500666</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Wywalenie nieużywanych levels</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>Friday_Night_Lights<span class="sc">$</span>odcinek <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(Friday_Night_Lights<span class="sc">$</span>odcinek)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(Friday_Night_Lights<span class="sc">$</span>odcinek)</span></code></pre></div>
+<pre><code>##  [1] &quot;1&quot;  &quot;10&quot; &quot;11&quot; &quot;12&quot; &quot;13&quot; &quot;14&quot; &quot;15&quot; &quot;16&quot; &quot;2&quot;  &quot;3&quot;  &quot;4&quot;  &quot;5&quot;  &quot;6&quot;  &quot;7&quot;  &quot;8&quot; 
+## [16] &quot;9&quot;  &quot;17&quot; &quot;18&quot; &quot;19&quot; &quot;20&quot; &quot;21&quot; &quot;22&quot;</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Dostawienie nowej kolumny w celu rozroznienia sezonów</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>Friday_Night_Lights<span class="sc">$</span>dobre <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;s&quot;</span>,Friday_Night_Lights<span class="sc">$</span>sezon,<span class="st">&quot; e&quot;</span>, Friday_Night_Lights<span class="sc">$</span>odcinek)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Friday_Night_Lights, <span class="fu">aes</span>(<span class="at">x=</span> dobre, <span class="at">y=</span> ocena))<span class="sc">+</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>)<span class="sc">+</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Eksploracja%20danych-8.png" width="672" /></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Friday_Night_Lights, <span class="fu">aes</span>(<span class="at">x=</span> odcinek, <span class="at">y=</span> ocena, <span class="at">color=</span> sezon))<span class="sc">+</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Eksploracja%20danych-9.png" width="672" /></p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># WCZESNIEJ PRZEZ ZAPIS W DF ZE KAZDY SEZON MA PIERWSZY,</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># DRUGI ODCINEK WYWALAO KILKA WARTOSCI DLA ODCINKA 1,2 ITP</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co">#NOWA KOLUMNA BY TO ROZROZNIC</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>srednie_sezon <span class="ot">&lt;-</span> Friday_Night_Lights <span class="sc">%&gt;%</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sezon) <span class="sc">%&gt;%</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">srednia =</span> <span class="fu">mean</span>(ocena))</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Friday_Night_Lights, <span class="fu">aes</span>(<span class="at">x=</span> dobre, <span class="at">y=</span> ocena, <span class="at">color=</span> sezon))<span class="sc">+</span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Wstawienie odcinka prostego by zaznaczyc średnią dla sezonu</span></span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span>, <span class="at">xend=</span><span class="dv">20</span>, <span class="at">y=</span><span class="fu">as.numeric</span>(srednie_sezon[<span class="dv">1</span>,<span class="dv">2</span>]), <span class="at">yend=</span><span class="fu">as.numeric</span>(srednie_sezon[<span class="dv">1</span>,<span class="dv">2</span>])))<span class="sc">+</span></span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Eksploracja%20danych-10.png" width="672" /></p>
+</div>
+<div id="regresja-prosta" class="section level2">
+<h2>13. Regresja prosta</h2>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PogromcyDanych)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(galton)</span></code></pre></div>
+<pre><code>##     syn rodzic
+## 1 156.7  179.1
+## 2 156.7  174.0
+## 3 156.7  166.4
+## 4 156.7  163.8
+## 5 156.7  162.6
+## 6 158.0  171.4</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(galton)</span></code></pre></div>
+<pre><code>## [1] 928   2</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(galton, <span class="fu">aes</span>(<span class="at">x=</span>rodzic, <span class="at">y=</span>syn)) <span class="sc">+</span> </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;[cm]&quot;</span>, <span class="at">y=</span> <span class="st">&quot;[cm]&quot;</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Regresja%20prosta-1.png" width="672" /></p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Zaszumione sztucznie `(position = &quot;jitter&quot;)`</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(galton, <span class="fu">aes</span>(<span class="at">x=</span>rodzic, <span class="at">y=</span>syn)) <span class="sc">+</span> </span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="st">&quot;jitter&quot;</span>) </span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Regresja%20prosta-2.png" width="672" /></p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#średnie dla grup</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>srednie <span class="ot">&lt;-</span> galton <span class="sc">%&gt;%</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rodzic) <span class="sc">%&gt;%</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">srednia =</span> <span class="fu">mean</span>(syn))</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="co"># wytwietl te średnie</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>srednie</span></code></pre></div>
+<pre><code>## # A tibble: 11 x 2
+##    rodzic srednia
+##     &lt;dbl&gt;   &lt;dbl&gt;
+##  1   163.    166.
+##  2   164.    166.
+##  3   166.    169.
+##  4   169.    170.
+##  5   171.    172.
+##  6   174     173.
+##  7   176.    175.
+##  8   179.    177.
+##  9   182.    178.
+## 10   184.    183.
+## 11   185.    185.</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Wykres z znanaczonymi średnimi</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(galton, <span class="fu">aes</span>(<span class="at">x=</span>rodzic, <span class="at">y=</span>syn)) <span class="sc">+</span> </span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="st">&quot;jitter&quot;</span>) <span class="sc">+</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># poniższa funkcja dorysowuje średnie w grupach</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>srednie, <span class="fu">aes</span>(<span class="at">x=</span>rodzic, <span class="at">y=</span>srednia), <span class="at">size=</span><span class="dv">2</span>, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>srednie, <span class="fu">aes</span>(<span class="at">x=</span>rodzic, <span class="at">y=</span>srednia), <span class="at">size=</span><span class="dv">5</span>, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) </span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Regresja%20prosta-3.png" width="672" /></p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Stworzenie modelu liniowego</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>modelSynRodzic <span class="ot">&lt;-</span> <span class="fu">lm</span>(syn <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> rodzic, <span class="at">data=</span>galton)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modelSynRodzic)</span></code></pre></div>
+<pre><code>## (Intercept)      rodzic 
+##   60.812990    0.646291</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wartośc 1 dodawana jest automatycznie</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>modelSynRodzic <span class="ot">&lt;-</span> <span class="fu">lm</span>(syn <span class="sc">~</span> rodzic, <span class="at">data=</span>galton)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modelSynRodzic)</span></code></pre></div>
+<pre><code>## (Intercept)      rodzic 
+##   60.812990    0.646291</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co">#4 modele</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(galton, <span class="fu">aes</span>(<span class="at">x=</span>rodzic, <span class="at">y=</span>syn)) <span class="sc">+</span> </span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="st">&quot;jitter&quot;</span>)<span class="sc">+</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># model 4, dla każdej grupy wzrostu rodziców wyznaczamy średni wzrost dzieci</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>srednie, <span class="fu">aes</span>(<span class="at">x=</span>rodzic, <span class="at">y=</span>srednia), <span class="at">size=</span><span class="dv">2</span>, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>srednie, <span class="fu">aes</span>(<span class="at">x=</span>rodzic, <span class="at">y=</span>srednia), <span class="at">size=</span><span class="dv">5</span>, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>)  <span class="sc">+</span> </span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># model 3, do danych dopasowujemy trend liniowy</span></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># model 2, wzost dziecka jest taki jak wzrost rodzica</span></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">size=</span><span class="dv">2</span>, <span class="at">color=</span><span class="st">&quot;gold3&quot;</span>)<span class="sc">+</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># model 1, wzrost dziecka nei zależy od wzrostu rodzica</span></span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">size=</span><span class="dv">2</span>, <span class="at">slope=</span><span class="dv">0</span>, <span class="at">intercept=</span><span class="fu">mean</span>(galton<span class="sc">$</span>syn))</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Regresja%20prosta-4.png" width="672" /></p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="do">###########ZADANIA##########</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="co">#1 Dla każdego wzrostu rodzica ze zbioru danych galton wyznacz o ile średnio niższe </span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="co"># są dzieci od rodziców</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Tu cos nie tak, polecenie nie jasne</span></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>srednie <span class="ot">&lt;-</span> galton <span class="sc">%&gt;%</span></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rodzic) <span class="sc">%&gt;%</span></span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sredni_wzrost_dla_grupy =</span> <span class="fu">mean</span>(syn))</span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>srednie</span></code></pre></div>
+<pre><code>## # A tibble: 11 x 2
+##    rodzic sredni_wzrost_dla_grupy
+##     &lt;dbl&gt;                   &lt;dbl&gt;
+##  1   163.                    166.
+##  2   164.                    166.
+##  3   166.                    169.
+##  4   169.                    170.
+##  5   171.                    172.
+##  6   174                     173.
+##  7   176.                    175.
+##  8   179.                    177.
+##  9   182.                    178.
+## 10   184.                    183.
+## 11   185.                    185.</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co">#2 Mając wyznaczone parametry b0 i b1 policz oceny średniego wzrostu dziecka dla </span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="co"># każdego średniego wzrostu rodzica</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>wspolczynniki <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">lm</span>(syn<span class="sc">~</span>rodzic, <span class="at">data=</span>galton))</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>wspolczynniki</span></code></pre></div>
+<pre><code>## (Intercept)      rodzic 
+##   60.812990    0.646291</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Np rodzic 173cm wzrostu to syn</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>wspolczynniki[<span class="dv">1</span>]<span class="sc">+</span><span class="dv">173</span><span class="sc">*</span>wspolczynniki[<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## (Intercept) 
+##    172.6213</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co">#3 Wyznacz różnice pomiędzy ocenami z modelu liniowego a średnimi liczonymi osobno </span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="co"># dla każdej grupy rodziców</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>srednie <span class="ot">&lt;-</span> srednie <span class="sc">%&gt;%</span></span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">m.liniowy =</span> wspolczynniki[<span class="dv">1</span>] <span class="sc">+</span> rodzic<span class="sc">*</span>wspolczynniki[<span class="dv">2</span>],</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">roznica_srednia_model =</span> sredni_wzrost_dla_grupy <span class="sc">-</span> m.liniowy)</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="co">#4 W pakiecie PogromcyDanych udostępniony jest również zbiór danych pearson zebrany</span></span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a><span class="co">#przez Pearsona. W tym zbiorze danych zebrane są wzrosty ojców i synów.</span></span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pearson)</span></code></pre></div>
+<pre><code>##     syn ojciec
+## 1 151.8  165.2
+## 2 160.6  160.7
+## 3 160.9  165.0
+## 4 159.5  167.0
+## 5 163.3  155.3
+## 6 163.2  160.1</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>modelSynOjciec <span class="ot">&lt;-</span> <span class="fu">lm</span>(syn<span class="sc">~</span>ojciec, <span class="at">data =</span> pearson)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="do">## syn= 86.1025732 + 0.5139133 * ojciec</span></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="do">## syn= b0 + b1 * ojciec</span></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modelSynOjciec)</span></code></pre></div>
+<pre><code>## (Intercept)      ojciec 
+##  86.1025732   0.5139133</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> pearson, <span class="fu">aes</span>(<span class="at">x=</span> ojciec, <span class="at">y=</span> syn))<span class="sc">+</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">color=</span> <span class="st">&quot;gold&quot;</span>, <span class="at">size =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Regresja%20prosta-5.png" width="672" /></p>
+</div>
+<div id="trendy-w-danych" class="section level2">
+<h2>14. Trendy w danych</h2>
+</div>
+</div>
+<div id="tu-skończyłeś" class="section level1">
+<h1>TU SKOŃCZYŁEŚ</h1>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres z ocenami odcinków, pakiet ggvis</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PogromcyDanych)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggvis)</span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>serialeIMDB <span class="sc">%&gt;%</span></span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(serial <span class="sc">==</span> <span class="st">&quot;Breaking Bad&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sezon =</span> <span class="fu">droplevels</span>(sezon)) <span class="sc">%&gt;%</span></span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggvis</span>(<span class="at">x =</span> <span class="sc">~</span>id, <span class="at">y =</span> <span class="sc">~</span>ocena, <span class="at">fill =</span> <span class="sc">~</span>sezon) <span class="sc">%&gt;%</span></span>
+<span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_text</span>(<span class="at">text :=</span> <span class="sc">~</span>nazwa, <span class="at">opacity=</span><span class="dv">0</span>, <span class="at">fontSize:=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_points</span>(<span class="at">fillOpacity:=</span><span class="fl">0.8</span>) </span></code></pre></div>
+<div id="plot_id295410893-container" class="ggvis-output-container">
+<div id="plot_id295410893" class="ggvis-output"></div>
+<div class="plot-gear-icon">
+<nav class="ggvis-control">
+<a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
+<ul class="ggvis-dropdown">
+<li>
+Renderer: 
+<a id="plot_id295410893_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id295410893" data-renderer="svg">SVG</a>
+ | 
+<a id="plot_id295410893_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id295410893" data-renderer="canvas">Canvas</a>
+</li>
+<li>
+<a id="plot_id295410893_download" class="ggvis-download" data-plot-id="plot_id295410893">Download</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<script type="text/javascript">
+var plot_id295410893_spec = {
+  "data": [
+    {
+      "name": ".0",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "id": "number",
+          "ocena": "number"
+        }
+      },
+      "values": "\"id\",\"ocena\",\"sezon\",\"nazwa\"\n1,8.7,\"1\",\"Pilot\"\n2,8.2,\"1\",\"Cat's in the Bag...\"\n3,8.3,\"1\",\"...And the Bag's in the River\"\n4,7.9,\"1\",\"Cancer Man\"\n5,7.9,\"1\",\"Gray Matter\"\n6,8.7,\"1\",\"Crazy Handful of Nothin'\"\n7,8.4,\"1\",\"A No-Rough-Stuff-Type Deal\"\n8,8.1,\"2\",\"Seven Thirty-Seven\"\n9,8.7,\"2\",\"Grilled\"\n10,7.9,\"2\",\"Bit by a Dead Bee\"\n11,7.8,\"2\",\"Down\"\n12,7.8,\"2\",\"Breakage\"\n13,8.3,\"2\",\"Peekaboo\"\n14,8.2,\"2\",\"Negro Y Azul\"\n15,8.5,\"2\",\"Better Call Saul\"\n16,8.5,\"2\",\"4 Days Out\"\n17,8,\"2\",\"Over\"\n18,8.2,\"2\",\"Mandala\"\n19,8.6,\"2\",\"Phoenix\"\n20,8.6,\"2\",\"ABQ\"\n21,8,\"3\",\"No Más\"\n22,8.1,\"3\",\"Caballo sin Nombre\"\n23,7.8,\"3\",\"I.F.T.\"\n24,7.7,\"3\",\"Green Light\"\n25,8,\"3\",\"Más\"\n26,8.6,\"3\",\"Sunset\"\n27,9,\"3\",\"One Minute\"\n28,8.1,\"3\",\"I See You\"\n29,7.8,\"3\",\"Kafkaesque\"\n30,7.4,\"3\",\"Fly\"\n31,7.9,\"3\",\"Abiquiu\"\n32,8.9,\"3\",\"Half Measures\"\n33,9.1,\"3\",\"Full Measure\"\n34,8.6,\"4\",\"Box Cutter\"\n35,7.8,\"4\",\"Thirty-Eight Snub\"\n36,7.6,\"4\",\"Open House\"\n37,8.1,\"4\",\"Bullet Points\"\n38,8.1,\"4\",\"Shotgun\"\n39,7.8,\"4\",\"Cornered\"\n40,8.2,\"4\",\"Problem Dog\"\n41,8.6,\"4\",\"Hermanos\"\n42,8.2,\"4\",\"Bug\"\n43,9.1,\"4\",\"Salud\"\n44,9.2,\"4\",\"Crawl Space\"\n45,8.8,\"4\",\"End Times\"\n46,9.7,\"4\",\"Face Off\"\n47,8.8,\"5\",\"Live Free or Die\"\n48,8.4,\"5\",\"Madrigal\"\n49,8.4,\"5\",\"Hazard Pay\"\n50,8.3,\"5\",\"Fifty-One\"\n51,9.3,\"5\",\"Dead Freight\"\n52,8.5,\"5\",\"Buyout\"\n53,9,\"5\",\"Say My Name\"\n54,9.2,\"5\",\"Gliding Over All\"\n55,9,\"5\",\"Blood Money\"\n56,8.7,\"5\",\"Buried\"\n57,9.2,\"5\",\"Confessions\"\n58,8.6,\"5\",\"Rabid Dog\"\n59,9.6,\"5\",\"To'hajiilee\"\n60,10,\"5\",\"Ozymandias\"\n61,9.4,\"5\",\"Granite State\"\n62,9.9,\"5\",\"Felina\""
+    },
+    {
+      "name": "scale/fill",
+      "format": {
+        "type": "csv",
+        "parse": {}
+      },
+      "values": "\"domain\"\n\"1\"\n\"2\"\n\"3\"\n\"4\"\n\"5\""
+    },
+    {
+      "name": "scale/opacity",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "domain": "number"
+        }
+      },
+      "values": "\"domain\"\n0\n0"
+    },
+    {
+      "name": "scale/x",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "domain": "number"
+        }
+      },
+      "values": "\"domain\"\n-2.05\n65.05"
+    },
+    {
+      "name": "scale/y",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "domain": "number"
+        }
+      },
+      "values": "\"domain\"\n7.27\n10.13"
+    }
+  ],
+  "scales": [
+    {
+      "name": "fill",
+      "type": "ordinal",
+      "domain": {
+        "data": "scale/fill",
+        "field": "data.domain"
+      },
+      "points": true,
+      "sort": false,
+      "range": "category10"
+    },
+    {
+      "name": "opacity",
+      "domain": {
+        "data": "scale/opacity",
+        "field": "data.domain"
+      },
+      "zero": false,
+      "nice": false,
+      "clamp": false,
+      "range": [0, 1]
+    },
+    {
+      "name": "x",
+      "domain": {
+        "data": "scale/x",
+        "field": "data.domain"
+      },
+      "zero": false,
+      "nice": false,
+      "clamp": false,
+      "range": "width"
+    },
+    {
+      "name": "y",
+      "domain": {
+        "data": "scale/y",
+        "field": "data.domain"
+      },
+      "zero": false,
+      "nice": false,
+      "clamp": false,
+      "range": "height"
+    }
+  ],
+  "marks": [
+    {
+      "type": "text",
+      "properties": {
+        "update": {
+          "x": {
+            "scale": "x",
+            "field": "data.id"
+          },
+          "y": {
+            "scale": "y",
+            "field": "data.ocena"
+          },
+          "fill": {
+            "scale": "fill",
+            "field": "data.sezon"
+          },
+          "opacity": {
+            "scale": "opacity",
+            "value": 0
+          },
+          "text": {
+            "field": "data.nazwa"
+          },
+          "fontSize": {
+            "value": 1
+          }
+        },
+        "ggvis": {
+          "data": {
+            "value": ".0"
+          }
+        }
+      },
+      "from": {
+        "data": ".0"
+      }
+    },
+    {
+      "type": "symbol",
+      "properties": {
+        "update": {
+          "size": {
+            "value": 50
+          },
+          "x": {
+            "scale": "x",
+            "field": "data.id"
+          },
+          "y": {
+            "scale": "y",
+            "field": "data.ocena"
+          },
+          "fill": {
+            "scale": "fill",
+            "field": "data.sezon"
+          },
+          "fillOpacity": {
+            "value": 0.8
+          }
+        },
+        "ggvis": {
+          "data": {
+            "value": ".0"
+          }
+        }
+      },
+      "from": {
+        "data": ".0"
+      }
+    }
+  ],
+  "legends": [
+    {
+      "orient": "right",
+      "fill": "fill",
+      "title": "sezon"
+    }
+  ],
+  "axes": [
+    {
+      "type": "x",
+      "scale": "x",
+      "orient": "bottom",
+      "layer": "back",
+      "grid": true,
+      "title": "id"
+    },
+    {
+      "type": "y",
+      "scale": "y",
+      "orient": "left",
+      "layer": "back",
+      "grid": true,
+      "title": "ocena"
+    }
+  ],
+  "padding": null,
+  "ggvis_opts": {
+    "keep_aspect": false,
+    "resizable": true,
+    "padding": {},
+    "duration": 250,
+    "renderer": "svg",
+    "hover_duration": 0,
+    "width": 672,
+    "height": 480
+  },
+  "handlers": null
+};
+ggvis.getPlot("plot_id295410893").parseSpec(plot_id295410893_spec);
+</script>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres z trendem, pakiet ggvis</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>serialeIMDB <span class="sc">%&gt;%</span></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(serial <span class="sc">==</span> <span class="st">&quot;Breaking Bad&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sezon =</span> <span class="fu">droplevels</span>(sezon)) <span class="sc">%&gt;%</span></span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggvis</span>(<span class="at">x =</span> <span class="sc">~</span>id, <span class="at">y =</span> <span class="sc">~</span>ocena, <span class="at">fill =</span> <span class="sc">~</span>sezon) <span class="sc">%&gt;%</span></span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ewentualnie group_by(sezon)</span></span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_text</span>(<span class="at">text :=</span> <span class="sc">~</span>nazwa, <span class="at">opacity=</span><span class="dv">0</span>, <span class="at">fontSize:=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_points</span>(<span class="at">fillOpacity:=</span><span class="fl">0.8</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_model_predictions</span>(<span class="at">model =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<div id="plot_id794557009-container" class="ggvis-output-container">
+<div id="plot_id794557009" class="ggvis-output"></div>
+<div class="plot-gear-icon">
+<nav class="ggvis-control">
+<a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
+<ul class="ggvis-dropdown">
+<li>
+Renderer: 
+<a id="plot_id794557009_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id794557009" data-renderer="svg">SVG</a>
+ | 
+<a id="plot_id794557009_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id794557009" data-renderer="canvas">Canvas</a>
+</li>
+<li>
+<a id="plot_id794557009_download" class="ggvis-download" data-plot-id="plot_id794557009">Download</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<script type="text/javascript">
+var plot_id794557009_spec = {
+  "data": [
+    {
+      "name": ".0",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "id": "number",
+          "ocena": "number"
+        }
+      },
+      "values": "\"id\",\"ocena\",\"sezon\",\"nazwa\"\n1,8.7,\"1\",\"Pilot\"\n2,8.2,\"1\",\"Cat's in the Bag...\"\n3,8.3,\"1\",\"...And the Bag's in the River\"\n4,7.9,\"1\",\"Cancer Man\"\n5,7.9,\"1\",\"Gray Matter\"\n6,8.7,\"1\",\"Crazy Handful of Nothin'\"\n7,8.4,\"1\",\"A No-Rough-Stuff-Type Deal\"\n8,8.1,\"2\",\"Seven Thirty-Seven\"\n9,8.7,\"2\",\"Grilled\"\n10,7.9,\"2\",\"Bit by a Dead Bee\"\n11,7.8,\"2\",\"Down\"\n12,7.8,\"2\",\"Breakage\"\n13,8.3,\"2\",\"Peekaboo\"\n14,8.2,\"2\",\"Negro Y Azul\"\n15,8.5,\"2\",\"Better Call Saul\"\n16,8.5,\"2\",\"4 Days Out\"\n17,8,\"2\",\"Over\"\n18,8.2,\"2\",\"Mandala\"\n19,8.6,\"2\",\"Phoenix\"\n20,8.6,\"2\",\"ABQ\"\n21,8,\"3\",\"No Más\"\n22,8.1,\"3\",\"Caballo sin Nombre\"\n23,7.8,\"3\",\"I.F.T.\"\n24,7.7,\"3\",\"Green Light\"\n25,8,\"3\",\"Más\"\n26,8.6,\"3\",\"Sunset\"\n27,9,\"3\",\"One Minute\"\n28,8.1,\"3\",\"I See You\"\n29,7.8,\"3\",\"Kafkaesque\"\n30,7.4,\"3\",\"Fly\"\n31,7.9,\"3\",\"Abiquiu\"\n32,8.9,\"3\",\"Half Measures\"\n33,9.1,\"3\",\"Full Measure\"\n34,8.6,\"4\",\"Box Cutter\"\n35,7.8,\"4\",\"Thirty-Eight Snub\"\n36,7.6,\"4\",\"Open House\"\n37,8.1,\"4\",\"Bullet Points\"\n38,8.1,\"4\",\"Shotgun\"\n39,7.8,\"4\",\"Cornered\"\n40,8.2,\"4\",\"Problem Dog\"\n41,8.6,\"4\",\"Hermanos\"\n42,8.2,\"4\",\"Bug\"\n43,9.1,\"4\",\"Salud\"\n44,9.2,\"4\",\"Crawl Space\"\n45,8.8,\"4\",\"End Times\"\n46,9.7,\"4\",\"Face Off\"\n47,8.8,\"5\",\"Live Free or Die\"\n48,8.4,\"5\",\"Madrigal\"\n49,8.4,\"5\",\"Hazard Pay\"\n50,8.3,\"5\",\"Fifty-One\"\n51,9.3,\"5\",\"Dead Freight\"\n52,8.5,\"5\",\"Buyout\"\n53,9,\"5\",\"Say My Name\"\n54,9.2,\"5\",\"Gliding Over All\"\n55,9,\"5\",\"Blood Money\"\n56,8.7,\"5\",\"Buried\"\n57,9.2,\"5\",\"Confessions\"\n58,8.6,\"5\",\"Rabid Dog\"\n59,9.6,\"5\",\"To'hajiilee\"\n60,10,\"5\",\"Ozymandias\"\n61,9.4,\"5\",\"Granite State\"\n62,9.9,\"5\",\"Felina\""
+    },
+    {
+      "name": ".0/model_prediction1",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "pred_": "number",
+          "resp_": "number"
+        }
+      },
+      "values": "\"pred_\",\"resp_\"\n1,7.92058371735791\n1.77215189873418,7.93476248809038\n2.54430379746835,7.94894125882285\n3.31645569620253,7.96312002955531\n4.08860759493671,7.97729880028778\n4.86075949367089,7.99147757102025\n5.63291139240506,8.00565634175271\n6.40506329113924,8.01983511248518\n7.17721518987342,8.03401388321764\n7.94936708860759,8.04819265395011\n8.72151898734177,8.06237142468258\n9.49367088607595,8.07655019541504\n10.2658227848101,8.09072896614751\n11.0379746835443,8.10490773687997\n11.8101265822785,8.11908650761244\n12.5822784810127,8.13326527834491\n13.3544303797468,8.14744404907737\n14.126582278481,8.16162281980984\n14.8987341772152,8.1758015905423\n15.6708860759494,8.18998036127477\n16.4430379746835,8.20415913200724\n17.2151898734177,8.2183379027397\n17.9873417721519,8.23251667347217\n18.7594936708861,8.24669544420463\n19.5316455696203,8.2608742149371\n20.3037974683544,8.27505298566957\n21.0759493670886,8.28923175640203\n21.8481012658228,8.3034105271345\n22.620253164557,8.31758929786696\n23.3924050632911,8.33176806859943\n24.1645569620253,8.3459468393319\n24.9367088607595,8.36012561006436\n25.7088607594937,8.37430438079683\n26.4810126582278,8.38848315152929\n27.253164556962,8.40266192226176\n28.0253164556962,8.41684069299423\n28.7974683544304,8.43101946372669\n29.5696202531646,8.44519823445916\n30.3417721518987,8.45937700519163\n31.1139240506329,8.47355577592409\n31.8860759493671,8.48773454665656\n32.6582278481013,8.50191331738902\n33.4303797468354,8.51609208812149\n34.2025316455696,8.53027085885396\n34.9746835443038,8.54444962958642\n35.746835443038,8.55862840031889\n36.5189873417722,8.57280717105136\n37.2911392405063,8.58698594178382\n38.0632911392405,8.60116471251629\n38.8354430379747,8.61534348324875\n39.6075949367089,8.62952225398122\n40.379746835443,8.64370102471369\n41.1518987341772,8.65787979544615\n41.9240506329114,8.67205856617862\n42.6962025316456,8.68623733691108\n43.4683544303797,8.70041610764355\n44.2405063291139,8.71459487837602\n45.0126582278481,8.72877364910848\n45.7848101265823,8.74295241984095\n46.5569620253165,8.75713119057341\n47.3291139240506,8.77130996130588\n48.1012658227848,8.78548873203835\n48.873417721519,8.79966750277081\n49.6455696202532,8.81384627350328\n50.4177215189873,8.82802504423574\n51.1898734177215,8.84220381496821\n51.9620253164557,8.85638258570068\n52.7341772151899,8.87056135643314\n53.5063291139241,8.88474012716561\n54.2784810126582,8.89891889789807\n55.0506329113924,8.91309766863054\n55.8227848101266,8.92727643936301\n56.5949367088608,8.94145521009547\n57.3670886075949,8.95563398082794\n58.1392405063291,8.9698127515604\n58.9113924050633,8.98399152229287\n59.6835443037975,8.99817029302534\n60.4556962025316,9.0123490637578\n61.2278481012658,9.02652783449027\n62,9.04070660522274"
+    },
+    {
+      "name": "scale/fill",
+      "format": {
+        "type": "csv",
+        "parse": {}
+      },
+      "values": "\"domain\"\n\"1\"\n\"2\"\n\"3\"\n\"4\"\n\"5\""
+    },
+    {
+      "name": "scale/opacity",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "domain": "number"
+        }
+      },
+      "values": "\"domain\"\n0\n0"
+    },
+    {
+      "name": "scale/x",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "domain": "number"
+        }
+      },
+      "values": "\"domain\"\n-2.05\n65.05"
+    },
+    {
+      "name": "scale/y",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "domain": "number"
+        }
+      },
+      "values": "\"domain\"\n7.27\n10.13"
+    }
+  ],
+  "scales": [
+    {
+      "name": "fill",
+      "type": "ordinal",
+      "domain": {
+        "data": "scale/fill",
+        "field": "data.domain"
+      },
+      "points": true,
+      "sort": false,
+      "range": "category10"
+    },
+    {
+      "name": "opacity",
+      "domain": {
+        "data": "scale/opacity",
+        "field": "data.domain"
+      },
+      "zero": false,
+      "nice": false,
+      "clamp": false,
+      "range": [0, 1]
+    },
+    {
+      "name": "x",
+      "domain": {
+        "data": "scale/x",
+        "field": "data.domain"
+      },
+      "zero": false,
+      "nice": false,
+      "clamp": false,
+      "range": "width"
+    },
+    {
+      "name": "y",
+      "domain": {
+        "data": "scale/y",
+        "field": "data.domain"
+      },
+      "zero": false,
+      "nice": false,
+      "clamp": false,
+      "range": "height"
+    }
+  ],
+  "marks": [
+    {
+      "type": "text",
+      "properties": {
+        "update": {
+          "x": {
+            "scale": "x",
+            "field": "data.id"
+          },
+          "y": {
+            "scale": "y",
+            "field": "data.ocena"
+          },
+          "fill": {
+            "scale": "fill",
+            "field": "data.sezon"
+          },
+          "opacity": {
+            "scale": "opacity",
+            "value": 0
+          },
+          "text": {
+            "field": "data.nazwa"
+          },
+          "fontSize": {
+            "value": 1
+          }
+        },
+        "ggvis": {
+          "data": {
+            "value": ".0"
+          }
+        }
+      },
+      "from": {
+        "data": ".0"
+      }
+    },
+    {
+      "type": "symbol",
+      "properties": {
+        "update": {
+          "size": {
+            "value": 50
+          },
+          "x": {
+            "scale": "x",
+            "field": "data.id"
+          },
+          "y": {
+            "scale": "y",
+            "field": "data.ocena"
+          },
+          "fill": {
+            "scale": "fill",
+            "field": "data.sezon"
+          },
+          "fillOpacity": {
+            "value": 0.8
+          }
+        },
+        "ggvis": {
+          "data": {
+            "value": ".0"
+          }
+        }
+      },
+      "from": {
+        "data": ".0"
+      }
+    },
+    {
+      "type": "line",
+      "properties": {
+        "update": {
+          "stroke": {
+            "value": "#000000"
+          },
+          "strokeWidth": {
+            "value": 2
+          },
+          "x": {
+            "scale": "x",
+            "field": "data.pred_"
+          },
+          "y": {
+            "scale": "y",
+            "field": "data.resp_"
+          },
+          "fill": {
+            "value": "transparent"
+          }
+        },
+        "ggvis": {
+          "data": {
+            "value": ".0/model_prediction1"
+          }
+        }
+      },
+      "from": {
+        "data": ".0/model_prediction1"
+      }
+    }
+  ],
+  "legends": [
+    {
+      "orient": "right",
+      "fill": "fill",
+      "title": "sezon"
+    }
+  ],
+  "axes": [
+    {
+      "type": "x",
+      "scale": "x",
+      "orient": "bottom",
+      "layer": "back",
+      "grid": true,
+      "title": "id"
+    },
+    {
+      "type": "y",
+      "scale": "y",
+      "orient": "left",
+      "layer": "back",
+      "grid": true,
+      "title": "ocena"
+    }
+  ],
+  "padding": null,
+  "ggvis_opts": {
+    "keep_aspect": false,
+    "resizable": true,
+    "padding": {},
+    "duration": 250,
+    "renderer": "svg",
+    "hover_duration": 0,
+    "width": 672,
+    "height": 480
+  },
+  "handlers": null
+};
+ggvis.getPlot("plot_id794557009").parseSpec(plot_id794557009_spec);
+</script>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres z trendem, pakiet ggvis dla kazdego sezonu</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>serialeIMDB <span class="sc">%&gt;%</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(serial <span class="sc">==</span> <span class="st">&quot;Breaking Bad&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sezon =</span> <span class="fu">droplevels</span>(sezon)) <span class="sc">%&gt;%</span></span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggvis</span>(<span class="at">x =</span> <span class="sc">~</span>id, <span class="at">y =</span> <span class="sc">~</span>ocena, <span class="at">fill =</span> <span class="sc">~</span>sezon) <span class="sc">%&gt;%</span></span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ewentualnie </span></span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sezon) <span class="sc">%&gt;%</span></span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_text</span>(<span class="at">text :=</span> <span class="sc">~</span>nazwa, <span class="at">opacity=</span><span class="dv">0</span>, <span class="at">fontSize:=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_points</span>(<span class="at">fillOpacity:=</span><span class="fl">0.8</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_model_predictions</span>(<span class="at">model =</span> <span class="st">&quot;lm&quot;</span>) </span></code></pre></div>
+<div id="plot_id847550555-container" class="ggvis-output-container">
+<div id="plot_id847550555" class="ggvis-output"></div>
+<div class="plot-gear-icon">
+<nav class="ggvis-control">
+<a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
+<ul class="ggvis-dropdown">
+<li>
+Renderer: 
+<a id="plot_id847550555_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id847550555" data-renderer="svg">SVG</a>
+ | 
+<a id="plot_id847550555_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id847550555" data-renderer="canvas">Canvas</a>
+</li>
+<li>
+<a id="plot_id847550555_download" class="ggvis-download" data-plot-id="plot_id847550555">Download</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<script type="text/javascript">
+var plot_id847550555_spec = {
+  "data": [
+    {
+      "name": ".0/group_by1_flat",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "id": "number",
+          "ocena": "number"
+        }
+      },
+      "values": "\"id\",\"ocena\",\"sezon\",\"nazwa\"\n1,8.7,\"1\",\"Pilot\"\n2,8.2,\"1\",\"Cat's in the Bag...\"\n3,8.3,\"1\",\"...And the Bag's in the River\"\n4,7.9,\"1\",\"Cancer Man\"\n5,7.9,\"1\",\"Gray Matter\"\n6,8.7,\"1\",\"Crazy Handful of Nothin'\"\n7,8.4,\"1\",\"A No-Rough-Stuff-Type Deal\"\n8,8.1,\"2\",\"Seven Thirty-Seven\"\n9,8.7,\"2\",\"Grilled\"\n10,7.9,\"2\",\"Bit by a Dead Bee\"\n11,7.8,\"2\",\"Down\"\n12,7.8,\"2\",\"Breakage\"\n13,8.3,\"2\",\"Peekaboo\"\n14,8.2,\"2\",\"Negro Y Azul\"\n15,8.5,\"2\",\"Better Call Saul\"\n16,8.5,\"2\",\"4 Days Out\"\n17,8,\"2\",\"Over\"\n18,8.2,\"2\",\"Mandala\"\n19,8.6,\"2\",\"Phoenix\"\n20,8.6,\"2\",\"ABQ\"\n21,8,\"3\",\"No Más\"\n22,8.1,\"3\",\"Caballo sin Nombre\"\n23,7.8,\"3\",\"I.F.T.\"\n24,7.7,\"3\",\"Green Light\"\n25,8,\"3\",\"Más\"\n26,8.6,\"3\",\"Sunset\"\n27,9,\"3\",\"One Minute\"\n28,8.1,\"3\",\"I See You\"\n29,7.8,\"3\",\"Kafkaesque\"\n30,7.4,\"3\",\"Fly\"\n31,7.9,\"3\",\"Abiquiu\"\n32,8.9,\"3\",\"Half Measures\"\n33,9.1,\"3\",\"Full Measure\"\n34,8.6,\"4\",\"Box Cutter\"\n35,7.8,\"4\",\"Thirty-Eight Snub\"\n36,7.6,\"4\",\"Open House\"\n37,8.1,\"4\",\"Bullet Points\"\n38,8.1,\"4\",\"Shotgun\"\n39,7.8,\"4\",\"Cornered\"\n40,8.2,\"4\",\"Problem Dog\"\n41,8.6,\"4\",\"Hermanos\"\n42,8.2,\"4\",\"Bug\"\n43,9.1,\"4\",\"Salud\"\n44,9.2,\"4\",\"Crawl Space\"\n45,8.8,\"4\",\"End Times\"\n46,9.7,\"4\",\"Face Off\"\n47,8.8,\"5\",\"Live Free or Die\"\n48,8.4,\"5\",\"Madrigal\"\n49,8.4,\"5\",\"Hazard Pay\"\n50,8.3,\"5\",\"Fifty-One\"\n51,9.3,\"5\",\"Dead Freight\"\n52,8.5,\"5\",\"Buyout\"\n53,9,\"5\",\"Say My Name\"\n54,9.2,\"5\",\"Gliding Over All\"\n55,9,\"5\",\"Blood Money\"\n56,8.7,\"5\",\"Buried\"\n57,9.2,\"5\",\"Confessions\"\n58,8.6,\"5\",\"Rabid Dog\"\n59,9.6,\"5\",\"To'hajiilee\"\n60,10,\"5\",\"Ozymandias\"\n61,9.4,\"5\",\"Granite State\"\n62,9.9,\"5\",\"Felina\""
+    },
+    {
+      "name": ".0/group_by1",
+      "source": ".0/group_by1_flat",
+      "transform": [
+        {
+          "type": "treefacet",
+          "keys": [
+            "data.sezon"
+          ]
+        }
+      ]
+    },
+    {
+      "name": ".0/group_by1/model_prediction2_flat",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "pred_": "number",
+          "resp_": "number"
+        }
+      },
+      "values": "\"sezon\",\"pred_\",\"resp_\"\n\"1\",1,8.33214285714286\n\"1\",1.07594936708861,8.33132911392405\n\"1\",1.15189873417722,8.33051537070524\n\"1\",1.22784810126582,8.32970162748644\n\"1\",1.30379746835443,8.32888788426763\n\"1\",1.37974683544304,8.32807414104882\n\"1\",1.45569620253165,8.32726039783002\n\"1\",1.53164556962025,8.32644665461121\n\"1\",1.60759493670886,8.3256329113924\n\"1\",1.68354430379747,8.3248191681736\n\"1\",1.75949367088608,8.32400542495479\n\"1\",1.83544303797468,8.32319168173598\n\"1\",1.91139240506329,8.32237793851718\n\"1\",1.9873417721519,8.32156419529837\n\"1\",2.06329113924051,8.32075045207957\n\"1\",2.13924050632911,8.31993670886076\n\"1\",2.21518987341772,8.31912296564195\n\"1\",2.29113924050633,8.31830922242315\n\"1\",2.36708860759494,8.31749547920434\n\"1\",2.44303797468354,8.31668173598553\n\"1\",2.51898734177215,8.31586799276673\n\"1\",2.59493670886076,8.31505424954792\n\"1\",2.67088607594937,8.31424050632911\n\"1\",2.74683544303797,8.31342676311031\n\"1\",2.82278481012658,8.3126130198915\n\"1\",2.89873417721519,8.31179927667269\n\"1\",2.9746835443038,8.31098553345389\n\"1\",3.05063291139241,8.31017179023508\n\"1\",3.12658227848101,8.30935804701627\n\"1\",3.20253164556962,8.30854430379747\n\"1\",3.27848101265823,8.30773056057866\n\"1\",3.35443037974684,8.30691681735985\n\"1\",3.43037974683544,8.30610307414105\n\"1\",3.50632911392405,8.30528933092224\n\"1\",3.58227848101266,8.30447558770343\n\"1\",3.65822784810127,8.30366184448463\n\"1\",3.73417721518987,8.30284810126582\n\"1\",3.81012658227848,8.30203435804702\n\"1\",3.88607594936709,8.30122061482821\n\"1\",3.9620253164557,8.3004068716094\n\"1\",4.0379746835443,8.2995931283906\n\"1\",4.11392405063291,8.29877938517179\n\"1\",4.18987341772152,8.29796564195298\n\"1\",4.26582278481013,8.29715189873418\n\"1\",4.34177215189873,8.29633815551537\n\"1\",4.41772151898734,8.29552441229656\n\"1\",4.49367088607595,8.29471066907776\n\"1\",4.56962025316456,8.29389692585895\n\"1\",4.64556962025316,8.29308318264014\n\"1\",4.72151898734177,8.29226943942134\n\"1\",4.79746835443038,8.29145569620253\n\"1\",4.87341772151899,8.29064195298372\n\"1\",4.94936708860759,8.28982820976492\n\"1\",5.0253164556962,8.28901446654611\n\"1\",5.10126582278481,8.28820072332731\n\"1\",5.17721518987342,8.2873869801085\n\"1\",5.25316455696203,8.28657323688969\n\"1\",5.32911392405063,8.28575949367089\n\"1\",5.40506329113924,8.28494575045208\n\"1\",5.48101265822785,8.28413200723327\n\"1\",5.55696202531646,8.28331826401447\n\"1\",5.63291139240506,8.28250452079566\n\"1\",5.70886075949367,8.28169077757685\n\"1\",5.78481012658228,8.28087703435805\n\"1\",5.86075949367089,8.28006329113924\n\"1\",5.93670886075949,8.27924954792043\n\"1\",6.0126582278481,8.27843580470163\n\"1\",6.08860759493671,8.27762206148282\n\"1\",6.16455696202532,8.27680831826401\n\"1\",6.24050632911392,8.27599457504521\n\"1\",6.31645569620253,8.2751808318264\n\"1\",6.39240506329114,8.27436708860759\n\"1\",6.46835443037975,8.27355334538879\n\"1\",6.54430379746835,8.27273960216998\n\"1\",6.62025316455696,8.27192585895117\n\"1\",6.69620253164557,8.27111211573237\n\"1\",6.77215189873418,8.27029837251356\n\"1\",6.84810126582278,8.26948462929476\n\"1\",6.92405063291139,8.26867088607595\n\"1\",7,8.26785714285714\n\"2\",8,8.05164835164835\n\"2\",8.15189873417722,8.05657254138267\n\"2\",8.30379746835443,8.06149673111699\n\"2\",8.45569620253165,8.0664209208513\n\"2\",8.60759493670886,8.07134511058562\n\"2\",8.75949367088608,8.07626930031993\n\"2\",8.91139240506329,8.08119349005425\n\"2\",9.06329113924051,8.08611767978857\n\"2\",9.21518987341772,8.09104186952288\n\"2\",9.36708860759494,8.0959660592572\n\"2\",9.51898734177215,8.10089024899152\n\"2\",9.67088607594937,8.10581443872583\n\"2\",9.82278481012658,8.11073862846015\n\"2\",9.9746835443038,8.11566281819447\n\"2\",10.126582278481,8.12058700792878\n\"2\",10.2784810126582,8.1255111976631\n\"2\",10.4303797468354,8.13043538739741\n\"2\",10.5822784810127,8.13535957713173\n\"2\",10.7341772151899,8.14028376686605\n\"2\",10.8860759493671,8.14520795660036\n\"2\",11.0379746835443,8.15013214633468\n\"2\",11.1898734177215,8.15505633606899\n\"2\",11.3417721518987,8.15998052580331\n\"2\",11.493670886076,8.16490471553763\n\"2\",11.6455696202532,8.16982890527195\n\"2\",11.7974683544304,8.17475309500626\n\"2\",11.9493670886076,8.17967728474058\n\"2\",12.1012658227848,8.18460147447489\n\"2\",12.253164556962,8.18952566420921\n\"2\",12.4050632911392,8.19444985394353\n\"2\",12.5569620253165,8.19937404367784\n\"2\",12.7088607594937,8.20429823341216\n\"2\",12.8607594936709,8.20922242314647\n\"2\",13.0126582278481,8.21414661288079\n\"2\",13.1645569620253,8.21907080261511\n\"2\",13.3164556962025,8.22399499234942\n\"2\",13.4683544303797,8.22891918208374\n\"2\",13.620253164557,8.23384337181806\n\"2\",13.7721518987342,8.23876756155237\n\"2\",13.9240506329114,8.24369175128669\n\"2\",14.0759493670886,8.24861594102101\n\"2\",14.2278481012658,8.25354013075532\n\"2\",14.379746835443,8.25846432048964\n\"2\",14.5316455696203,8.26338851022395\n\"2\",14.6835443037975,8.26831269995827\n\"2\",14.8354430379747,8.27323688969259\n\"2\",14.9873417721519,8.2781610794269\n\"2\",15.1392405063291,8.28308526916122\n\"2\",15.2911392405063,8.28800945889554\n\"2\",15.4430379746835,8.29293364862985\n\"2\",15.5949367088608,8.29785783836417\n\"2\",15.746835443038,8.30278202809848\n\"2\",15.8987341772152,8.3077062178328\n\"2\",16.0506329113924,8.31263040756712\n\"2\",16.2025316455696,8.31755459730143\n\"2\",16.3544303797468,8.32247878703575\n\"2\",16.5063291139241,8.32740297677007\n\"2\",16.6582278481013,8.33232716650438\n\"2\",16.8101265822785,8.3372513562387\n\"2\",16.9620253164557,8.34217554597302\n\"2\",17.1139240506329,8.34709973570733\n\"2\",17.2658227848101,8.35202392544165\n\"2\",17.4177215189873,8.35694811517596\n\"2\",17.5696202531646,8.36187230491028\n\"2\",17.7215189873418,8.3667964946446\n\"2\",17.873417721519,8.37172068437891\n\"2\",18.0253164556962,8.37664487411323\n\"2\",18.1772151898734,8.38156906384754\n\"2\",18.3291139240506,8.38649325358186\n\"2\",18.4810126582278,8.39141744331618\n\"2\",18.6329113924051,8.39634163305049\n\"2\",18.7848101265823,8.40126582278481\n\"2\",18.9367088607595,8.40619001251913\n\"2\",19.0886075949367,8.41111420225344\n\"2\",19.2405063291139,8.41603839198776\n\"2\",19.3924050632911,8.42096258172208\n\"2\",19.5443037974684,8.42588677145639\n\"2\",19.6962025316456,8.43081096119071\n\"2\",19.8481012658228,8.43573515092502\n\"2\",20,8.44065934065934\n\"3\",21,7.88131868131868\n\"3\",21.1518987341772,7.8889970788705\n\"3\",21.3037974683544,7.89667547642231\n\"3\",21.4556962025316,7.90435387397413\n\"3\",21.6075949367089,7.91203227152594\n\"3\",21.7594936708861,7.91971066907776\n\"3\",21.9113924050633,7.92738906662957\n\"3\",22.0632911392405,7.93506746418139\n\"3\",22.2151898734177,7.9427458617332\n\"3\",22.3670886075949,7.95042425928502\n\"3\",22.5189873417722,7.95810265683683\n\"3\",22.6708860759494,7.96578105438865\n\"3\",22.8227848101266,7.97345945194047\n\"3\",22.9746835443038,7.98113784949228\n\"3\",23.126582278481,7.9888162470441\n\"3\",23.2784810126582,7.99649464459591\n\"3\",23.4303797468354,8.00417304214773\n\"3\",23.5822784810127,8.01185143969954\n\"3\",23.7341772151899,8.01952983725136\n\"3\",23.8860759493671,8.02720823480317\n\"3\",24.0379746835443,8.03488663235499\n\"3\",24.1898734177215,8.0425650299068\n\"3\",24.3417721518987,8.05024342745862\n\"3\",24.493670886076,8.05792182501043\n\"3\",24.6455696202532,8.06560022256225\n\"3\",24.7974683544304,8.07327862011406\n\"3\",24.9493670886076,8.08095701766588\n\"3\",25.1012658227848,8.08863541521769\n\"3\",25.253164556962,8.09631381276951\n\"3\",25.4050632911392,8.10399221032132\n\"3\",25.5569620253165,8.11167060787314\n\"3\",25.7088607594937,8.11934900542496\n\"3\",25.8607594936709,8.12702740297677\n\"3\",26.0126582278481,8.13470580052859\n\"3\",26.1645569620253,8.1423841980804\n\"3\",26.3164556962025,8.15006259563222\n\"3\",26.4683544303797,8.15774099318403\n\"3\",26.620253164557,8.16541939073585\n\"3\",26.7721518987342,8.17309778828766\n\"3\",26.9240506329114,8.18077618583948\n\"3\",27.0759493670886,8.18845458339129\n\"3\",27.2278481012658,8.19613298094311\n\"3\",27.379746835443,8.20381137849492\n\"3\",27.5316455696203,8.21148977604674\n\"3\",27.6835443037975,8.21916817359855\n\"3\",27.8354430379747,8.22684657115037\n\"3\",27.9873417721519,8.23452496870219\n\"3\",28.1392405063291,8.242203366254\n\"3\",28.2911392405063,8.24988176380582\n\"3\",28.4430379746835,8.25756016135763\n\"3\",28.5949367088608,8.26523855890945\n\"3\",28.746835443038,8.27291695646126\n\"3\",28.8987341772152,8.28059535401308\n\"3\",29.0506329113924,8.28827375156489\n\"3\",29.2025316455696,8.29595214911671\n\"3\",29.3544303797468,8.30363054666852\n\"3\",29.5063291139241,8.31130894422034\n\"3\",29.6582278481013,8.31898734177215\n\"3\",29.8101265822785,8.32666573932397\n\"3\",29.9620253164557,8.33434413687578\n\"3\",30.1139240506329,8.3420225344276\n\"3\",30.2658227848101,8.34970093197941\n\"3\",30.4177215189873,8.35737932953123\n\"3\",30.5696202531646,8.36505772708304\n\"3\",30.7215189873418,8.37273612463486\n\"3\",30.873417721519,8.38041452218667\n\"3\",31.0253164556962,8.38809291973849\n\"3\",31.1772151898734,8.39577131729031\n\"3\",31.3291139240506,8.40344971484212\n\"3\",31.4810126582278,8.41112811239394\n\"3\",31.6329113924051,8.41880650994575\n\"3\",31.7848101265823,8.42648490749757\n\"3\",31.9367088607595,8.43416330504938\n\"3\",32.0886075949367,8.4418417026012\n\"3\",32.2405063291139,8.44952010015301\n\"3\",32.3924050632911,8.45719849770483\n\"3\",32.5443037974684,8.46487689525664\n\"3\",32.6962025316456,8.47255529280846\n\"3\",32.8481012658228,8.48023369036027\n\"3\",33,8.48791208791209\n\"4\",34,7.72087912087912\n\"4\",34.1518987341772,7.73924050632912\n\"4\",34.3037974683544,7.75760189177911\n\"4\",34.4556962025316,7.7759632772291\n\"4\",34.6075949367089,7.7943246626791\n\"4\",34.7594936708861,7.81268604812909\n\"4\",34.9113924050633,7.83104743357908\n\"4\",35.0632911392405,7.84940881902907\n\"4\",35.2151898734177,7.86777020447907\n\"4\",35.3670886075949,7.88613158992906\n\"4\",35.5189873417722,7.90449297537905\n\"4\",35.6708860759494,7.92285436082905\n\"4\",35.8227848101266,7.94121574627904\n\"4\",35.9746835443038,7.95957713172903\n\"4\",36.126582278481,7.97793851717902\n\"4\",36.2784810126582,7.99629990262902\n\"4\",36.4303797468354,8.01466128807901\n\"4\",36.5822784810127,8.033022673529\n\"4\",36.7341772151899,8.051384058979\n\"4\",36.8860759493671,8.06974544442899\n\"4\",37.0379746835443,8.08810682987898\n\"4\",37.1898734177215,8.10646821532898\n\"4\",37.3417721518987,8.12482960077897\n\"4\",37.4936708860759,8.14319098622896\n\"4\",37.6455696202532,8.16155237167895\n\"4\",37.7974683544304,8.17991375712895\n\"4\",37.9493670886076,8.19827514257894\n\"4\",38.1012658227848,8.21663652802893\n\"4\",38.253164556962,8.23499791347893\n\"4\",38.4050632911392,8.25335929892892\n\"4\",38.5569620253165,8.27172068437891\n\"4\",38.7088607594937,8.29008206982891\n\"4\",38.8607594936709,8.3084434552789\n\"4\",39.0126582278481,8.32680484072889\n\"4\",39.1645569620253,8.34516622617889\n\"4\",39.3164556962025,8.36352761162888\n\"4\",39.4683544303797,8.38188899707887\n\"4\",39.620253164557,8.40025038252887\n\"4\",39.7721518987342,8.41861176797886\n\"4\",39.9240506329114,8.43697315342885\n\"4\",40.0759493670886,8.45533453887884\n\"4\",40.2278481012658,8.47369592432884\n\"4\",40.379746835443,8.49205730977883\n\"4\",40.5316455696203,8.51041869522882\n\"4\",40.6835443037975,8.52878008067882\n\"4\",40.8354430379747,8.54714146612881\n\"4\",40.9873417721519,8.5655028515788\n\"4\",41.1392405063291,8.58386423702879\n\"4\",41.2911392405063,8.60222562247879\n\"4\",41.4430379746835,8.62058700792878\n\"4\",41.5949367088608,8.63894839337877\n\"4\",41.746835443038,8.65730977882877\n\"4\",41.8987341772152,8.67567116427876\n\"4\",42.0506329113924,8.69403254972875\n\"4\",42.2025316455696,8.71239393517875\n\"4\",42.3544303797468,8.73075532062874\n\"4\",42.5063291139241,8.74911670607873\n\"4\",42.6582278481013,8.76747809152872\n\"4\",42.8101265822785,8.78583947697872\n\"4\",42.9620253164557,8.80420086242871\n\"4\",43.1139240506329,8.8225622478787\n\"4\",43.2658227848101,8.8409236333287\n\"4\",43.4177215189873,8.85928501877869\n\"4\",43.5696202531646,8.87764640422868\n\"4\",43.7215189873418,8.89600778967868\n\"4\",43.873417721519,8.91436917512867\n\"4\",44.0253164556962,8.93273056057866\n\"4\",44.1772151898734,8.95109194602866\n\"4\",44.3291139240506,8.96945333147865\n\"4\",44.4810126582278,8.98781471692864\n\"4\",44.6329113924051,9.00617610237864\n\"4\",44.7848101265823,9.02453748782863\n\"4\",44.9367088607595,9.04289887327862\n\"4\",45.0886075949367,9.06126025872861\n\"4\",45.2405063291139,9.07962164417861\n\"4\",45.3924050632911,9.0979830296286\n\"4\",45.5443037974684,9.11634441507859\n\"4\",45.6962025316456,9.13470580052859\n\"4\",45.8481012658228,9.15306718597858\n\"4\",46,9.17142857142857\n\"5\",47,8.39779411764706\n\"5\",47.1898734177215,8.41351451973194\n\"5\",47.379746835443,8.42923492181683\n\"5\",47.5696202531646,8.44495532390171\n\"5\",47.7594936708861,8.4606757259866\n\"5\",47.9493670886076,8.47639612807148\n\"5\",48.1392405063291,8.49211653015637\n\"5\",48.3291139240506,8.50783693224125\n\"5\",48.5189873417722,8.52355733432614\n\"5\",48.7088607594937,8.53927773641102\n\"5\",48.8987341772152,8.5549981384959\n\"5\",49.0886075949367,8.57071854058079\n\"5\",49.2784810126582,8.58643894266567\n\"5\",49.4683544303797,8.60215934475056\n\"5\",49.6582278481013,8.61787974683544\n\"5\",49.8481012658228,8.63360014892033\n\"5\",50.0379746835443,8.64932055100521\n\"5\",50.2278481012658,8.6650409530901\n\"5\",50.4177215189873,8.68076135517498\n\"5\",50.6075949367089,8.69648175725987\n\"5\",50.7974683544304,8.71220215934475\n\"5\",50.9873417721519,8.72792256142964\n\"5\",51.1772151898734,8.74364296351452\n\"5\",51.3670886075949,8.75936336559941\n\"5\",51.5569620253165,8.77508376768429\n\"5\",51.746835443038,8.79080416976917\n\"5\",51.9367088607595,8.80652457185406\n\"5\",52.126582278481,8.82224497393894\n\"5\",52.3164556962025,8.83796537602383\n\"5\",52.5063291139241,8.85368577810871\n\"5\",52.6962025316456,8.8694061801936\n\"5\",52.8860759493671,8.88512658227848\n\"5\",53.0759493670886,8.90084698436337\n\"5\",53.2658227848101,8.91656738644825\n\"5\",53.4556962025316,8.93228778853313\n\"5\",53.6455696202532,8.94800819061802\n\"5\",53.8354430379747,8.9637285927029\n\"5\",54.0253164556962,8.97944899478779\n\"5\",54.2151898734177,8.99516939687267\n\"5\",54.4050632911392,9.01088979895756\n\"5\",54.5949367088608,9.02661020104244\n\"5\",54.7848101265823,9.04233060312733\n\"5\",54.9746835443038,9.05805100521221\n\"5\",55.1645569620253,9.0737714072971\n\"5\",55.3544303797468,9.08949180938198\n\"5\",55.5443037974684,9.10521221146687\n\"5\",55.7341772151899,9.12093261355175\n\"5\",55.9240506329114,9.13665301563664\n\"5\",56.1139240506329,9.15237341772152\n\"5\",56.3037974683544,9.1680938198064\n\"5\",56.4936708860759,9.18381422189129\n\"5\",56.6835443037975,9.19953462397617\n\"5\",56.873417721519,9.21525502606106\n\"5\",57.0632911392405,9.23097542814594\n\"5\",57.253164556962,9.24669583023083\n\"5\",57.4430379746835,9.26241623231571\n\"5\",57.6329113924051,9.2781366344006\n\"5\",57.8227848101266,9.29385703648548\n\"5\",58.0126582278481,9.30957743857036\n\"5\",58.2025316455696,9.32529784065525\n\"5\",58.3924050632911,9.34101824274013\n\"5\",58.5822784810127,9.35673864482502\n\"5\",58.7721518987342,9.3724590469099\n\"5\",58.9620253164557,9.38817944899479\n\"5\",59.1518987341772,9.40389985107967\n\"5\",59.3417721518987,9.41962025316456\n\"5\",59.5316455696203,9.43534065524944\n\"5\",59.7215189873418,9.45106105733433\n\"5\",59.9113924050633,9.46678145941921\n\"5\",60.1012658227848,9.4825018615041\n\"5\",60.2911392405063,9.49822226358898\n\"5\",60.4810126582278,9.51394266567386\n\"5\",60.6708860759494,9.52966306775875\n\"5\",60.8607594936709,9.54538346984363\n\"5\",61.0506329113924,9.56110387192852\n\"5\",61.2405063291139,9.5768242740134\n\"5\",61.4303797468354,9.59254467609829\n\"5\",61.620253164557,9.60826507818317\n\"5\",61.8101265822785,9.62398548026806\n\"5\",62,9.63970588235294"
+    },
+    {
+      "name": ".0/group_by1/model_prediction2",
+      "source": ".0/group_by1/model_prediction2_flat",
+      "transform": [
+        {
+          "type": "treefacet",
+          "keys": [
+            "data.sezon"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "scale/fill",
+      "format": {
+        "type": "csv",
+        "parse": {}
+      },
+      "values": "\"domain\"\n\"1\"\n\"2\"\n\"3\"\n\"4\"\n\"5\""
+    },
+    {
+      "name": "scale/opacity",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "domain": "number"
+        }
+      },
+      "values": "\"domain\"\n0\n0"
+    },
+    {
+      "name": "scale/x",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "domain": "number"
+        }
+      },
+      "values": "\"domain\"\n-2.05\n65.05"
+    },
+    {
+      "name": "scale/y",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "domain": "number"
+        }
+      },
+      "values": "\"domain\"\n7.27\n10.13"
+    }
+  ],
+  "scales": [
+    {
+      "name": "fill",
+      "type": "ordinal",
+      "domain": {
+        "data": "scale/fill",
+        "field": "data.domain"
+      },
+      "points": true,
+      "sort": false,
+      "range": "category10"
+    },
+    {
+      "name": "opacity",
+      "domain": {
+        "data": "scale/opacity",
+        "field": "data.domain"
+      },
+      "zero": false,
+      "nice": false,
+      "clamp": false,
+      "range": [0, 1]
+    },
+    {
+      "name": "x",
+      "domain": {
+        "data": "scale/x",
+        "field": "data.domain"
+      },
+      "zero": false,
+      "nice": false,
+      "clamp": false,
+      "range": "width"
+    },
+    {
+      "name": "y",
+      "domain": {
+        "data": "scale/y",
+        "field": "data.domain"
+      },
+      "zero": false,
+      "nice": false,
+      "clamp": false,
+      "range": "height"
+    }
+  ],
+  "marks": [
+    {
+      "type": "group",
+      "from": {
+        "data": ".0/group_by1"
+      },
+      "marks": [
+        {
+          "type": "text",
+          "properties": {
+            "update": {
+              "x": {
+                "scale": "x",
+                "field": "data.id"
+              },
+              "y": {
+                "scale": "y",
+                "field": "data.ocena"
+              },
+              "fill": {
+                "scale": "fill",
+                "field": "data.sezon"
+              },
+              "opacity": {
+                "scale": "opacity",
+                "value": 0
+              },
+              "text": {
+                "field": "data.nazwa"
+              },
+              "fontSize": {
+                "value": 1
+              }
+            },
+            "ggvis": {
+              "data": {
+                "value": ".0/group_by1"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "from": {
+        "data": ".0/group_by1"
+      },
+      "marks": [
+        {
+          "type": "symbol",
+          "properties": {
+            "update": {
+              "size": {
+                "value": 50
+              },
+              "x": {
+                "scale": "x",
+                "field": "data.id"
+              },
+              "y": {
+                "scale": "y",
+                "field": "data.ocena"
+              },
+              "fill": {
+                "scale": "fill",
+                "field": "data.sezon"
+              },
+              "fillOpacity": {
+                "value": 0.8
+              }
+            },
+            "ggvis": {
+              "data": {
+                "value": ".0/group_by1"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "from": {
+        "data": ".0/group_by1/model_prediction2"
+      },
+      "marks": [
+        {
+          "type": "line",
+          "properties": {
+            "update": {
+              "stroke": {
+                "value": "#000000"
+              },
+              "strokeWidth": {
+                "value": 2
+              },
+              "x": {
+                "scale": "x",
+                "field": "data.pred_"
+              },
+              "y": {
+                "scale": "y",
+                "field": "data.resp_"
+              },
+              "fill": {
+                "value": "transparent"
+              }
+            },
+            "ggvis": {
+              "data": {
+                "value": ".0/group_by1/model_prediction2"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "legends": [
+    {
+      "orient": "right",
+      "fill": "fill",
+      "title": "sezon"
+    }
+  ],
+  "axes": [
+    {
+      "type": "x",
+      "scale": "x",
+      "orient": "bottom",
+      "layer": "back",
+      "grid": true,
+      "title": "id"
+    },
+    {
+      "type": "y",
+      "scale": "y",
+      "orient": "left",
+      "layer": "back",
+      "grid": true,
+      "title": "ocena"
+    }
+  ],
+  "padding": null,
+  "ggvis_opts": {
+    "keep_aspect": false,
+    "resizable": true,
+    "padding": {},
+    "duration": 250,
+    "renderer": "svg",
+    "hover_duration": 0,
+    "width": 672,
+    "height": 480
+  },
+  "handlers": null
+};
+ggvis.getPlot("plot_id847550555").parseSpec(plot_id847550555_spec);
+</script>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wybierz tylko dwie kolumny i wiersze dla jednego serialu</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>tylkoBreakingBad <span class="ot">&lt;-</span> serialeIMDB <span class="sc">%&gt;%</span></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(serial <span class="sc">==</span> <span class="st">&quot;Breaking Bad&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, ocena)</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="co"># pierwsze 6 wierszy z nowo przygotowanego zbioru danych</span></span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tylkoBreakingBad)</span></code></pre></div>
+<pre><code>##   id ocena
+## 1  1   8.7
+## 2  2   8.2
+## 3  3   8.3
+## 4  4   7.9
+## 5  5   7.9
+## 6  6   8.7</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wyznacz trend liniowy dla serialu BreakingBad</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(ocena<span class="sc">~</span>id, tylkoBreakingBad)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = ocena ~ id, data = tylkoBreakingBad)
+## 
+## Coefficients:
+## (Intercept)           id  
+##     7.90222      0.01836</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># odczytaj z trendu liniowego wsp??czynniki trendu</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(ocena<span class="sc">~</span>id, tylkoBreakingBad)<span class="sc">$</span>coef</span></code></pre></div>
+<pre><code>## (Intercept)          id 
+##  7.90222105  0.01836267</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="do">########### ZADANIA 14 #############</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(serialeIMDB<span class="sc">$</span>serial)[<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## [1] Cosmos: A Space-Time Odyssey
+## 198 Levels: Breaking Bad Cosmos: A Space-Time Odyssey ... The Good Wife</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>serialeIMDB <span class="sc">%&gt;%</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(serial) <span class="sc">%&gt;%</span></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(ocena<span class="sc">~</span>id, .)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = ocena ~ id, data = .)
+## 
+## Coefficients:
+## (Intercept)           id  
+##     7.84229     -0.00154</code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>nazwy_seriali <span class="ot">&lt;-</span> <span class="fu">levels</span>(serialeIMDB<span class="sc">$</span>serial)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>wspolczynnikTrendu <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (ser <span class="cf">in</span> nazwy_seriali) {</span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>  jedenSerial <span class="ot">&lt;-</span> serialeIMDB <span class="sc">%&gt;%</span></span>
+<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(serial <span class="sc">==</span> ser) <span class="sc">%&gt;%</span> </span>
+<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(id, ocena)</span>
+<span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a>  wspolczynnikTrendu[ser] <span class="ot">&lt;-</span> <span class="fu">lm</span>(ocena<span class="sc">~</span>id, jedenSerial)<span class="sc">$</span>coef[<span class="dv">2</span>]</span>
+<span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb79-10"><a href="#cb79-10" aria-hidden="true" tabindex="-1"></a><span class="co"># na pocz?tku najsilniejsze spadki, na koniec wzrosty</span></span>
+<span id="cb79-11"><a href="#cb79-11" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">sort</span>(wspolczynnikTrendu))</span></code></pre></div>
+<pre><code>## [1] 0.1314286</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(wspolczynnikTrendu)</span></code></pre></div>
+<pre><code>## [1] -0.05686275</code></pre>
+<div id="testowanie-trendu" class="section level2">
+<h2>15. Testowanie trendu</h2>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PogromcyDanych)</span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="co"># wybieramy dane o jednym serialu, dwie kolumny</span></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>tylkoBreakingBad <span class="ot">&lt;-</span> serialeIMDB <span class="sc">%&gt;%</span> </span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(serial <span class="sc">==</span> <span class="st">&quot;Breaking Bad&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(id, ocena)</span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a><span class="co"># wy?wietlamy pierwsze wiersze</span></span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tylkoBreakingBad)</span></code></pre></div>
+<pre><code>##   id ocena
+## 1  1   8.7
+## 2  2   8.2
+## 3  3   8.3
+## 4  4   7.9
+## 5  5   7.9
+## 6  6   8.7</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(ocena<span class="sc">~</span>id, tylkoBreakingBad)<span class="sc">$</span>coef</span></code></pre></div>
+<pre><code>## (Intercept)          id 
+##  7.90222105  0.01836267</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>(wspolczynnikiTrendu <span class="ot">&lt;-</span> <span class="fu">lm</span>(ocena<span class="sc">~</span>id, tylkoBreakingBad)<span class="sc">$</span>coef)</span></code></pre></div>
+<pre><code>## (Intercept)          id 
+##  7.90222105  0.01836267</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>(modulBreakingBad <span class="ot">&lt;-</span> <span class="fu">abs</span>(wspolczynnikiTrendu[<span class="dv">2</span>]))</span></code></pre></div>
+<pre><code>##         id 
+## 0.01836267</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># funkcja replicate() powtarza drugie wyra?enie tyle razy, ile wynosi pierwszy argument (=99999)</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>trendy <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">99999</span>, {</span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># wymieszaj losowo warto?ci, robi to funkcja sample()</span></span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a>  tylkoBreakingBad<span class="sc">$</span>wymieszane <span class="ot">&lt;-</span> <span class="fu">sample</span>(tylkoBreakingBad<span class="sc">$</span>ocena)</span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># wyznacz modu? wsp??czynnika wzrostu dla losowo wymieszanych danych</span></span>
+<span id="cb91-7"><a href="#cb91-7" aria-hidden="true" tabindex="-1"></a>  wspolczynnikiTrendu <span class="ot">&lt;-</span> <span class="fu">lm</span>(wymieszane<span class="sc">~</span>id, tylkoBreakingBad)<span class="sc">$</span>coef</span>
+<span id="cb91-8"><a href="#cb91-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abs</span>(wspolczynnikiTrendu[<span class="dv">2</span>])</span>
+<span id="cb91-9"><a href="#cb91-9" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb91-10"><a href="#cb91-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-11"><a href="#cb91-11" aria-hidden="true" tabindex="-1"></a><span class="co"># modulBreakingBad jest te? jedn? z mo?liwych permutacji, dodajmy go do wyniku</span></span>
+<span id="cb91-12"><a href="#cb91-12" aria-hidden="true" tabindex="-1"></a>trendy <span class="ot">&lt;-</span> <span class="fu">c</span>(trendy, modulBreakingBad)</span>
+<span id="cb91-13"><a href="#cb91-13" aria-hidden="true" tabindex="-1"></a><span class="co"># wy?wietl pierwsze 20 z tak otrzymanych warto?ci</span></span>
+<span id="cb91-14"><a href="#cb91-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(trendy, <span class="dv">20</span>)</span></code></pre></div>
+<pre><code>##           id           id           id           id           id           id 
+## 0.0018433180 0.0057465186 0.0019087910 0.0028556319 0.0014907708 0.0044169122 
+##           id           id           id           id           id           id 
+## 0.0071113797 0.0018634635 0.0036161265 0.0008813679 0.0053587167 0.0020397371 
+##           id           id           id           id           id           id 
+## 0.0007302762 0.0038880915 0.0063508851 0.0021555740 0.0004331294 0.0064767948 
+##           id           id 
+## 0.0001611644 0.0029765053</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># jak wygl?daj? przypadkowe wsp??czynniki</span></span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(trendy, <span class="dv">50</span>, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">border=</span><span class="st">&quot;white&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.02</span>))</span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="co"># dorysuj na czerwono wsp??czynnik dla BreakingBad</span></span>
+<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>modulBreakingBad, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">5</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Testowanie%20trendu-1.png" width="672" /></p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p-warto??</span></span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(trendy <span class="sc">&gt;=</span> modulBreakingBad)</span></code></pre></div>
+<pre><code>## [1] 1e-05</code></pre>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="do">####### ZADANIE odc 15 ########</span></span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>nazwy_seriali <span class="ot">&lt;-</span> <span class="fu">levels</span>(serialeIMDB<span class="sc">$</span>serial)</span>
+<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a>wspolczynnikiTrendu <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb96-5"><a href="#cb96-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-6"><a href="#cb96-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (ser <span class="cf">in</span> nazwy_seriali) {</span>
+<span id="cb96-7"><a href="#cb96-7" aria-hidden="true" tabindex="-1"></a>  jedenSerial <span class="ot">&lt;-</span> serialeIMDB <span class="sc">%&gt;%</span></span>
+<span id="cb96-8"><a href="#cb96-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(serial <span class="sc">==</span> ser) <span class="sc">%&gt;%</span></span>
+<span id="cb96-9"><a href="#cb96-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(id, ocena)</span>
+<span id="cb96-10"><a href="#cb96-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb96-11"><a href="#cb96-11" aria-hidden="true" tabindex="-1"></a>  wspolczynnikiTrendu[ser] <span class="ot">&lt;-</span> <span class="fu">lm</span>(ocena<span class="sc">~</span>id, <span class="at">data =</span> jedenSerial)<span class="sc">$</span>coef[<span class="dv">2</span>]</span>
+<span id="cb96-12"><a href="#cb96-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb96-13"><a href="#cb96-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb96-14"><a href="#cb96-14" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(wspolczynnikiTrendu)</span></code></pre></div>
+<pre><code>##                             The Prisoner 
+##                            -5.686275e-02 
+##                                     FLCL 
+##                            -5.142857e-02 
+##                    Black Adder the Third 
+##                            -5.142857e-02 
+##                                 Mr. Bean 
+##                            -3.263158e-02 
+##                                  Misfits 
+##                            -3.206040e-02 
+##              Are You Afraid of the Dark? 
+##                            -2.517121e-02 
+##                                 Coupling 
+##                            -2.471264e-02 
+##                              Black Books 
+##                            -2.063983e-02 
+##                       Jeeves and Wooster 
+##                            -2.055336e-02 
+##                               Twin Peaks 
+##                            -2.020022e-02 
+##                         Chappelle&#39;s Show 
+##                            -1.788102e-02 
+##         Behzat Ç.: Bir Ankara Polisiyesi 
+##                            -1.770198e-02 
+##                           Black-Adder II 
+##                            -1.714286e-02 
+##                        Dragon Ball Z Kai 
+##                            -1.548458e-02 
+##                                    X-Men 
+##                            -1.513876e-02 
+##                        Robin of Sherwood 
+##                            -1.495652e-02 
+##                  Flight of the Conchords 
+##                            -1.428571e-02 
+##                                Star Trek 
+##                            -1.392639e-02 
+##                            The Boondocks 
+##                            -1.216450e-02 
+##                          Californication 
+##                            -1.167561e-02 
+##                            Dragon Ball Z 
+##                            -1.101911e-02 
+##                                   Dexter 
+##                            -1.063280e-02 
+##                 Courage the Cowardly Dog 
+##                            -1.015159e-02 
+##                            Metalocalypse 
+##                            -1.002493e-02 
+##                        Trailer Park Boys 
+##                            -9.637825e-03 
+##                                Rescue Me 
+##                            -9.253678e-03 
+##                             Cowboy Bebop 
+##                            -8.852259e-03 
+##                               Death Note 
+##                            -8.629682e-03 
+##                   The Andy Griffith Show 
+##                            -8.389895e-03 
+##                             Prison Break 
+##                            -7.829720e-03 
+##                               The Shield 
+##                            -7.727273e-03 
+##             Monty Python&#39;s Flying Circus 
+##                            -7.252544e-03 
+##                              Dragon Ball 
+##                            -6.971640e-03 
+##                       I&#39;m Alan Partridge 
+##                            -6.643357e-03 
+##                             &#39;Allo &#39;Allo! 
+##                            -6.572210e-03 
+##                                The Guild 
+##                            -6.201363e-03 
+##                                       QI 
+##                            -6.056326e-03 
+##                             Regular Show 
+##                            -5.756645e-03 
+##                                     Life 
+##                            -5.443852e-03 
+##                               Dragonball 
+##                            -5.393865e-03 
+##                               The League 
+##                            -5.174380e-03 
+##                                 Futurama 
+##                            -5.108733e-03 
+##                              Broadchurch 
+##                            -4.945055e-03 
+##                               The Office 
+##                            -4.421954e-03 
+##                The Angry Video Game Nerd 
+##                            -4.397449e-03 
+##                            Downton Abbey 
+##                            -4.288735e-03 
+##                             The IT Crowd 
+##                            -4.230769e-03 
+##                              MythBusters 
+##                            -4.170834e-03 
+##                    How I Met Your Mother 
+##                            -4.133929e-03 
+##                               Family Guy 
+##                            -3.951197e-03 
+##                      The Big Bang Theory 
+##                            -3.840663e-03 
+##                             Boston Legal 
+##                            -3.725102e-03 
+##                             The Sopranos 
+##                            -3.516204e-03 
+##                                   Scrubs 
+##                            -3.510990e-03 
+##                                Entourage 
+##                            -3.364759e-03 
+##                        The Venture Bros. 
+##                            -3.301905e-03 
+##        It&#39;s Always Sunny in Philadelphia 
+##                            -3.233494e-03 
+##                            The West Wing 
+##                            -2.946086e-03 
+##                                Peep Show 
+##                            -2.928571e-03 
+##                     Arrested Development 
+##                            -2.824751e-03 
+##                        All in the Family 
+##                            -2.824740e-03 
+##                 Whose Line Is It Anyway? 
+##                            -2.773739e-03 
+##                            Twilight Zone 
+##                            -2.738063e-03 
+##            The Adventures of Pete &amp; Pete 
+##                            -2.579737e-03 
+##                            Young Justice 
+##                            -2.577860e-03 
+##                         The Wonder Years 
+##                            -2.222047e-03 
+##                                  M*A*S*H 
+##                            -2.164826e-03 
+##                             The Simpsons 
+##                            -1.922224e-03 
+##                              Invader ZIM 
+##                            -1.888342e-03 
+##                               South Park 
+##                            -1.669815e-03 
+##              Batman: The Animated Series 
+##                            -1.635926e-03 
+##                            Modern Family 
+##                            -1.432015e-03 
+##                                     Lost 
+##                            -1.403117e-03 
+##   The Avengers: Earth&#39;s Mightiest Heroes 
+##                            -1.378810e-03 
+##                                       24 
+##                            -1.377268e-03 
+##                              Foyle&#39;s War 
+##                            -1.368363e-03 
+##                                Community 
+##                            -1.321534e-03 
+##                     Curb Your Enthusiasm 
+##                            -1.312105e-03 
+##                                Get Smart 
+##                            -1.233364e-03 
+##                          The Thick of It 
+##                            -1.130435e-03 
+##                               House M.D. 
+##                            -1.057341e-03 
+##                                 Homeland 
+##                            -1.025836e-03 
+##                         The Mighty Boosh 
+##                            -9.090909e-04 
+##                                  Firefly 
+##                            -8.791209e-04 
+##                             Supernatural 
+##                            -7.071685e-04 
+##                         The Walking Dead 
+##                            -5.844535e-04 
+##                             Almost Human 
+##                            -5.494505e-04 
+##                               Doctor Who 
+##                            -5.294429e-04 
+##                                One Piece 
+##                            -4.568604e-04 
+##                                    Psych 
+##                            -3.576751e-04 
+##                             Isler Güçler 
+##                            -1.742160e-04 
+##                              The X-Files 
+##                            -5.955372e-05 
+##            Late Night with Conan O&#39;Brien 
+##                             2.716218e-05 
+##                          Sons of Anarchy 
+##                             2.449608e-04 
+##                        Naruto: Shippuden 
+##                             3.118025e-04 
+##                                  Friends 
+##                             4.325633e-04 
+##                                   Castle 
+##                             4.987371e-04 
+##                            Stargate SG-1 
+##                             9.076324e-04 
+##                                 Farscape 
+##                             1.004720e-03 
+##          The Daily Show with Jon Stewart 
+##                             1.077573e-03 
+##                                   Cosmos 
+##                             1.098901e-03 
+##                    American Horror Story 
+##                             1.212670e-03 
+##                       The Colbert Report 
+##                             1.269420e-03 
+##                      Fullmetal Alchemist 
+##                             1.312217e-03 
+##                                   Archer 
+##                             1.454963e-03 
+##                           Adventure Time 
+##                             1.968985e-03 
+##                             White Collar 
+##                             1.998645e-03 
+##                                 Top Gear 
+##                             2.139616e-03 
+##                                 Seinfeld 
+##                             2.187499e-03 
+##                     Parks and Recreation 
+##                             2.428429e-03 
+##             Homicide: Life on the Street 
+##                             2.453234e-03 
+##                              I Love Lucy 
+##                             2.467367e-03 
+##                         Leyla ile Mecnun 
+##                             2.543476e-03 
+##                                Southland 
+##                             2.899426e-03 
+##                             Black Mirror 
+##                             3.571429e-03 
+##                           Six Feet Under 
+##                             4.089862e-03 
+##                 The Adventures of Tintin 
+##                             4.251012e-03 
+##           Star Trek: The Next Generation 
+##                             4.299912e-03 
+##                            The Good Wife 
+##                             4.567113e-03 
+##                                   Fringe 
+##                             4.805281e-03 
+##                        Hellsing Ultimate 
+##                             4.848485e-03 
+##                           Justice League 
+##                             4.951425e-03 
+##                         Samurai Champloo 
+##                             5.128205e-03 
+##                                 The Wire 
+##                             5.290358e-03 
+##                          The Muppet Show 
+##                             5.338912e-03 
+##                            Veronica Mars 
+##                             5.524267e-03 
+##             Mystery Science Theater 3000 
+##                             5.786551e-03 
+##                         Boardwalk Empire 
+##                             5.937257e-03 
+##                 Agatha Christie&#39;s Poirot 
+##                             6.018721e-03 
+##                                  Mad Men 
+##                             6.370920e-03 
+##                Only Fools and Horses.... 
+##                             6.542832e-03 
+##          Fullmetal Alchemist Brotherhood 
+##                             7.246503e-03 
+##                      Blue Mountain State 
+##                             7.317073e-03 
+##                                    Louie 
+##                             7.321400e-03 
+##                            The Originals 
+##                             7.486631e-03 
+##                            Avrupa yakasi 
+##                             7.592472e-03 
+##                       Person of Interest 
+##                             7.836495e-03 
+##            Ninjago: Masters of Spinjitzu 
+##                             7.899160e-03 
+##                                Red Dwarf 
+##                             7.916446e-03 
+##                  Neon Genesis Evangelion 
+##                             8.136752e-03 
+##                          Attack on Titan 
+##                             8.177340e-03 
+##                               Undercover 
+##                             8.353235e-03 
+##                                 Deadwood 
+##                             8.468468e-03 
+##                                Justified 
+##                             8.984289e-03 
+##               Avatar: The Last Airbender 
+##                             9.936793e-03 
+##                     Battlestar Galactica 
+##                             9.956189e-03 
+##                          Rurouni Kenshin 
+##                             1.074262e-02 
+##                                    Arrow 
+##                             1.102772e-02 
+##                                   Borgen 
+##                             1.150167e-02 
+##                                    Suits 
+##                             1.159452e-02 
+## Red vs. Blue: The Blood Gulch Chronicles 
+##                             1.172637e-02 
+##                      The Bugs Bunny Show 
+##                             1.176471e-02 
+##                             Planet Earth 
+##                             1.181818e-02 
+##                               The Bridge 
+##                             1.233083e-02 
+##                         The Inbetweeners 
+##                             1.238390e-02 
+##     Code Geass: Lelouch of the Rebellion 
+##                             1.263736e-02 
+##                      The Legend of Korra 
+##                             1.291727e-02 
+##                          Game of Thrones 
+##                             1.319887e-02 
+##             Cosmos: A Space-Time Odyssey 
+##                             1.373626e-02 
+##                            Police Squad! 
+##                             1.428571e-02 
+##                               Green Wing 
+##                             1.620227e-02 
+##                                Shameless 
+##                             1.704943e-02 
+##                                       Oz 
+##                             1.750513e-02 
+##                             Life on Mars 
+##                             1.808824e-02 
+##                             Breaking Bad 
+##                             1.836267e-02 
+##  Ghost in the Shell: Stand Alone Complex 
+##                             1.881684e-02 
+##                              I, Claudius 
+##                             1.978022e-02 
+##             Spartacus: War of the Damned 
+##                             1.990833e-02 
+##                         Call the Midwife 
+##                             2.082649e-02 
+##                                   Luther 
+##                             2.142857e-02 
+##                                   Trigun 
+##                             2.188034e-02 
+##                           House of Cards 
+##                             2.205128e-02 
+##                          Pushing Daisies 
+##                             2.512705e-02 
+##                             Orphan Black 
+##                             2.518797e-02 
+##                            Fawlty Towers 
+##                             2.552448e-02 
+##                                  Berserk 
+##                             2.561538e-02 
+##                        My So-Called Life 
+##                             2.649123e-02 
+##                  Orange Is the New Black 
+##                             2.649573e-02 
+##                         Freaks and Geeks 
+##                             2.755418e-02 
+##                                     Rome 
+##                             2.862789e-02 
+##                               Father Ted 
+##                             2.876923e-02 
+##                             The Newsroom 
+##                             3.261538e-02 
+##        The Adventures of Sherlock Holmes 
+##                             3.956044e-02 
+##                      Friday Night Lights 
+##                             4.042789e-02 
+##                                 Hannibal 
+##                             4.471795e-02 
+##                                   Spaced 
+##                             4.593407e-02 
+##                                   Utopia 
+##                             4.790210e-02 
+##                                 Terriers 
+##                             4.823529e-02 
+##                                 Sherlock 
+##                             5.000000e-02 
+##                               Party Down 
+##                             5.037594e-02 
+##                           True Detective 
+##                             5.238095e-02 
+##                                  Vikings 
+##                             5.403509e-02 
+##               Garth Marenghi&#39;s Darkplace 
+##                             5.428571e-02 
+##                                Carnivale 
+##                             5.634783e-02 
+##                                   Extras 
+##                             6.263736e-02 
+##                      Summer Heights High 
+##                             6.309524e-02 
+##                          The Black Adder 
+##                             7.500000e-02 
+##                    Blackadder Goes Forth 
+##                             1.314286e-01</code></pre>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>tylkoThePrisoner <span class="ot">&lt;-</span> serialeIMDB <span class="sc">%&gt;%</span></span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(serial <span class="sc">==</span> <span class="st">&quot;The Prisoner&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, ocena)</span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a>(modulThePrisoner <span class="ot">&lt;-</span> <span class="fu">lm</span>(ocena<span class="sc">~</span>id, <span class="at">data =</span> tylkoThePrisoner)<span class="sc">$</span>coef[<span class="dv">2</span>])</span></code></pre></div>
+<pre><code>##          id 
+## -0.05686275</code></pre>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### SPRAWDZENIE CZY TREND DLA THE PRISONER JEST ISTOTNIE UJEMNY #######</span></span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>trendy_losowe_ThePrisoner <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">9999</span>, {</span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>  tylkoThePrisoner<span class="sc">$</span>wymieszane <span class="ot">&lt;-</span> <span class="fu">sample</span>(tylkoThePrisoner<span class="sc">$</span>ocena)</span>
+<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>  wspolczynnikTrenduThePrisoner <span class="ot">&lt;-</span> <span class="fu">lm</span>(wymieszane<span class="sc">~</span>id, <span class="at">data =</span> tylkoThePrisoner)<span class="sc">$</span>coef</span>
+<span id="cb100-7"><a href="#cb100-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abs</span>(wspolczynnikTrenduThePrisoner[<span class="dv">2</span>])</span>
+<span id="cb100-8"><a href="#cb100-8" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb100-9"><a href="#cb100-9" aria-hidden="true" tabindex="-1"></a>trendy_losowe_ThePrisoner <span class="ot">&lt;-</span> <span class="fu">c</span>(trendy_losowe_ThePrisoner, modulThePrisoner)</span>
+<span id="cb100-10"><a href="#cb100-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-11"><a href="#cb100-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-12"><a href="#cb100-12" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(trendy_losowe_ThePrisoner, <span class="dv">50</span>, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">border=</span><span class="st">&quot;white&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>))</span>
+<span id="cb100-13"><a href="#cb100-13" aria-hidden="true" tabindex="-1"></a><span class="co"># dorysuj na czerwono wsp??czynnik dla BreakingBad</span></span>
+<span id="cb100-14"><a href="#cb100-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">abs</span>(modulThePrisoner), <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">5</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Testowanie%20trendu-2.png" width="672" /></p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(trendy_losowe_ThePrisoner <span class="sc">&gt;=</span> <span class="fu">abs</span>(modulThePrisoner))</span></code></pre></div>
+<pre><code>## [1] 0.0136</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="do">######################################################################wersja 2 ta mi sie bardziej podoba</span></span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>trendy_losowe_ThePrisoner <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">9999</span>, {</span>
+<span id="cb103-4"><a href="#cb103-4" aria-hidden="true" tabindex="-1"></a>  tylkoThePrisoner<span class="sc">$</span>wymieszane <span class="ot">&lt;-</span> <span class="fu">sample</span>(tylkoThePrisoner<span class="sc">$</span>ocena)</span>
+<span id="cb103-5"><a href="#cb103-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb103-6"><a href="#cb103-6" aria-hidden="true" tabindex="-1"></a>  wspolczynnikTrenduThePrisoner <span class="ot">&lt;-</span> <span class="fu">lm</span>(wymieszane<span class="sc">~</span>id, <span class="at">data =</span> tylkoThePrisoner)<span class="sc">$</span>coef</span>
+<span id="cb103-7"><a href="#cb103-7" aria-hidden="true" tabindex="-1"></a>  wspolczynnikTrenduThePrisoner[<span class="dv">2</span>]</span>
+<span id="cb103-8"><a href="#cb103-8" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb103-9"><a href="#cb103-9" aria-hidden="true" tabindex="-1"></a>trendy_losowe_ThePrisoner <span class="ot">&lt;-</span> <span class="fu">c</span>(trendy_losowe_ThePrisoner, modulThePrisoner)</span>
+<span id="cb103-10"><a href="#cb103-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-11"><a href="#cb103-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-12"><a href="#cb103-12" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(trendy_losowe_ThePrisoner, <span class="dv">50</span>, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">border=</span><span class="st">&quot;white&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>))</span>
+<span id="cb103-13"><a href="#cb103-13" aria-hidden="true" tabindex="-1"></a><span class="co"># dorysuj na czerwono wsp??czynnik dla BreakingBad</span></span>
+<span id="cb103-14"><a href="#cb103-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>modulThePrisoner, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">5</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Testowanie%20trendu-3.png" width="672" /></p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(trendy_losowe_ThePrisoner <span class="sc">&lt;=</span> modulThePrisoner)</span></code></pre></div>
+<pre><code>## [1] 0.0053</code></pre>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="do">########## NA DESER ##########</span></span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a>nazwy_seriali <span class="ot">&lt;-</span> <span class="fu">levels</span>(serialeIMDB<span class="sc">$</span>serial)</span>
+<span id="cb106-5"><a href="#cb106-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-6"><a href="#cb106-6" aria-hidden="true" tabindex="-1"></a>seriale_istotne_dodatnie <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb106-7"><a href="#cb106-7" aria-hidden="true" tabindex="-1"></a>seriale_istotne_ujemne <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb106-8"><a href="#cb106-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-9"><a href="#cb106-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (ser <span class="cf">in</span> nazwy_seriali) {</span>
+<span id="cb106-10"><a href="#cb106-10" aria-hidden="true" tabindex="-1"></a>  jedenSerial <span class="ot">&lt;-</span> serialeIMDB <span class="sc">%&gt;%</span></span>
+<span id="cb106-11"><a href="#cb106-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(serial <span class="sc">==</span> ser) <span class="sc">%&gt;%</span></span>
+<span id="cb106-12"><a href="#cb106-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(id, ocena)</span>
+<span id="cb106-13"><a href="#cb106-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb106-14"><a href="#cb106-14" aria-hidden="true" tabindex="-1"></a>  modul_jedenSerial <span class="ot">&lt;-</span> <span class="fu">lm</span>(ocena<span class="sc">~</span>id, <span class="at">data =</span> jedenSerial)<span class="sc">$</span>coef[<span class="dv">2</span>]</span>
+<span id="cb106-15"><a href="#cb106-15" aria-hidden="true" tabindex="-1"></a>p.vaule_jedenSerial <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">lm</span>(ocena<span class="sc">~</span>id, <span class="at">data =</span> jedenSerial))<span class="sc">$</span>coef[<span class="dv">2</span>,<span class="dv">4</span>]</span>
+<span id="cb106-16"><a href="#cb106-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-17"><a href="#cb106-17" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (p.vaule_jedenSerial <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> modul_jedenSerial <span class="sc">&gt;</span><span class="dv">0</span>) {</span>
+<span id="cb106-18"><a href="#cb106-18" aria-hidden="true" tabindex="-1"></a>  seriale_istotne_dodatnie <span class="ot">&lt;-</span> seriale_istotne_dodatnie <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb106-19"><a href="#cb106-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb106-20"><a href="#cb106-20" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span>(p.vaule_jedenSerial <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> modul_jedenSerial <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb106-21"><a href="#cb106-21" aria-hidden="true" tabindex="-1"></a>  seriale_istotne_ujemne <span class="ot">&lt;-</span> seriale_istotne_ujemne <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb106-22"><a href="#cb106-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb106-23"><a href="#cb106-23" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb106-24"><a href="#cb106-24" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb106-25"><a href="#cb106-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb106-26"><a href="#cb106-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb106-27"><a href="#cb106-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-28"><a href="#cb106-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-29"><a href="#cb106-29" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(ocena<span class="sc">~</span>id, <span class="at">data =</span> tylkoBreakingBad)<span class="sc">$</span>coef[<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>##         id 
+## 0.01836267</code></pre>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(ocena<span class="sc">~</span>id, <span class="at">data =</span> tylkoBreakingBad))<span class="sc">$</span>coef[<span class="dv">2</span>,<span class="dv">4</span>]</span></code></pre></div>
+<pre><code>## [1] 1.723685e-06</code></pre>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(ocena<span class="sc">~</span>id, <span class="at">data =</span> tylkoThePrisoner))<span class="sc">$</span>coef[<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## [1] -0.05686275</code></pre>
+</div>
+<div id="regresja-multiplikatywna" class="section level2">
+<h2>16. Regresja multiplikatywna</h2>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="co"># w tym pakiecie znajduje si? zbi?r danych auta2012</span></span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PogromcyDanych)      </span>
+<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a><span class="co"># funkcja filter pozostawia wybrane wiersze ze zbioru danych</span></span>
+<span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a>volkswagen <span class="ot">&lt;-</span> auta2012 <span class="sc">%&gt;%</span></span>
+<span id="cb112-5"><a href="#cb112-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Marka <span class="sc">==</span> <span class="st">&quot;Volkswagen&quot;</span>)</span>
+<span id="cb112-6"><a href="#cb112-6" aria-hidden="true" tabindex="-1"></a><span class="co"># pierwsze dwa wiersze</span></span>
+<span id="cb112-7"><a href="#cb112-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(volkswagen, <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##    Cena Waluta Cena.w.PLN Brutto.netto  KM  kW      Marka    Model Wersja
+## 1 79900    PLN      79900        netto 175 129 Volkswagen Multivan       
+## 2 13600    PLN      13600       brutto  NA  NA Volkswagen     Golf     IV
+##   Liczba.drzwi Pojemnosc.skokowa Przebieg.w.km          Rodzaj.paliwa
+## 1          4/5              2500        157400 olej napedowy (diesel)
+## 2          4/5              1900        195000 olej napedowy (diesel)
+##   Rok.produkcji              Kolor Kraj.aktualnej.rejestracji Kraj.pochodzenia
+## 1          2007 niebieski-metallic                     Polska           Polska
+## 2          2001                                                         Niemcy
+##   Pojazd.uszkodzony Skrzynia.biegow           Status.pojazdu.sprowadzonego
+## 1                          manualna                                       
+## 2                          manualna przygotowany do rejestracji / oplacony
+##                                                                                                                                                                                                                                                                 Wyposazenie.dodatkowe
+## 1 ABS, el. szyby, el. lusterka, klimatyzacja, alufelgi, centralny zamek, poduszka powietrzna, radio / CD, wspomaganie kierownicy, immobiliser, komputer, tempomat, podgrzewane fotele, ESP, lwiatla przeciwmglowe, kierownica wielofunkcyjna, czujnik parkowania, pod. przednia szyba
+## 2                                                                                                                                                                                                                                                                                    
+##   przedzily_Rok.Produkcji przedzialu_Przebieg.w.km Rok.produkcjiKat
+## 1             [2005,2010)            (1e+05,1e+06]      (2006,2010]
+## 2             [2000,2005)            (1e+05,1e+06]      (2000,2006]
+##             MarkaModel
+## 1 Volkswagen: Multivan
+## 2     Volkswagen: Golf
+##                                                                                                                                                                                                                                                          Wyposazenie.dodatkowe_napisy
+## 1 ABS, el. szyby, el. lusterka, klimatyzacja, alufelgi, centralny zamek, poduszka powietrzna, radio / CD, wspomaganie kierownicy, immobiliser, komputer, tempomat, podgrzewane fotele, ESP, lwiatla przeciwmglowe, kierownica wielofunkcyjna, czujnik parkowania, pod. przednia szyba
+## 2                                                                                                                                                                                                                                                                                    
+##         Kolor_napisy
+## 1 niebieski-metallic
+## 2</code></pre>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>mlodeVolkswageny <span class="ot">&lt;-</span> volkswagen <span class="sc">%&gt;%</span></span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Wiek =</span> <span class="dv">2012</span> <span class="sc">-</span> Rok.produkcji) <span class="sc">%&gt;%</span></span>
+<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Wiek <span class="sc">&lt;</span> <span class="dv">20</span>)</span>
+<span id="cb114-4"><a href="#cb114-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-5"><a href="#cb114-5" aria-hidden="true" tabindex="-1"></a>modelCenaWiek <span class="ot">&lt;-</span> <span class="fu">lm</span>(Cena.w.PLN <span class="sc">~</span> Wiek, <span class="at">data=</span>mlodeVolkswageny)</span>
+<span id="cb114-6"><a href="#cb114-6" aria-hidden="true" tabindex="-1"></a><span class="co"># wsp??czynniki modelu</span></span>
+<span id="cb114-7"><a href="#cb114-7" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modelCenaWiek)</span></code></pre></div>
+<pre><code>## (Intercept)        Wiek 
+##   67429.597   -4219.158</code></pre>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mlodeVolkswageny, <span class="fu">aes</span>(<span class="at">y=</span>Cena.w.PLN, <span class="at">x =</span> Wiek)) <span class="sc">+</span> </span>
+<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb116-4"><a href="#cb116-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># funkcj? ylim() ograniczamy zakres na osiach, by wykres by? czytelniejszy</span></span>
+<span id="cb116-5"><a href="#cb116-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>,<span class="dv">400000</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Regresja%20multiplikatywna-1.png" width="672" /></p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="do">### wykres z logarytmiczna osi Y #######</span></span>
+<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mlodeVolkswageny, <span class="fu">aes</span>(<span class="at">y=</span>Cena.w.PLN, <span class="at">x =</span> Wiek)) <span class="sc">+</span> </span>
+<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb117-4"><a href="#cb117-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb117-5"><a href="#cb117-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans=</span><span class="st">&quot;log10&quot;</span>, <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">number_format</span>())</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Regresja%20multiplikatywna-2.png" width="672" /></p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="do">## geom_smooth: method=&quot;auto&quot; and size of largest group is &gt;=1000, so using gam with formula: y ~ s(x, bs = &quot;cs&quot;). Use &#39;method = x&#39; to change the smoothing method.</span></span>
+<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a><span class="co"># dodajemy now? kolumn? logCena.w.PLN</span></span>
+<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a>mlodeVolkswageny <span class="ot">&lt;-</span> mlodeVolkswageny <span class="sc">%&gt;%</span></span>
+<span id="cb118-5"><a href="#cb118-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logCena.w.PLN =</span> <span class="fu">log10</span>(Cena.w.PLN))</span>
+<span id="cb118-6"><a href="#cb118-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-7"><a href="#cb118-7" aria-hidden="true" tabindex="-1"></a><span class="co"># budujemy model na logarytmach</span></span>
+<span id="cb118-8"><a href="#cb118-8" aria-hidden="true" tabindex="-1"></a>modelCenaWiek <span class="ot">&lt;-</span> <span class="fu">lm</span>(logCena.w.PLN <span class="sc">~</span> Wiek, <span class="at">data=</span>mlodeVolkswageny)</span>
+<span id="cb118-9"><a href="#cb118-9" aria-hidden="true" tabindex="-1"></a>wsp <span class="ot">&lt;-</span> <span class="fu">coef</span>(modelCenaWiek)</span>
+<span id="cb118-10"><a href="#cb118-10" aria-hidden="true" tabindex="-1"></a>wsp</span></code></pre></div>
+<pre><code>## (Intercept)        Wiek 
+##  4.93723746 -0.06927818</code></pre>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(mlodeVolkswageny<span class="sc">$</span>logCena.w.PLN)</span></code></pre></div>
+<pre><code>## [1] 4.300777</code></pre>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(mlodeVolkswageny<span class="sc">$</span>Cena.w.PLN)</span></code></pre></div>
+<pre><code>## [1] 28668.09</code></pre>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### </span></span>
+<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mlodeVolkswageny, <span class="fu">aes</span>(<span class="at">y=</span>Przebieg.w.km, <span class="at">x =</span> Wiek)) <span class="sc">+</span> </span>
+<span id="cb124-4"><a href="#cb124-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Regresja%20multiplikatywna-3.png" width="672" /></p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a>mlodeVolkswageny <span class="ot">&lt;-</span>   auta2012 <span class="sc">%&gt;%</span></span>
+<span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Marka <span class="sc">==</span> <span class="st">&quot;Volkswagen&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb125-3"><a href="#cb125-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Wiek =</span> <span class="dv">2012</span> <span class="sc">-</span> Rok.produkcji) <span class="sc">%&gt;%</span></span>
+<span id="cb125-4"><a href="#cb125-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Wiek <span class="sc">&lt;</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb125-5"><a href="#cb125-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Przebieg.w.km <span class="sc">&lt;</span> <span class="dv">400000</span>)</span>
+<span id="cb125-6"><a href="#cb125-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-7"><a href="#cb125-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mlodeVolkswageny, <span class="fu">aes</span>(<span class="at">y=</span>Przebieg.w.km, <span class="at">x =</span> Wiek)) <span class="sc">+</span> </span>
+<span id="cb125-8"><a href="#cb125-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb125-9"><a href="#cb125-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) </span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Regresja%20multiplikatywna-4.png" width="672" /></p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a>mlodeVolkswageny <span class="ot">&lt;-</span> mlodeVolkswageny <span class="sc">%&gt;%</span></span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Wiek0 =</span> <span class="fu">ifelse</span>(Wiek <span class="sc">&gt;=</span> <span class="dv">0</span>, Wiek, <span class="dv">0</span>),</span>
+<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">Wiek5 =</span> <span class="fu">ifelse</span>(Wiek <span class="sc">&gt;=</span> <span class="dv">5</span>, Wiek <span class="sc">-</span> <span class="dv">5</span>, <span class="dv">0</span>))</span>
+<span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb126-5"><a href="#cb126-5" aria-hidden="true" tabindex="-1"></a><span class="co"># model z nowymi zmiennymi</span></span>
+<span id="cb126-6"><a href="#cb126-6" aria-hidden="true" tabindex="-1"></a>M1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Przebieg.w.km <span class="sc">~</span> Wiek0 <span class="sc">+</span> Wiek5, <span class="at">data=</span>mlodeVolkswageny)</span>
+<span id="cb126-7"><a href="#cb126-7" aria-hidden="true" tabindex="-1"></a>M1</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Przebieg.w.km ~ Wiek0 + Wiek5, data = mlodeVolkswageny)
+## 
+## Coefficients:
+## (Intercept)        Wiek0        Wiek5  
+##      -31518        34400       -28540</code></pre>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="co">#?redni przebieg = b1 * wiek[0+] + b2 * wiek[5+]</span></span>
+<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a>M2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Przebieg.w.km <span class="sc">~</span> Wiek0 <span class="sc">+</span> Wiek5 <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data=</span>mlodeVolkswageny)</span>
+<span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a>M2</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Przebieg.w.km ~ Wiek0 + Wiek5 - 1, data = mlodeVolkswageny)
+## 
+## Coefficients:
+##  Wiek0   Wiek5  
+##  27481  -21230</code></pre>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="do">############regresja odcinkami liniowa #############</span></span>
+<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sztuczny zbi?r danych, na potrzeby pokazywania modeli</span></span>
+<span id="cb130-3"><a href="#cb130-3" aria-hidden="true" tabindex="-1"></a>topred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Wiek0 =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">20</span>), <span class="at">Wiek5 =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">15</span>))</span>
+<span id="cb130-4"><a href="#cb130-4" aria-hidden="true" tabindex="-1"></a>topred<span class="sc">$</span>M1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(M1, <span class="at">newdata =</span> topred)</span>
+<span id="cb130-5"><a href="#cb130-5" aria-hidden="true" tabindex="-1"></a>topred<span class="sc">$</span>M2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(M2, <span class="at">newdata =</span> topred)</span>
+<span id="cb130-6"><a href="#cb130-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-7"><a href="#cb130-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-8"><a href="#cb130-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mlodeVolkswageny, <span class="fu">aes</span>(<span class="at">y=</span>Przebieg.w.km, <span class="at">x =</span> Wiek)) <span class="sc">+</span> </span>
+<span id="cb130-9"><a href="#cb130-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span> topred, <span class="fu">aes</span>(<span class="at">y=</span>M1, <span class="at">x =</span> Wiek0), <span class="at">size=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;green&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb130-10"><a href="#cb130-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span> topred, <span class="fu">aes</span>(<span class="at">y=</span>M2, <span class="at">x =</span> Wiek0), <span class="at">size=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Regresja%20multiplikatywna-5.png" width="672" /></p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mlodeVolkswageny, <span class="fu">aes</span>(<span class="at">y=</span>Przebieg.w.km, <span class="at">x =</span> Wiek)) <span class="sc">+</span> </span>
+<span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb131-3"><a href="#cb131-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb131-4"><a href="#cb131-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span> topred, <span class="fu">aes</span>(<span class="at">y=</span>M1, <span class="at">x =</span> Wiek0), <span class="at">size=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;green&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb131-5"><a href="#cb131-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span> topred, <span class="fu">aes</span>(<span class="at">y=</span>M2, <span class="at">x =</span> Wiek0), <span class="at">size=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Regresja%20multiplikatywna-6.png" width="672" /></p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="do">###### ZADANIA ######</span></span>
+<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Wykonaj modelowanie z u?yciem modelu multiplikatywnego dla innej marki.</span></span>
+<span id="cb132-4"><a href="#cb132-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-5"><a href="#cb132-5" aria-hidden="true" tabindex="-1"></a>tylkoBMW <span class="ot">&lt;-</span> auta2012 <span class="sc">%&gt;%</span></span>
+<span id="cb132-6"><a href="#cb132-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Wiek =</span> <span class="dv">2012</span> <span class="sc">-</span> Rok.produkcji) <span class="sc">%&gt;%</span></span>
+<span id="cb132-7"><a href="#cb132-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Wiek <span class="sc">&lt;</span> <span class="dv">20</span>,</span>
+<span id="cb132-8"><a href="#cb132-8" aria-hidden="true" tabindex="-1"></a>         Marka <span class="sc">==</span> <span class="st">&quot;BMW&quot;</span>,</span>
+<span id="cb132-9"><a href="#cb132-9" aria-hidden="true" tabindex="-1"></a>         Przebieg.w.km <span class="sc">&lt;</span> <span class="dv">500000</span>)</span>
+<span id="cb132-10"><a href="#cb132-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-11"><a href="#cb132-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-12"><a href="#cb132-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-13"><a href="#cb132-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> tylkoBMW, <span class="fu">aes</span>(<span class="at">x=</span> Wiek, <span class="at">y=</span> Cena.w.PLN)) <span class="sc">+</span></span>
+<span id="cb132-14"><a href="#cb132-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb132-15"><a href="#cb132-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb132-16"><a href="#cb132-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>,<span class="dv">700000</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Regresja%20multiplikatywna-7.png" width="672" /></p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> tylkoBMW, <span class="fu">aes</span>(<span class="at">x=</span> Wiek, <span class="at">y=</span> Cena.w.PLN)) <span class="sc">+</span></span>
+<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb133-3"><a href="#cb133-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb133-4"><a href="#cb133-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>,<span class="dv">700000</span>)<span class="sc">+</span></span>
+<span id="cb133-5"><a href="#cb133-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log10&quot;</span>, <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">number_format</span>())</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Regresja%20multiplikatywna-8.png" width="672" /></p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a>tylkoBMW <span class="ot">&lt;-</span> tylkoBMW <span class="sc">%&gt;%</span></span>
+<span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logCena.w.PLN =</span> <span class="fu">log</span>(Cena.w.PLN))</span>
+<span id="cb134-3"><a href="#cb134-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-4"><a href="#cb134-4" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(logCena.w.PLN <span class="sc">~</span> Wiek, <span class="at">data =</span> tylkoBMW)</span>
+<span id="cb134-5"><a href="#cb134-5" aria-hidden="true" tabindex="-1"></a>model1</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = logCena.w.PLN ~ Wiek, data = tylkoBMW)
+## 
+## Coefficients:
+## (Intercept)         Wiek  
+##     12.3977      -0.2159</code></pre>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="fu">lm</span>(logCena.w.PLN <span class="sc">~</span> Wiek, <span class="at">data =</span> tylkoBMW)<span class="sc">$</span>coef[<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>##      Wiek 
+## 0.7841046</code></pre>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Je?eli model multiplikatywny wygl?da na uzasadniony, policz ile procent corocznie traci na cenie auto danej marki.</span></span>
+<span id="cb138-2"><a href="#cb138-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-3"><a href="#cb138-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="fu">lm</span>(logCena.w.PLN <span class="sc">~</span> Wiek, <span class="at">data =</span> tylkoBMW)<span class="sc">$</span>coef[<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>##      Wiek 
+## 0.7841046</code></pre>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Zobacz jak wygl?da zale?no?? pomi?dzy cen? a wiekiem dla innych marek. Dziesi?? najcz?stszych marek w tym zbiorze danych to Volkswagen, Opel, Ford, Renault, Audi, Mercedes-Benz, BMW, Peugeot, Skoda, Fiat</span></span>
+<span id="cb140-2"><a href="#cb140-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-3"><a href="#cb140-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Wykonaj modelowanie z u?yciem ?amanej regresji dla innych marek.</span></span>
+<span id="cb140-4"><a href="#cb140-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-5"><a href="#cb140-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> tylkoBMW, <span class="fu">aes</span>(<span class="at">y=</span> Przebieg.w.km, <span class="at">x=</span> Wiek))<span class="sc">+</span></span>
+<span id="cb140-6"><a href="#cb140-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb140-7"><a href="#cb140-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()<span class="sc">+</span></span>
+<span id="cb140-8"><a href="#cb140-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red3&quot;</span>)<span class="sc">+</span></span>
+<span id="cb140-9"><a href="#cb140-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;mod1&quot;</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Regresja%20multiplikatywna-9.png" width="672" /></p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a>tylkoBMW <span class="ot">&lt;-</span> tylkoBMW <span class="sc">%&gt;%</span></span>
+<span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Wiek0 =</span> <span class="fu">ifelse</span>(Wiek <span class="sc">&gt;=</span> <span class="dv">0</span>, Wiek, <span class="dv">0</span>),</span>
+<span id="cb141-3"><a href="#cb141-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">Wiek4 =</span> <span class="fu">ifelse</span>(Wiek <span class="sc">&gt;=</span> <span class="dv">4</span>, Wiek<span class="dv">-4</span>, <span class="dv">0</span>))</span>
+<span id="cb141-4"><a href="#cb141-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-5"><a href="#cb141-5" aria-hidden="true" tabindex="-1"></a>mod1<span class="ot">&lt;-</span> <span class="fu">lm</span>(Przebieg.w.km<span class="sc">~</span>Wiek0 <span class="sc">+</span> Wiek4, <span class="at">data =</span> tylkoBMW)</span>
+<span id="cb141-6"><a href="#cb141-6" aria-hidden="true" tabindex="-1"></a>mod1</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Przebieg.w.km ~ Wiek0 + Wiek4, data = tylkoBMW)
+## 
+## Coefficients:
+## (Intercept)        Wiek0        Wiek4  
+##      -36658        37117       -27839</code></pre>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> mod1<span class="ot">&lt;-</span> <span class="fu">lm</span>(Przebieg.w.km<span class="sc">~</span>Wiek0 <span class="sc">+</span> Wiek4 <span class="sc">-</span><span class="dv">1</span>, <span class="at">data =</span> tylkoBMW)</span>
+<span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a>mod2</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Przebieg.w.km ~ Wiek0 + Wiek4 - 1, data = tylkoBMW)
+## 
+## Coefficients:
+##  Wiek0   Wiek4  
+##  26737  -16887</code></pre>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a>sztuczne <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Wiek0 =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">20</span>),</span>
+<span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Wiek4 =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">16</span>))</span>
+<span id="cb145-3"><a href="#cb145-3" aria-hidden="true" tabindex="-1"></a>sztuczne<span class="sc">$</span>mod1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod1, <span class="at">newdata =</span> sztuczne)</span>
+<span id="cb145-4"><a href="#cb145-4" aria-hidden="true" tabindex="-1"></a>sztuczne<span class="sc">$</span>mod2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod2, <span class="at">newdata =</span> sztuczne)</span>
+<span id="cb145-5"><a href="#cb145-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-6"><a href="#cb145-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-7"><a href="#cb145-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> tylkoBMW, <span class="fu">aes</span>(<span class="at">y=</span> Przebieg.w.km, <span class="at">x=</span> Wiek))<span class="sc">+</span></span>
+<span id="cb145-8"><a href="#cb145-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb145-9"><a href="#cb145-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()<span class="sc">+</span></span>
+<span id="cb145-10"><a href="#cb145-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red3&quot;</span>, <span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb145-11"><a href="#cb145-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;mod1&quot;</span>, <span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb145-12"><a href="#cb145-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> sztuczne, <span class="fu">aes</span>(<span class="at">x=</span> Wiek0, <span class="at">y=</span> mod1), <span class="at">color =</span> <span class="st">&quot;green3&quot;</span>, <span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb145-13"><a href="#cb145-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> sztuczne, <span class="fu">aes</span>(<span class="at">x=</span> Wiek0, <span class="at">y=</span> mod2), <span class="at">color =</span> <span class="st">&quot;gold3&quot;</span>, <span class="at">size=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Regresja%20multiplikatywna-10.png" width="672" /></p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>,<span class="dv">500000</span>)</span></code></pre></div>
+<pre><code>## &lt;ScaleContinuousPosition&gt;
+##  Range:  
+##  Limits:    0 -- 5e+05</code></pre>
+</div>
+<div id="test-dla-średnich" class="section level2">
+<h2>17. Test dla średnich</h2>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PogromcyDanych)</span>
+<span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(serialeIMDB)</span></code></pre></div>
+<pre><code>##   id       serial                         nazwa sezon odcinek ocena glosow
+## 1  1 Breaking Bad                         Pilot     1       1   8.7   9357
+## 2  2 Breaking Bad           Cat&#39;s in the Bag...     1       2   8.2   6506
+## 3  3 Breaking Bad ...And the Bag&#39;s in the River     1       3   8.3   6176
+## 4  4 Breaking Bad                    Cancer Man     1       4   7.9   5796
+## 5  5 Breaking Bad                   Gray Matter     1       5   7.9   5664
+## 6  6 Breaking Bad      Crazy Handful of Nothin&#39;     1       6   8.7   6521
+##      imdbId
+## 1 tt0903747
+## 2 tt0903747
+## 3 tt0903747
+## 4 tt0903747
+## 5 tt0903747
+## 6 tt0903747</code></pre>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a>ocenyFriends     <span class="ot">&lt;-</span> serialeIMDB[serialeIMDB<span class="sc">$</span>serial <span class="sc">==</span> <span class="st">&quot;Friends&quot;</span>, <span class="st">&quot;ocena&quot;</span>]</span>
+<span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ocenyFriends)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   7.400   8.300   8.500   8.508   8.700   9.600</code></pre>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a>ocenyBreakingBad <span class="ot">&lt;-</span> serialeIMDB[serialeIMDB<span class="sc">$</span>serial <span class="sc">==</span> <span class="st">&quot;Breaking Bad&quot;</span>, <span class="st">&quot;ocena&quot;</span>]</span>
+<span id="cb152-2"><a href="#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ocenyBreakingBad)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   7.400   8.025   8.400   8.481   8.800  10.000</code></pre>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(ocenyBreakingBad)</span></code></pre></div>
+<pre><code>## [1] 8.480645</code></pre>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(ocenyFriends)</span></code></pre></div>
+<pre><code>## [1] 8.507983</code></pre>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a>(obserwowana_roznica <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">mean</span>(ocenyBreakingBad) <span class="sc">-</span> <span class="fu">mean</span>(ocenyFriends)))</span></code></pre></div>
+<pre><code>## [1] 0.02733803</code></pre>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="co"># po??czony wektor ocen z obu seriali</span></span>
+<span id="cb160-2"><a href="#cb160-2" aria-hidden="true" tabindex="-1"></a>ocenyRazem <span class="ot">&lt;-</span> <span class="fu">c</span>(ocenyFriends, ocenyBreakingBad)</span>
+<span id="cb160-3"><a href="#cb160-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ile pierwszych ocen pochodzi z Friends</span></span>
+<span id="cb160-4"><a href="#cb160-4" aria-hidden="true" tabindex="-1"></a>liczbaFriends <span class="ot">&lt;-</span> <span class="fu">length</span>(ocenyFriends)</span>
+<span id="cb160-5"><a href="#cb160-5" aria-hidden="true" tabindex="-1"></a><span class="co"># wynikiem funkcji replicate b?dzie 99999 warto?ci, modu??w r??nic ?rednich po wymieszaniu obserwacji pomi?dzy grupami</span></span>
+<span id="cb160-6"><a href="#cb160-6" aria-hidden="true" tabindex="-1"></a>roznice <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">99999</span>, {</span>
+<span id="cb160-7"><a href="#cb160-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># wymieszaj losowo warto?ci pomi?dzy grupami</span></span>
+<span id="cb160-8"><a href="#cb160-8" aria-hidden="true" tabindex="-1"></a>  wymieszane <span class="ot">&lt;-</span> <span class="fu">sample</span>(ocenyRazem)</span>
+<span id="cb160-9"><a href="#cb160-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># losowo dobrane pr?by, pierwsze &#39;liczbaFriends&#39; warto?ci to grupa pierwsza, reszta to druga</span></span>
+<span id="cb160-10"><a href="#cb160-10" aria-hidden="true" tabindex="-1"></a>  oceny1 <span class="ot">&lt;-</span> wymieszane[<span class="dv">1</span><span class="sc">:</span>liczbaFriends]</span>
+<span id="cb160-11"><a href="#cb160-11" aria-hidden="true" tabindex="-1"></a>  oceny2 <span class="ot">&lt;-</span> wymieszane[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span>liczbaFriends)]</span>
+<span id="cb160-12"><a href="#cb160-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># r??nica pomiedzy losowymi grupami</span></span>
+<span id="cb160-13"><a href="#cb160-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abs</span>(<span class="fu">mean</span>(oceny1) <span class="sc">-</span> <span class="fu">mean</span>(oceny2))</span>
+<span id="cb160-14"><a href="#cb160-14" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb160-15"><a href="#cb160-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-16"><a href="#cb160-16" aria-hidden="true" tabindex="-1"></a><span class="co"># jedn? z permutacji jest brak permutacji, dodajemy wi?c obserwowan? r??nic?</span></span>
+<span id="cb160-17"><a href="#cb160-17" aria-hidden="true" tabindex="-1"></a>roznice <span class="ot">&lt;-</span> <span class="fu">c</span>(roznice, obserwowana_roznica)</span>
+<span id="cb160-18"><a href="#cb160-18" aria-hidden="true" tabindex="-1"></a><span class="co"># wy?wietl 20 r??nic zaobserowanych w przypadku losowego podzia?u na grupy</span></span>
+<span id="cb160-19"><a href="#cb160-19" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(roznice,<span class="dv">20</span>)</span></code></pre></div>
+<pre><code>##  [1] 0.023488750 0.043819463 0.043602602 0.070032529 0.033654107 0.055801030
+##  [7] 0.001124966 0.080414747 0.027338032 0.049701816 0.112727026 0.090363242
+## [13] 0.082447818 0.053767959 0.112943887 0.070249390 0.060084034 0.119043101
+## [19] 0.049701816 0.055801030</code></pre>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wektor referencyjnych r??nic po losowym podziale na grupy</span></span>
+<span id="cb162-2"><a href="#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(roznice, <span class="dv">50</span>, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">border=</span><span class="st">&quot;white&quot;</span>)</span>
+<span id="cb162-3"><a href="#cb162-3" aria-hidden="true" tabindex="-1"></a><span class="co"># obserowana r??nica w ?rednich pomi?dzy Friends a Breaking Bad</span></span>
+<span id="cb162-4"><a href="#cb162-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>obserwowana_roznica, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">5</span>)</span></code></pre></div>
+<p><img src="pogRomcy2.3_files/figure-html/Test dla średnich-1.png" width="672" /></p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p-warto??</span></span>
+<span id="cb163-2"><a href="#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(roznice <span class="sc">&gt;=</span> obserwowana_roznica) </span></code></pre></div>
+<pre><code>## [1] 0.64126</code></pre>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

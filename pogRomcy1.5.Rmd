@@ -1,0 +1,334 @@
+---
+title: "pogRomcy1.5"
+author: "Przemyslaw Lagosz"
+date: "18-03-2021"
+output: html_document
+---
+
+# Przetwarzanie potokowe danych <br>
+
+```{r Ustawienie opcji globalnych}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+Wgranie bibliotek
+```{r Wgranie bibliotek}
+library(PogromcyDanych)
+library(dplyr)
+```
+
+## 16. Czyszczenie i wprowadzenie do obróbki danych
+
+```{r Czyszczenie i wprowadzenie do obróbki danych}
+library(PogromcyDanych)
+
+DF <- data.frame(
+  imie = c("Maja","Anna","Zosia","Anna"),
+  wiek = c("40","12,5","25","16.6"),
+  numer = c(1,2,NA,4),
+  oczo = factor(c("niebieskie", "jasno-niebieskie", "ciemne", "niebieskie")),
+  stringsAsFactors = FALSE)
+
+########## ZMIANA NAZYW KOLUMNY ###########
+colnames(DF) <- c("imie", "wiek", "numer", "oczy")
+colnames(DF)[4] <- "oczy"
+
+
+
+######## ZMIANA WEDLUG WZORU #################
+(tmp <- gsub(pattern = ",", replacement = ".", DF$wiek))
+(DF$wiek <- as.numeric(tmp))
+
+
+
+# tylko centrowanie: scale(DF$wiek, center = TRUE, scale = FALSE)
+# tylko skalowanie:  scale(DF$wiek, center = FALSE, scale = TRUE)
+# normalizacja
+(DF$wiekNorm <- scale(DF$wiek))
+
+levels(DF$oczy) <- c("ciemne", "niebieskie", "niebieskie")
+
+levels((DF$oczy))
+
+# Pominiecie wierszy z wartośćią NA
+na.omit(DF)
+
+# Sprawdzenie który wiersz ma wartość NA
+(ktorePuste <- which(is.na(DF$numer)))
+
+# Zmiana KOlejnosci levels
+
+factor(DF$oczy, levels = c("niebieskie", "ciemne"))
+
+
+# zmiana wartosci w kolumach 
+DF$imie=="Anna"
+
+DF$imie[DF$imie=="Anna"] <- "Joanna"
+
+
+#### ZADANIA ####
+df <- data.frame(
+  litary = c("X","B","Y","D"),
+  liczby = c("1","2","3,0","4,0"),
+  braki = c(NA,1,NA,1),
+  stringsAsFactors = FALSE)
+
+## popraw nazwę kolumny litary.
+colnames(df)[1] <- "litery"
+
+## Zamień wartośći X i Y odpowiednio na A i B,
+df[c(1,3),"litery"] <- c("A","B")
+
+## zamień kolumny liczby na kolumne liczb,
+class(df$liczby)
+
+#zmiana "," na "."
+gsub(pattern = ",",replacement = ".", df$liczby)
+df$liczby <- as.numeric(df$liczby)
+
+class(df$liczby)
+
+## zastąp brakujące dane w kolumnie braki.
+
+# wyrzuca wektor z wartościami TRUE tam gdzie NA
+is.na(df$braki)
+
+# wyrzuca wektor z indeksami gdzie występuje NA
+which(is.na(df$braki))
+
+# zastepuje wskazanie miejsca 1
+df$braki[is.na(df$braki)] <- 1
+
+# zastąpi brakujace miejsca wartośćią średnią z kolumny
+df$braki[which(is.na(df$braki))] <- mean(df$braki, na.rm = TRUE)
+```
+
+## 17. Filtrowanie wierszy
+```{r Filtrowanie wierszy}
+#Ze zbioru danych auta2012 pozostaw tylko samochody o wieku do pi?ciu lat (czyli o roku produkcji > 2007). 
+#Nazwij ten wynikowy zbi?r danych mlodeAuta
+
+mlodeAuta <- auta2012 %>%
+  filter(Rok.produkcji > 2007)
+
+#Z przed chwil? stworzonego zbioru danych mlodeAuta wybierz tylko Fiaty 500.
+ mlodeAuta <- mlodeAuta %>%
+   filter(Marka == "Fiat", Model == "500")
+ 
+#Ile jest takich aut? (wymiary ramki danych mo?esz sprawdzi? funkcj? dim())
+ dim(mlodeAuta)
+```
+
+## 18. Sortowanie wierszy
+```{r Sortowanie wierszy}
+ #Posortuj auta według mocy silnika (liczby koni mechanicznych, kolumna KM) lub 
+ #pojemno?ci skokowej (kolumna Pojemnosc.skokowa). Które marki mają najwieksze silniki?
+ 
+auta2012_silniki <- arrange(auta2012, desc(Pojemnosc.skokowa))
+
+head(auta2012_silniki %>%
+  select(Marka, Pojemnosc.skokowa),3)
+
+#Wybierz tylko auta marki ?Rolls-Royce? i posortuj je po cenie.
+ 
+ rr_cena <- auta2012 %>%
+   filter(Marka == "Rolls-Royce") %>%
+arrange(desc(Cena.w.PLN))
+```
+
+## 19. Przetwarzanie potokowe
+```{r Przetwarzanie potokowe}
+#U?yj operatora %>% by ze zbioru danych auta2012 wybra? tylko 10 najta?szych aut marki Rolls-Royce.
+tanierojse <- auta2012 %>%
+  filter(Marka == "Rolls-Royce") %>%
+  arrange(Cena.w.PLN) %>%
+  select(Marka,Model, Cena.w.PLN)
+
+head(tanierojse,3)
+
+#U?yj operatora %>% by ze zbioru danych auta2012 wybra? 5 Volkswagen?w o najwi?kszych silnikach.
+
+
+```
+## 20. Filtrowanie kolumn  
+Wyrażenia regularne do wyszukiwania można znaleśc tutaj [WIKIPEDIA](http://pl.wikipedia.org/wiki/Wyra%C5%BCenie_regularne#Podstawowe_elementy)
+```{r Filtrowanie kolumn}
+#Wybierz tylko samochody marki Volvo, posortuj je po pojemności skokowej, a następnie wyświetl
+#tylko trzy kolumny: Marka, Cena.w.PLN i Kolor.
+
+volvo <- auta2012 %>%
+  filter(Marka == "Volvo") %>%
+  arrange(Pojemnosc.skokowa) %>%
+  select(Marka, Cena.w.PLN, Kolor)
+
+head(volvo, 3)
+
+#Wybierz tylko te kolumny, których nazwa kończy się na a (wyrażenie regularne opisujące a na ko?cu 
+#nazwy to a$, więcej o wyra?eniach regularnych
+
+tylkoa <- auta2012 %>%
+  select(matches("a$"))
+
+head(tylkoa)
+```
+## 21. Tworzenie nowych cech
+```{r Tworzenie nowych cech}
+# Dla zbioru danych koty_ptaki dodajmy nową zmienną. Z fizyki wiemy, że pęd to prędkość razy masa. 
+#Policz maksymalne pędy dla każdego gatunku oraz uporządkuj wiersze w kolejności od tych zdolnych
+#do uzyskiwania najwyższego pędu.
+
+koty_ptaki_ped <- koty_ptaki %>%
+  mutate(ped = waga*predkosc) %>%
+  arrange(-ped)
+
+head(koty_ptaki_ped,3)
+
+#Policz średni przebieg na rok, dzieląc przebieg przez wieka auta.
+
+przebieg <- auta2012 %>%
+  mutate(wiek = 2013 - Rok.produkcji,
+         przebieg_na_rok = round(Przebieg.w.km/wiek)) %>%
+  arrange(-przebieg_na_rok) %>%
+  filter(Przebieg.w.km < 1000000)
+
+head(przebieg,4)
+
+#Poza koniem mechanicznym inn? ciekaw? jednostk? mocy jest ko? parowy (jednostka HP). 
+#Jeden ko? mechaniczny to 0.9863 konia parowego. Utw?rz now? zmienn?, kt?ra przedstawi moc aut w
+#koniach parowych 
+#(btw: Wikipedia zna jeszcze kilka innych ciekawych jednostek mocy).
+
+auta2012_kon_parowy <- auta2012 %>%
+  mutate(kon.parowy = KM*0.9863)
+
+head(auta2012_kon_parowy,3)
+
+```
+## 22. Agregowanie danych
+```{r Agregowanie danych}
+# Policz sumaryczny przebieg wszystkich samochodów. Następnie policz ile razy okrążono kulę
+#ziemską uwzględniając te wszystkie przebiegi.
+
+przebieg_sum <- auta2012 %>%
+  summarise(przebieg_caly = sum(Przebieg.w.km, na.rm = TRUE),
+            ile_okrazen = przebieg_caly/40075,
+            średnio.okrążeń = ile_okrazen/ n())
+
+przebieg_sum
+
+#Wybierz tylko samochody marki ?Rolls-Royce? i policz ich ?redni przebieg oraz ?redni? cen?.
+
+rojsy <- auta2012 %>%
+  filter(Marka == "Rolls-Royce") %>%
+  summarise(sr_przebieg = mean(Przebieg.w.km, na.rm = TRUE),
+            sr_cena = mean(Cena.w.PLN))
+
+rojsy
+```
+## 23. Przetwarzanie danych w grupach
+```{r Przetwarzanie danych w grupach}
+# Wybierz pięcioletnie Golfy i sprawdź czy średnia cena zależy od kraju aktualnej rejestracji.
+# W tym celu pogrupuj po zmiennej Kraj.aktualnej.rejestracji i w każdej grupie policz średnią.
+
+head(
+  auta2012 %>%
+  filter(Model == "Golf",
+         Rok.produkcji > 2007) %>%
+  group_by(Kraj.aktualnej.rejestracji) %>%
+  summarise(cena_sr = mean(Cena.w.PLN)) %>%
+  arrange(cena_sr))
+
+
+# Wybierz tylko Peugeoty 206 i policz ?redni? cen? w zale?no?ci od roku produkcji. 
+# Posortuj te grupy po roku produkcji.
+
+head(
+  auta2012 %>%
+   filter(Model == "206") %>%
+  group_by(Rok.produkcji) %>%
+  summarise(cena_sr = mean(Cena.w.PLN))
+)
+```
+## 24. Reprezentacja wąska i szeroka danych
+```{r Reprezentacja wąska i szeroka danych}
+library(PBImisc) #w tym pakiecie znajduje sie DF kidney
+library(dplyr)
+library(tidyr)
+
+kidney$id <- rownames(kidney)
+
+kidney_wybrane <- kidney %>%
+  dplyr::select(id,therapy, MDRD7:MDRD60)
+
+kidney_waska <- gather(kidney_wybrane, time, MDRD, MDRD7:MDRD60)  
+
+kidney_waska %>%
+  filter(id == "1")
+
+#### waska --> szeroka ####
+
+library(SmarterPoland)
+#tsdtr210 <- getEurostatRCV("tsdtr210")
+#head(tsdtr210)
+
+daty_df <- data.frame(daty = c("2004-01-01", "2012-04-15", "2006-10-29", "2010-03-03"),
+                 id = 1:4)
+daty_df
+
+separate(daty_df, daty, c("rok", "miesiac", "dzien"), "-")
+
+############################# ZADANIA ########################
+
+# W bazie danych Eurostatu o nazwie prc_ppp_ind zbierane są informacje o średniej sile nabywczej.
+# Odczytaj te dane funkcją getEurostatRCV(), a następnie zamień z postaci wąskiej do szerokiej.
+
+prc_ppp_ind <- getEurostatRCV("prc_ppp_ind")
+head(prc_ppp_ind)
+
+#Tutaj kolumny to time
+fajno <- spread(prc_ppp_ind, time, value)
+head(fajno)
+
+#Tutaj kolumny to geo
+szeroka <- spread(prc_ppp_ind, geo, value)
+head(szeroka)
+
+
+# Ze zbioru danych kidney wybierz tylko kolumny MDRD12, MDRD24, MDRD36, MDRD60 a następnie 
+# zamień je z postaci szerokiej do wąskiej.
+
+kidney$id <- rownames(kidney)
+
+## Postać szeroka
+head(kidney)
+
+## Postać wąska
+kidnej_pogromcy <- kidney %>% 
+  dplyr::select(id, MDRD12:MDRD60) %>%
+  gather(MDRD, time, MDRD12:MDRD60)
+
+head(kidnej_pogromcy)
+
+kidney_zadanie <- kidney %>%
+  select(MDRD12:MDRD60) %>%
+  gather(time, MDRD, MDRD12:MDRD60)
+
+head(kidney_zadanie)
+
+# W zbiorze danych kidney niezgodności w antygenach AB i DR są opisane przez kolumny discrepancy.AB 
+#i discrepancy.DR. Zamień je w jedną kolumnę o nazwie discrepancy gdzie obie niezgodności są sklejone 
+#i separowane znakiem _.
+
+kidney_discrepancy <- kidney %>%
+  unite(discrepancy, discrepancy.AB, discrepancy.DR, sep = "_")
+
+head(kidney_discrepancy)
+
+# niezgodnosci
+kidnej_pogromcy_2 <- kidney %>%
+  dplyr::select(therapy, discrepancy.AB, discrepancy.DR) %>%
+  unite(discrepancy, discrepancy.AB, discrepancy.DR, sep="_")
+
+head(kidnej_pogromcy_2)
+```
