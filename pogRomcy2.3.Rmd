@@ -252,7 +252,6 @@ ggplot(data = pearson, aes(x= ojciec, y= syn))+
 
 ## 14. Trendy w danych
 
-# TU SKOŃCZYŁEŚ
 ```{r Trendy w danych}
 
 # wykres z ocenami odcinków, pakiet ggvis
@@ -296,20 +295,25 @@ head(tylkoBreakingBad)
 # wyznacz trend liniowy dla serialu BreakingBad
 lm(ocena~id, tylkoBreakingBad)
 
-# odczytaj z trendu liniowego wsp??czynniki trendu
+# odczytaj z trendu liniowego współczynniki trendu
 lm(ocena~id, tylkoBreakingBad)$coef
 
-########### ZADANIA 14 #############
+###########################3## ZADANIA 14 ###########################
+
+# Znajdź serial o najsilniej rosnącym trendzie dotyczącym ocen (ponieważ oceny są ograniczone z góry przez 10 to może nie być serial o najwyższej średniej ocenie)
+# 
+# Znajdź serial o najsilniejszym trendzie spadkowym
+
+#Wyświetl 2 serial
 unique(serialeIMDB$serial)[2]
 
-serialeIMDB %>%
-  group_by(serial) %>%
-
-lm(ocena~id, .)
-
-
+#Stworzenie fektora z nazwami seriali
 nazwy_seriali <- levels(serialeIMDB$serial)
+
+#Stworzenie pustego wektora
 wspolczynnikTrendu <- c()
+
+#Petla która pokolei dla każdego serialu, dodaje jego wspoólczynnik do wektora `wspolczynnikTrendu`
 
 for (ser in nazwy_seriali) {
   jedenSerial <- serialeIMDB %>%
@@ -317,8 +321,13 @@ for (ser in nazwy_seriali) {
     select(id, ocena)
   wspolczynnikTrendu[ser] <- lm(ocena~id, jedenSerial)$coef[2]
 }
-# na pocz?tku najsilniejsze spadki, na koniec wzrosty
-max(sort(wspolczynnikTrendu))
+
+# Na początku najsilniejsze wzrosty
+
+head(-sort(wspolczynnikTrendu))
+
+# Najwiekszy i najmniejszy
+max(wspolczynnikTrendu)
 min(wspolczynnikTrendu)
 ```
 
@@ -328,7 +337,7 @@ library(PogromcyDanych)
 # wybieramy dane o jednym serialu, dwie kolumny
 tylkoBreakingBad <- serialeIMDB %>% 
   filter(serial == "Breaking Bad") %>% select(id, ocena)
-# wy?wietlamy pierwsze wiersze
+# wyświetlamy pierwsze wiersze
 head(tylkoBreakingBad)
 
 lm(ocena~id, tylkoBreakingBad)$coef
@@ -337,34 +346,44 @@ lm(ocena~id, tylkoBreakingBad)$coef
 
 (modulBreakingBad <- abs(wspolczynnikiTrendu[2]))
 
-# funkcja replicate() powtarza drugie wyra?enie tyle razy, ile wynosi pierwszy argument (=99999)
-trendy <- replicate(99999, {
-  # wymieszaj losowo warto?ci, robi to funkcja sample()
+# funkcja replicate() powtarza drugie wyrażenie tyle razy, ile wynosi pierwszy argument (=99999)
+trendy <- replicate(9999, {
+  # wymieszaj losowo wartości, robi to funkcja sample()
   tylkoBreakingBad$wymieszane <- sample(tylkoBreakingBad$ocena)
   
-  # wyznacz modu? wsp??czynnika wzrostu dla losowo wymieszanych danych
+  # wyznacz moduł współczynnika wzrostu dla losowo wymieszanych danych
   wspolczynnikiTrendu <- lm(wymieszane~id, tylkoBreakingBad)$coef
+  #dodanie samego współczynnika
   abs(wspolczynnikiTrendu[2])
 })
 
-# modulBreakingBad jest te? jedn? z mo?liwych permutacji, dodajmy go do wyniku
+# modulBreakingBad jest tez jedną z możliwych permutacji, dodajmy go do wyniku
 trendy <- c(trendy, modulBreakingBad)
-# wy?wietl pierwsze 20 z tak otrzymanych warto?ci
+
+# wyświetl pierwsze 20 z tak otrzymanych wartości
 head(trendy, 20)
 
-# jak wygl?daj? przypadkowe wsp??czynniki
+## Pokazanie rzeczywistego trendu na tle trendów wynikających z losowych fluktuacji ocen
+
+# jak wyglądają przypadkowe współczynniki
 hist(trendy, 50, col="grey", main="", las=1, border="white", xlim=c(0, 0.02))
 # dorysuj na czerwono wsp??czynnik dla BreakingBad
 abline(v=modulBreakingBad, col="red", lwd=5)
+```
 
-# p-warto??
+* p-value (p-wartość określa) ile trendów wynikających z losowych fluktuacji jest wieksza rzeczywistego, zaobserwowanego trendu
+```{r Testowanie trendu2}
+# p-wartość
 mean(trendy >= modulBreakingBad)
 
 ####### ZADANIE odc 15 ########
 
+## 1.Znajdź serial o istotnym ujemnym trendem, to znaczy takim, którego oceny maleją.
+
 nazwy_seriali <- levels(serialeIMDB$serial)
 wspolczynnikiTrendu <- c()
 
+# Stworzenie wektora z wspolczynnikami trendów
 for (ser in nazwy_seriali) {
   jedenSerial <- serialeIMDB %>%
     filter(serial == ser) %>%
@@ -373,8 +392,12 @@ for (ser in nazwy_seriali) {
   wspolczynnikiTrendu[ser] <- lm(ocena~id, data = jedenSerial)$coef[2]
   
 }
-sort(wspolczynnikiTrendu)
 
+head(
+sort(wspolczynnikiTrendu)
+)
+
+#Wektor tylko z seriale The Prisoner
 tylkoThePrisoner <- serialeIMDB %>%
   filter(serial == "The Prisoner") %>%
   select(id, ocena)
@@ -385,19 +408,21 @@ tylkoThePrisoner <- serialeIMDB %>%
 
 trendy_losowe_ThePrisoner <- replicate(9999, {
   tylkoThePrisoner$wymieszane <- sample(tylkoThePrisoner$ocena)
-  
   wspolczynnikTrenduThePrisoner <- lm(wymieszane~id, data = tylkoThePrisoner)$coef
   abs(wspolczynnikTrenduThePrisoner[2])
 })
+
 trendy_losowe_ThePrisoner <- c(trendy_losowe_ThePrisoner, modulThePrisoner)
 
 
 hist(trendy_losowe_ThePrisoner, 50, col="grey", main="", las=1, border="white", xlim = c(0, 0.1))
-# dorysuj na czerwono wsp??czynnik dla BreakingBad
+# dorysuj na czerwono współczynnik dla BreakingBad
 abline(v=abs(modulThePrisoner), col="red", lwd=5)
 
 mean(trendy_losowe_ThePrisoner >= abs(modulThePrisoner))
-######################################################################wersja 2 ta mi sie bardziej podoba
+
+########################### Wersja 2 ta mi sie bardziej podoba ############
+### TU NIE MA WARTOSCI ABSOLUTNYCH PRZY WYZNACZENIU LOSOWYCH SILCZYNNIKÓW #####
 
 trendy_losowe_ThePrisoner <- replicate(9999, {
   tylkoThePrisoner$wymieszane <- sample(tylkoThePrisoner$ocena)
@@ -408,17 +433,20 @@ trendy_losowe_ThePrisoner <- replicate(9999, {
 trendy_losowe_ThePrisoner <- c(trendy_losowe_ThePrisoner, modulThePrisoner)
 
 
+# Wykres
 hist(trendy_losowe_ThePrisoner, 50, col="grey", main="", las=1, border="white", xlim = c(-0.1, 0.1))
-# dorysuj na czerwono wsp??czynnik dla BreakingBad
+# dorysuj na czerwono współczynnik dla BreakingBad
 abline(v=modulThePrisoner, col="red", lwd=5)
 
 mean(trendy_losowe_ThePrisoner <= modulThePrisoner)
 
 ########## NA DESER ##########
 
+#3. [Trudne] Policz dla ilu serialu ich oceny rosną a dla ilu maleją i te wzrosty lub spadki są istotnie większe niż wynikające z przypadku.
 
 nazwy_seriali <- levels(serialeIMDB$serial)
 
+#Stworzenie pustych wektoróW
 seriale_istotne_dodatnie <- 0
 seriale_istotne_ujemne <- 0
 
@@ -438,21 +466,17 @@ if (p.vaule_jedenSerial < 0.05 & modul_jedenSerial >0) {
 }
  
   }
+
+seriale_istotne_dodatnie
+seriale_istotne_ujemne
   
-  
-
-
-lm(ocena~id, data = tylkoBreakingBad)$coef[2]
-
+#Wyrzucan sampo -value z podsumowania
 summary(lm(ocena~id, data = tylkoBreakingBad))$coef[2,4]
-
-summary(lm(ocena~id, data = tylkoThePrisoner))$coef[2]
-                                           
 ```
 ## 16. Regresja multiplikatywna  
 
 ```{r Regresja multiplikatywna}
-# w tym pakiecie znajduje si? zbi?r danych auta2012
+# w tym pakiecie znajduje się zbiór danych auta2012
 library(PogromcyDanych)      
 # funkcja filter pozostawia wybrane wiersze ze zbioru danych
 volkswagen <- auta2012 %>%
@@ -464,24 +488,30 @@ mlodeVolkswageny <- volkswagen %>%
   mutate(Wiek = 2012 - Rok.produkcji) %>%
   filter(Wiek < 20)
 
+#Uzaleznienie Ceny od Wieku
 modelCenaWiek <- lm(Cena.w.PLN ~ Wiek, data=mlodeVolkswageny)
-# wsp??czynniki modelu
+
+# współczynniki modelu
 coef(modelCenaWiek)
 
 ggplot(mlodeVolkswageny, aes(y=Cena.w.PLN, x = Wiek)) + 
   geom_point() + 
   geom_smooth(method="lm", col="red", size=2) +
-  # funkcj? ylim() ograniczamy zakres na osiach, by wykres by? czytelniejszy
+  # syntax ylim() ograniczamy zakres na osiach, by wykres był czytelniejszy
   ylim(0,400000)
 
-### wykres z logarytmiczna osi Y #######
+### wykres z logarytmiczną osi Y #######
+# Wyglada na to ze wystepuje zaleznosc logarytmiczna
 ggplot(mlodeVolkswageny, aes(y=Cena.w.PLN, x = Wiek)) + 
   geom_point() + 
   geom_smooth(size=2) + geom_smooth(method="lm", col="red", size=2) +
   scale_y_continuous(trans="log10", labels = scales::number_format())
-## geom_smooth: method="auto" and size of largest group is >=1000, so using gam with formula: y ~ s(x, bs = "cs"). Use 'method = x' to change the smoothing method.
 
-# dodajemy now? kolumn? logCena.w.PLN
+## geom_smooth: method="auto" and size of largest group is >=1000, so using gam with 
+## formula: y ~ s(x, bs = "cs"). Use 'method = x' to change the smoothing method.
+
+# dodajemy nową kolumnę logCena.w.PLN
+
 mlodeVolkswageny <- mlodeVolkswageny %>%
   mutate(logCena.w.PLN = log10(Cena.w.PLN))
 
@@ -490,15 +520,22 @@ modelCenaWiek <- lm(logCena.w.PLN ~ Wiek, data=mlodeVolkswageny)
 wsp <- coef(modelCenaWiek)
 wsp
 
-mean(mlodeVolkswageny$logCena.w.PLN)
-mean(mlodeVolkswageny$Cena.w.PLN)
+## ŚREDNIA CENA WYJSCIOWA TO 10^wsp[1], zamiana na orginalną skale
+
+10**wsp[1]
+
+# wspólczynnik [2], Drugi współczynnik wynosi -0.0692782, co oznacza, że cena w kolejnym
+# roku to 0.8525538 ceny z poprzedniego roku, czyli przeciętnie, corocznie auto traci 15% swojej ceny.
 
 
-#### 
 
+#### Dalsze przykłady
+
+#Wykres startowy
 ggplot(mlodeVolkswageny, aes(y=Przebieg.w.km, x = Wiek)) + 
   geom_point()
 
+# usunięcie skrajnych wartosci
 mlodeVolkswageny <-   auta2012 %>%
   filter(Marka == "Volkswagen") %>%
   mutate(Wiek = 2012 - Rok.produkcji) %>%
@@ -507,32 +544,44 @@ mlodeVolkswageny <-   auta2012 %>%
 
 ggplot(mlodeVolkswageny, aes(y=Przebieg.w.km, x = Wiek)) + 
   geom_point()+
-  geom_smooth(size=2) + geom_smooth(method="lm", col="red", size=2) 
+  geom_smooth(size=2) +
+  geom_smooth(method="lm", col="red", size=2) 
 
-
+# Widać że przebieg znacznie szybciej rośnie przez 5 lat, wiec rozgraniczamy
 mlodeVolkswageny <- mlodeVolkswageny %>%
   mutate(Wiek0 = ifelse(Wiek >= 0, Wiek, 0),
          Wiek5 = ifelse(Wiek >= 5, Wiek - 5, 0))
+
+head(mlodeVolkswageny %>%
+       select(Wiek, Wiek0, Wiek5)
+     , 20)
 
 # model z nowymi zmiennymi
 M1 <- lm(Przebieg.w.km ~ Wiek0 + Wiek5, data=mlodeVolkswageny)
 M1
 
-#?redni przebieg = b1 * wiek[0+] + b2 * wiek[5+]
+# średni przebieg = b1 * wiek[0+] + b2 * wiek[5+]
+## dodanie "-1" Oznacza ze prognozowany przebieg dla nowych aut oznacza 0. CO MA SENS
+
 M2 <- lm(Przebieg.w.km ~ Wiek0 + Wiek5 - 1, data=mlodeVolkswageny)
 M2
 
-############regresja odcinkami liniowa #############
-# sztuczny zbi?r danych, na potrzeby pokazywania modeli
+############  REGRESJA ODCINKAMI LINIOWA #############
+# sztuczny zbiór danych, na potrzeby pokazywania 
+
 topred <- data.frame(Wiek0 = c(0, 5, 20), Wiek5 = c(0, 0, 15))
 topred$M1 <- predict(M1, newdata = topred)
 topred$M2 <- predict(M2, newdata = topred)
 
+topred
 
+# Wykres w oparciu o modele M1 i M2
 ggplot(mlodeVolkswageny, aes(y=Przebieg.w.km, x = Wiek)) + 
   geom_line(data= topred, aes(y=M1, x = Wiek0), size=2, col="green") + 
   geom_line(data= topred, aes(y=M2, x = Wiek0), size=2, col="blue")
 
+# Wykres w oparciu o modele M1 i M2 na tle faktycznego zbioru
+# Jak widać zielony model startuje z przebiegiem -3k. [km]
 ggplot(mlodeVolkswageny, aes(y=Przebieg.w.km, x = Wiek)) + 
   geom_point() + 
   geom_smooth(method="lm", col="red", size=2) +
@@ -540,9 +589,9 @@ ggplot(mlodeVolkswageny, aes(y=Przebieg.w.km, x = Wiek)) +
   geom_line(data= topred, aes(y=M2, x = Wiek0), size=2, col="blue")
 
 
-###### ZADANIA ######
+##############   ZADANIA   ##############
 
-#Wykonaj modelowanie z u?yciem modelu multiplikatywnego dla innej marki.
+#Wykonaj modelowanie z użyciem modelu multiplikatywnego dla innej marki.
 
 tylkoBMW <- auta2012 %>%
   mutate(Wiek = 2012 - Rok.produkcji) %>%
@@ -551,33 +600,38 @@ tylkoBMW <- auta2012 %>%
          Przebieg.w.km < 500000)
 
 
-
+# Pierwsze spojrzenie
 ggplot(data = tylkoBMW, aes(x= Wiek, y= Cena.w.PLN)) +
   geom_point()+
   geom_smooth(method = "lm", color = "red", size = 2)+
   ylim(0,700000)
 
+# Sprawdzenie czy model linow pokrywa sie z skalą log
 ggplot(data = tylkoBMW, aes(x= Wiek, y= Cena.w.PLN)) +
   geom_point()+
   geom_smooth(method = "lm", color = "red", size = 2)+
   ylim(0,700000)+
   scale_y_continuous(trans = "log10", labels = scales::number_format())
 
+# Wybranie tylko BMW
+
 tylkoBMW <- tylkoBMW %>%
   mutate(logCena.w.PLN = log(Cena.w.PLN))
 
+# Stworzenie modelu
 model1 <- lm(logCena.w.PLN ~ Wiek, data = tylkoBMW)
 model1
 
+## Tyle średnio wnosi cena w auta w porownaniu do porzedniego roku
 1 + lm(logCena.w.PLN ~ Wiek, data = tylkoBMW)$coef[2]
 
-#Je?eli model multiplikatywny wygl?da na uzasadniony, policz ile procent corocznie traci na cenie auto danej marki.
+## 2. Zobacz jak wygląda zależność pomiędzy ceną a wiekiem dla innych marek.
+# Dziesi?? najcz?stszych marek w tym zbiorze danych to Volkswagen, Opel, Ford,
+# Renault, Audi, Mercedes-Benz, BMW, Peugeot, Skoda, Fiat
 
-1 + lm(logCena.w.PLN ~ Wiek, data = tylkoBMW)$coef[2]
-#Zobacz jak wygl?da zale?no?? pomi?dzy cen? a wiekiem dla innych marek. Dziesi?? najcz?stszych marek w tym zbiorze danych to Volkswagen, Opel, Ford, Renault, Audi, Mercedes-Benz, BMW, Peugeot, Skoda, Fiat
+#Wykonaj modelowanie z użyciem łamanej regresji dla innych marek.
 
-#Wykonaj modelowanie z u?yciem ?amanej regresji dla innych marek.
-
+# Pierwsze spojrzenie na zależnosci
 ggplot(data = tylkoBMW, aes(y= Przebieg.w.km, x= Wiek))+
   geom_point()+
   geom_smooth()+
@@ -585,23 +639,28 @@ ggplot(data = tylkoBMW, aes(y= Przebieg.w.km, x= Wiek))+
   geom_smooth(method = "mod1")
 
 
-
+# Dodanie kolumn
 tylkoBMW <- tylkoBMW %>%
   mutate(Wiek0 = ifelse(Wiek >= 0, Wiek, 0),
          Wiek4 = ifelse(Wiek >= 4, Wiek-4, 0))
 
+#Model 1
 mod1<- lm(Przebieg.w.km~Wiek0 + Wiek4, data = tylkoBMW)
 mod1
 
+#Model 2
 mod2 <- mod1<- lm(Przebieg.w.km~Wiek0 + Wiek4 -1, data = tylkoBMW)
 mod2
 
+# Stworzenie sztucznego zbioru
 sztuczne <- data.frame(Wiek0 = c(0,4,20),
                        Wiek4 = c(0,0,16))
+
+# Dodanie kolumnt z przewidywanymi wartosciami przebiegu na podstawie okreslonego modelu
 sztuczne$mod1 <- predict(mod1, newdata = sztuczne)
 sztuczne$mod2 <- predict(mod2, newdata = sztuczne)
 
-
+## Przedstawienie modeli
 ggplot(data = tylkoBMW, aes(y= Przebieg.w.km, x= Wiek))+
   geom_point()+
   geom_smooth()+
@@ -613,6 +672,25 @@ ggplot(data = tylkoBMW, aes(y= Przebieg.w.km, x= Wiek))+
 
 ```
 ## 17. Test dla średnich
+
+### Krok 1: Postaw hipotezę, określ co chcesz porównać
+Będziemy testować hipotezę (=przypuszczenie), czy wartości w jednym zbiorze są istotnie większe niż wartości w drugim zbiorze.  
+
+Tę hipotezę, sformujmy w następujący sposób: Czy obserwowana różnica pomiędzy średnimi ocenami jest wystarczająco duża, by uznać ją za istotną (mieć pewność, która grupa jest większy)?  
+
+### Krok 2: Określ miarę wielkości różnic  
+Ustalmy, że wielkość różnicy pomiędzy grupami będziemy mierzyć za pomocą wartości bezwzględnej z różnicy pomiędzy średnimi w obu grupach  
+
+### Krok 3: Porównaj zaobserwowaną wielkość różnicy z różnicą w sytuacji gdyby grupy nie były różne  
+Wciąż nie wiemy, czy 0.026 to duża różnica czy mała. Musimy ją z czymś porównać. Najlepiej by było porównać ją z wartościami, które byśmy obserwowali gdyby te dwie grupy się nie różniły.  
+
+Ale skąd wiadomo jakie byłyby różnice gdyby obie grupy się nie różniły? Możemy to oszacować w następujący sposób  
+
+* [I] Wymieszamy losowo wartości w obu grupach zachowując liczebność grup. Dzięki temu otrzymamy dwie grupy o których wiemy, że się nie różnią istotnie (są losowo wymieszane) a jedyne różnice wynikają z losowych fluktuacji,  
+* [II] Policzymy jak duża jest różnica dla tych nowo wylosowanych grup,  
+* [III] Powtórzymy kroki [I] i [II] wielokrotnie (np. 99 999 razy) aby zobaczyć jak duże wartości może przyjmować ta różnica w sytuacji gdy obie grupy nie różnią się od siebie.  
+Liczenie różnic na próbach różniących się jedynie losową fluktuacją jest realizowane przez poniższy kod.  
+
 ```{r Test dla średnich}
 library(PogromcyDanych)
 head(serialeIMDB)
@@ -626,32 +704,73 @@ summary(ocenyBreakingBad)
 mean(ocenyBreakingBad)
 mean(ocenyFriends)
 (obserwowana_roznica <- abs(mean(ocenyBreakingBad) - mean(ocenyFriends)))
-# po??czony wektor ocen z obu seriali
+
+# połączony wektor ocen z obu seriali
 ocenyRazem <- c(ocenyFriends, ocenyBreakingBad)
 # ile pierwszych ocen pochodzi z Friends
 liczbaFriends <- length(ocenyFriends)
-# wynikiem funkcji replicate b?dzie 99999 warto?ci, modu??w r??nic ?rednich po wymieszaniu obserwacji pomi?dzy grupami
-roznice <- replicate(99999, {
-  # wymieszaj losowo warto?ci pomi?dzy grupami
+# wynikiem funkcji replicate będzie 9999 wartości, modułów różnic średnich po wymieszaniu obserwacji pomiędzy grupami
+roznice <- replicate(9999, {
+  # wymieszaj losowo wartości pomiędzy grupami
   wymieszane <- sample(ocenyRazem)
-  # losowo dobrane pr?by, pierwsze 'liczbaFriends' warto?ci to grupa pierwsza, reszta to druga
+  # losowo dobrane próby, pierwsze 'liczbaFriends' wartości to grupa pierwsza, reszta to druga
   oceny1 <- wymieszane[1:liczbaFriends]
   oceny2 <- wymieszane[-(1:liczbaFriends)]
-  # r??nica pomiedzy losowymi grupami
+  # różnica pomiedzy losowymi grupami
   abs(mean(oceny1) - mean(oceny2))
 })
-
-# jedn? z permutacji jest brak permutacji, dodajemy wi?c obserwowan? r??nic?
+# jedną z permutacji jest brak permutacji, dodajemy więc obserwowaną różnicę
 roznice <- c(roznice, obserwowana_roznica)
-# wy?wietl 20 r??nic zaobserowanych w przypadku losowego podzia?u na grupy
+# wyświetl 20 różnic zaobserowanych w przypadku losowego podziału na grupy
 head(roznice,20)
 
-# wektor referencyjnych r??nic po losowym podziale na grupy
+# wektor referencyjnych różnic po losowym podziale na grupy
 hist(roznice, 50, col="grey", main="", las=1, border="white")
-# obserowana r??nica w ?rednich pomi?dzy Friends a Breaking Bad
+# obserowana różnica w średnich pomiędzy Friends a Breaking Bad
 abline(v=obserwowana_roznica, col="red", lwd=5)
 
 # p-warto??
 mean(roznice >= obserwowana_roznica) 
 ```
+Gdy próby są losowo wymieszane, a więc ich średnie, teoretycznie są równe. Czy wiedząc, że w wyniku losowych przypisać aż w 64% przypadków obserwuje się większą różnicę niż ta pomiędzy Friends a Breaking Bad, czy uznamy różnicę pomiędzy tymi dwoma serialami za istotną?  
 
+Pewnie nie. To jaki próg przyjmiemy zależy od konkretnego zastosowania, ale często za próg wybiera się 0.05. Z powodów historycznych.  
+
+W każdym razie, jeżeli otrzymana p-wartość jest mniejsza niż 0.05, to przyjmiemy, że obserwowana wartość jest istotnie różna od przypadkowej (=0). Jeżeli otrzymana p-wartość jest większa równa 0.05 to przyjmiemy, że nie ma istotnych statystycznie różnic.  
+
+W przypadku part Friends i Breaking Bad, ta różnica była niewielka i raczej uznamy, że nie istotna statystycznie.   
+
+```{r Test dla średnich2}
+
+## Przyklad dla innych seriali
+
+ocenyFriends     <- serialeIMDB[serialeIMDB$serial == "Friends", "ocena"]
+ocenySherlock    <- serialeIMDB[serialeIMDB$serial == "Sherlock", "ocena"]
+# moduł różnicy średnich
+(obserwowana_roznica <- abs(mean(ocenyFriends) - mean(ocenySherlock)))
+
+
+# połączony wektor ocen z obu seriali
+ocenyRazem <- c(ocenyFriends, ocenySherlock)
+# ile pierwszych ocen pochodzi z Friends
+liczbaFriends <- length(ocenyFriends)
+# permutacyjny test
+liczbaFriends <- length(ocenyFriends)
+roznice <- replicate(99999, {
+  wymieszane <- sample(ocenyRazem)
+  oceny1 <- wymieszane[1:liczbaFriends]
+  oceny2 <- wymieszane[-(1:liczbaFriends)]
+  # różnica pomiedzy losowymi grupami
+  abs(mean(oceny1) - mean(oceny2))
+})
+# dodajemy obserowaną różnicę
+roznice <- c(roznice, obserwowana_roznica)
+
+# p-wartość dla różnicy średnich
+mean(roznice >= obserwowana_roznica)
+
+# wektor referencyjnych różnic po losowym podziale na grupy
+hist(roznice, 50, col="grey", main="", las=1, border="white", xlim=c(0,0.5))
+# obserwowana różnica w średnich pomiędzy Friends a Sherlock
+abline(v=obserwowana_roznica, col="red", lwd=5)
+```

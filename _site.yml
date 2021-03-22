@@ -7,7 +7,10 @@ navbar:
       href: index.html
     - text: "Spatial Objects"
       menu:
+        - text: "Pierwsze mapy - NAUKA"
+          href: learn_maps.html
         - text: "Mapa Polski"
+        
     - text: "pogRomcy"
       menu:
         - text: "SEZON 1"
@@ -25,6 +28,8 @@ navbar:
           href: pogRomcy2.2.html
         - text: "Modelowanie danych ilościowych"
           href: pogRomcy2.3.html
+        - text: "Modelowanie danych jakościowych"
+          href: pogRomcy2.4.html
         
   right: 
     - icon: fa-envelope
