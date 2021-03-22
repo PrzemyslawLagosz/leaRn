@@ -1,0 +1,39 @@
+name: "my-website"
+output_dir: "docs"
+navbar:
+  title: "Notebook"
+  left:
+    - icon: fa-home
+      href: index.html
+    - text: "Spatial Objects"
+      menu:
+        - text: "Mapa Polski"
+    - text: "pogRomcy"
+      menu:
+        - text: "SEZON 1"
+        - text: "Odczytywanie, zapisywanie i indeksowanie danych"
+          href: pogRomcy1.2.html
+        - text: "Instrukcje sterujące, pętle, warunki i funkcje"
+          href: pogRomcy1.3.html
+        - text: "Podstawowe typy danych i ich statystyki opisowe"
+          href: pogRomcy1.4.html
+        - text: "Przetwarzanie potokowe danych"
+          href: pogRomcy1.5.html
+        - text: '---------'
+        - text: "SEZON 2"
+        - text: "Jak zrobić wykres w pakiecie ggplot2?"
+          href: pogRomcy2.2.html
+        - text: "Modelowanie danych ilościowych"
+          href: pogRomcy2.3.html
+        
+  right: 
+    - icon: fa-envelope
+      href: mailto:<przemyslawlagosz1@gmail.com>
+    - text: "Git"
+      href: https://github.com/PrzemyslawLagosz/learn-R
+output:
+  html_document:
+    theme: yeti
+    highlight: pygments
+    toc: true  
+    toc_float: true

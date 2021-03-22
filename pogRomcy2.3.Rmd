@@ -1,0 +1,657 @@
+---
+title: "pogRomcy2.3"
+author: "Przemyslaw Lagosz"
+date: "19-03-2021"
+output: html_document
+---
+
+# Modelowanie danych ilościowych
+
+```{r Ustawienie opcji globalnych}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+Wgranie bibliotek
+```{r Wgranie bibliotek}
+library(PogromcyDanych)
+library(dplyr)
+```
+
+## 11. Wprowadzenie do modelowania
+
+Materiały o modelowaniu, zostały podzielone na następujące odcinki  
+
+Wprowadzający do eksploracji danych  
+  
+* eksploracja danych  
+
+Dwa odcinki poświęcone analizie trendu  
+
+* zmienne ilościowe - analiza trendu  
+* zmienne ilościowe - testowanie trendu  
+
+Odcinek poświęcony analizie średnich  
+
+* zmienne ilościowe - porównanie dwóch grup  
+
+Dwa odcinki poświęcone regresji liniowej, przedziałowej i multiplikatywnej  
+
+* zmienne ilościowe - regresja liniowa  
+* zmienne ilościowe - regresja przedziałowo liniowa  
+
+Dwa odcinki poświęcone zmiennym jakościowym  
+
+* zmienne jakościowe - tabele 2x2  
+* zmienne jakościowe - tabele kontyngencji  
+
+## 12. Eksploracja danych
+```{r Eksploracja danych}
+
+# wielkość danych i kilka pierwszych wierszy
+dim(serialeIMDB)
+head(serialeIMDB)
+
+# wartości zmiennych jakościowych
+head(
+  levels(serialeIMDB$serial),10
+  )
+
+# jak wyznaczyć tabelę liczebności i jak posortowaś
+tabela <- table(serialeIMDB$serial)
+
+head(
+sort(tabela, decreasing = TRUE)
+,15)
+
+#Tworzy wektor z ideksami gdzie  serial == "The Office"
+which(serialeIMDB$serial == "The Office")
+serialeIMDB$serial[5902]
+
+# wybieramy tylko dane dotyczące serialu Breaking Bad
+BreakingBad <- filter(serialeIMDB, serial == "Breaking Bad") 
+# o ilu odcinkach dost?pna jest informacja dla tego serialu? 
+dim(BreakingBad)
+
+# różne sposoby oglądania informacji o odcinkach
+BreakingBad$ocena
+barplot(BreakingBad$ocena)
+plot(BreakingBad$ocena)
+
+# sortowanie danych
+head(
+arrange(BreakingBad, ocena) %>%
+  select(id, serial, nazwa, sezon, odcinek, ocena, glosow)
+,10)
+
+# podsumowanie danych o ocenach
+summary(BreakingBad$ocena)
+
+# wykres pudełkowy
+boxplot(BreakingBad$ocena )
+
+# wykres pudełkowy dla grup
+BreakingBad$sezon <- droplevels(BreakingBad$sezon)
+boxplot(BreakingBad$ocena ~ BreakingBad$sezon)
+
+# histogram a więc pełna informacja o rozkładzie
+hist(BreakingBad$ocena, 10, col="grey")
+
+# kiedy histogram zdradza dodatkowe informacje
+TheShield <- filter(serialeIMDB, serial == "The Shield")
+hist(TheShield$ocena, 10, col="grey")
+boxplot(TheShield$ocena, col="grey", range = 10)
+
+
+#### ZADANIE #####
+
+Friday_Night_Lights <- filter(serialeIMDB, serial == "Friday Night Lights")
+
+dim(Friday_Night_Lights)
+
+summarise(Friday_Night_Lights, sum(glosow))
+summarise(BreakingBad, sum(glosow))
+
+#Wywalenie nieużywanych levels
+Friday_Night_Lights$odcinek <- droplevels(Friday_Night_Lights$odcinek)
+levels(Friday_Night_Lights$odcinek)
+
+#Dostawienie nowej kolumny w celu rozroznienia sezonów
+
+Friday_Night_Lights$dobre <- paste0("s",Friday_Night_Lights$sezon," e", Friday_Night_Lights$odcinek)
+
+ggplot(Friday_Night_Lights, aes(x= dobre, y= ocena))+
+  geom_bar(stat = "identity")+
+  theme(axis.text.x = element_text(angle = 90))
+
+ggplot(Friday_Night_Lights, aes(x= odcinek, y= ocena, color= sezon))+
+  geom_point()+
+  theme(axis.text.x = element_text(angle = 90))
+
+
+
+# WCZESNIEJ PRZEZ ZAPIS W DF ZE KAZDY SEZON MA PIERWSZY,
+# DRUGI ODCINEK WYWALAO KILKA WARTOSCI DLA ODCINKA 1,2 ITP
+
+
+#NOWA KOLUMNA BY TO ROZROZNIC
+srednie_sezon <- Friday_Night_Lights %>%
+  group_by(sezon) %>%
+  summarise(srednia = mean(ocena))
+
+
+ggplot(Friday_Night_Lights, aes(x= dobre, y= ocena, color= sezon))+
+  geom_point()+
+  #Wstawienie odcinka prostego by zaznaczyc średnią dla sezonu
+  geom_segment(aes(x=1, xend=20, y=as.numeric(srednie_sezon[1,2]), yend=as.numeric(srednie_sezon[1,2])))+
+  theme(axis.text.x = element_text(angle = 90))
+
+
+
+```
+
+## 13. Regresja prosta  
+
+```{r Regresja prosta}
+library(PogromcyDanych)
+
+head(galton)
+
+dim(galton)
+
+#
+ggplot(galton, aes(x=rodzic, y=syn)) + 
+  geom_point()+
+  labs(x="[cm]", y= "[cm]")
+
+#Zaszumione sztucznie `(position = "jitter")`
+ggplot(galton, aes(x=rodzic, y=syn)) + 
+  geom_point(position = "jitter") 
+
+#średnie dla grup
+srednie <- galton %>%
+  group_by(rodzic) %>%
+  summarise(srednia = mean(syn))
+# wytwietl te średnie
+
+srednie
+
+#Wykres z znanaczonymi średnimi
+ggplot(galton, aes(x=rodzic, y=syn)) + 
+  geom_point(position = "jitter") +
+  # poniższa funkcja dorysowuje średnie w grupach
+  geom_line(data=srednie, aes(x=rodzic, y=srednia), size=2, color = "blue") + 
+  geom_point(data=srednie, aes(x=rodzic, y=srednia), size=5, color = "blue") 
+
+#Stworzenie modelu liniowego
+modelSynRodzic <- lm(syn ~ 1 + rodzic, data=galton)
+coef(modelSynRodzic)
+
+# wartośc 1 dodawana jest automatycznie
+modelSynRodzic <- lm(syn ~ rodzic, data=galton)
+coef(modelSynRodzic)
+
+
+#4 modele
+ggplot(galton, aes(x=rodzic, y=syn)) + 
+  geom_point(position = "jitter")+
+  # model 4, dla każdej grupy wzrostu rodziców wyznaczamy średni wzrost dzieci
+  geom_line(data=srednie, aes(x=rodzic, y=srednia), size=2, color = "blue") + 
+  geom_point(data=srednie, aes(x=rodzic, y=srednia), size=5, color = "blue")  + 
+  # model 3, do danych dopasowujemy trend liniowy
+  geom_smooth(method="lm", se=FALSE, size=3, color="red") +
+  # model 2, wzost dziecka jest taki jak wzrost rodzica
+  geom_abline(size=2, color="gold3")+
+  # model 1, wzrost dziecka nei zależy od wzrostu rodzica
+  geom_abline(size=2, slope=0, intercept=mean(galton$syn))
+
+###########ZADANIA##########
+
+#1 Dla każdego wzrostu rodzica ze zbioru danych galton wyznacz o ile średnio niższe 
+# są dzieci od rodziców
+
+# Tu cos nie tak, polecenie nie jasne
+srednie <- galton %>%
+  group_by(rodzic) %>%
+  summarise(sredni_wzrost_dla_grupy = mean(syn))
+
+srednie
+
+#2 Mając wyznaczone parametry b0 i b1 policz oceny średniego wzrostu dziecka dla 
+# każdego średniego wzrostu rodzica
+
+
+wspolczynniki <- coef(lm(syn~rodzic, data=galton))
+wspolczynniki
+
+#Np rodzic 173cm wzrostu to syn
+
+wspolczynniki[1]+173*wspolczynniki[2]
+
+#3 Wyznacz różnice pomiędzy ocenami z modelu liniowego a średnimi liczonymi osobno 
+# dla każdej grupy rodziców
+
+
+srednie <- srednie %>%
+  mutate(m.liniowy = wspolczynniki[1] + rodzic*wspolczynniki[2],
+         roznica_srednia_model = sredni_wzrost_dla_grupy - m.liniowy)
+
+#4 W pakiecie PogromcyDanych udostępniony jest również zbiór danych pearson zebrany
+#przez Pearsona. W tym zbiorze danych zebrane są wzrosty ojców i synów.
+head(pearson)
+
+modelSynOjciec <- lm(syn~ojciec, data = pearson)
+
+## syn= 86.1025732 + 0.5139133 * ojciec
+## syn= b0 + b1 * ojciec
+coef(modelSynOjciec)
+
+ggplot(data = pearson, aes(x= ojciec, y= syn))+
+  geom_point()+
+  geom_smooth(method = "lm", se=FALSE, color= "gold", size = 2)
+```
+
+## 14. Trendy w danych
+
+# TU SKOŃCZYŁEŚ
+```{r Trendy w danych}
+
+# wykres z ocenami odcinków, pakiet ggvis
+library(PogromcyDanych)
+library(ggvis)
+serialeIMDB %>%
+  filter(serial == "Breaking Bad") %>%
+  mutate(sezon = droplevels(sezon)) %>%
+  ggvis(x = ~id, y = ~ocena, fill = ~sezon) %>%
+  layer_text(text := ~nazwa, opacity=0, fontSize:=1) %>%
+  layer_points(fillOpacity:=0.8) 
+
+# wykres z trendem, pakiet ggvis
+serialeIMDB %>%
+  filter(serial == "Breaking Bad") %>%
+  mutate(sezon = droplevels(sezon)) %>%
+  ggvis(x = ~id, y = ~ocena, fill = ~sezon) %>%
+  # ewentualnie group_by(sezon)
+  layer_text(text := ~nazwa, opacity=0, fontSize:=1) %>%
+  layer_points(fillOpacity:=0.8) %>%
+  layer_model_predictions(model = "lm")
+
+# wykres z trendem, pakiet ggvis dla kazdego sezonu
+serialeIMDB %>%
+  filter(serial == "Breaking Bad") %>%
+  mutate(sezon = droplevels(sezon)) %>%
+  ggvis(x = ~id, y = ~ocena, fill = ~sezon) %>%
+  # ewentualnie 
+  group_by(sezon) %>%
+  layer_text(text := ~nazwa, opacity=0, fontSize:=1) %>%
+  layer_points(fillOpacity:=0.8) %>%
+  layer_model_predictions(model = "lm") 
+
+# wybierz tylko dwie kolumny i wiersze dla jednego serialu
+tylkoBreakingBad <- serialeIMDB %>%
+  filter(serial == "Breaking Bad") %>% 
+  select(id, ocena)
+# pierwsze 6 wierszy z nowo przygotowanego zbioru danych
+head(tylkoBreakingBad)
+
+# wyznacz trend liniowy dla serialu BreakingBad
+lm(ocena~id, tylkoBreakingBad)
+
+# odczytaj z trendu liniowego wsp??czynniki trendu
+lm(ocena~id, tylkoBreakingBad)$coef
+
+########### ZADANIA 14 #############
+unique(serialeIMDB$serial)[2]
+
+serialeIMDB %>%
+  group_by(serial) %>%
+
+lm(ocena~id, .)
+
+
+nazwy_seriali <- levels(serialeIMDB$serial)
+wspolczynnikTrendu <- c()
+
+for (ser in nazwy_seriali) {
+  jedenSerial <- serialeIMDB %>%
+    filter(serial == ser) %>% 
+    select(id, ocena)
+  wspolczynnikTrendu[ser] <- lm(ocena~id, jedenSerial)$coef[2]
+}
+# na pocz?tku najsilniejsze spadki, na koniec wzrosty
+max(sort(wspolczynnikTrendu))
+min(wspolczynnikTrendu)
+```
+
+## 15. Testowanie trendu  
+```{r Testowanie trendu}
+library(PogromcyDanych)
+# wybieramy dane o jednym serialu, dwie kolumny
+tylkoBreakingBad <- serialeIMDB %>% 
+  filter(serial == "Breaking Bad") %>% select(id, ocena)
+# wy?wietlamy pierwsze wiersze
+head(tylkoBreakingBad)
+
+lm(ocena~id, tylkoBreakingBad)$coef
+
+(wspolczynnikiTrendu <- lm(ocena~id, tylkoBreakingBad)$coef)
+
+(modulBreakingBad <- abs(wspolczynnikiTrendu[2]))
+
+# funkcja replicate() powtarza drugie wyra?enie tyle razy, ile wynosi pierwszy argument (=99999)
+trendy <- replicate(99999, {
+  # wymieszaj losowo warto?ci, robi to funkcja sample()
+  tylkoBreakingBad$wymieszane <- sample(tylkoBreakingBad$ocena)
+  
+  # wyznacz modu? wsp??czynnika wzrostu dla losowo wymieszanych danych
+  wspolczynnikiTrendu <- lm(wymieszane~id, tylkoBreakingBad)$coef
+  abs(wspolczynnikiTrendu[2])
+})
+
+# modulBreakingBad jest te? jedn? z mo?liwych permutacji, dodajmy go do wyniku
+trendy <- c(trendy, modulBreakingBad)
+# wy?wietl pierwsze 20 z tak otrzymanych warto?ci
+head(trendy, 20)
+
+# jak wygl?daj? przypadkowe wsp??czynniki
+hist(trendy, 50, col="grey", main="", las=1, border="white", xlim=c(0, 0.02))
+# dorysuj na czerwono wsp??czynnik dla BreakingBad
+abline(v=modulBreakingBad, col="red", lwd=5)
+
+# p-warto??
+mean(trendy >= modulBreakingBad)
+
+####### ZADANIE odc 15 ########
+
+nazwy_seriali <- levels(serialeIMDB$serial)
+wspolczynnikiTrendu <- c()
+
+for (ser in nazwy_seriali) {
+  jedenSerial <- serialeIMDB %>%
+    filter(serial == ser) %>%
+    select(id, ocena)
+  
+  wspolczynnikiTrendu[ser] <- lm(ocena~id, data = jedenSerial)$coef[2]
+  
+}
+sort(wspolczynnikiTrendu)
+
+tylkoThePrisoner <- serialeIMDB %>%
+  filter(serial == "The Prisoner") %>%
+  select(id, ocena)
+
+(modulThePrisoner <- lm(ocena~id, data = tylkoThePrisoner)$coef[2])
+
+#### SPRAWDZENIE CZY TREND DLA THE PRISONER JEST ISTOTNIE UJEMNY #######
+
+trendy_losowe_ThePrisoner <- replicate(9999, {
+  tylkoThePrisoner$wymieszane <- sample(tylkoThePrisoner$ocena)
+  
+  wspolczynnikTrenduThePrisoner <- lm(wymieszane~id, data = tylkoThePrisoner)$coef
+  abs(wspolczynnikTrenduThePrisoner[2])
+})
+trendy_losowe_ThePrisoner <- c(trendy_losowe_ThePrisoner, modulThePrisoner)
+
+
+hist(trendy_losowe_ThePrisoner, 50, col="grey", main="", las=1, border="white", xlim = c(0, 0.1))
+# dorysuj na czerwono wsp??czynnik dla BreakingBad
+abline(v=abs(modulThePrisoner), col="red", lwd=5)
+
+mean(trendy_losowe_ThePrisoner >= abs(modulThePrisoner))
+######################################################################wersja 2 ta mi sie bardziej podoba
+
+trendy_losowe_ThePrisoner <- replicate(9999, {
+  tylkoThePrisoner$wymieszane <- sample(tylkoThePrisoner$ocena)
+  
+  wspolczynnikTrenduThePrisoner <- lm(wymieszane~id, data = tylkoThePrisoner)$coef
+  wspolczynnikTrenduThePrisoner[2]
+})
+trendy_losowe_ThePrisoner <- c(trendy_losowe_ThePrisoner, modulThePrisoner)
+
+
+hist(trendy_losowe_ThePrisoner, 50, col="grey", main="", las=1, border="white", xlim = c(-0.1, 0.1))
+# dorysuj na czerwono wsp??czynnik dla BreakingBad
+abline(v=modulThePrisoner, col="red", lwd=5)
+
+mean(trendy_losowe_ThePrisoner <= modulThePrisoner)
+
+########## NA DESER ##########
+
+
+nazwy_seriali <- levels(serialeIMDB$serial)
+
+seriale_istotne_dodatnie <- 0
+seriale_istotne_ujemne <- 0
+
+for (ser in nazwy_seriali) {
+  jedenSerial <- serialeIMDB %>%
+    filter(serial == ser) %>%
+    select(id, ocena)
+  
+  modul_jedenSerial <- lm(ocena~id, data = jedenSerial)$coef[2]
+p.vaule_jedenSerial <- summary(lm(ocena~id, data = jedenSerial))$coef[2,4]
+
+if (p.vaule_jedenSerial < 0.05 & modul_jedenSerial >0) {
+  seriale_istotne_dodatnie <- seriale_istotne_dodatnie + 1
+  
+} else if(p.vaule_jedenSerial < 0.05 & modul_jedenSerial < 0) {
+  seriale_istotne_ujemne <- seriale_istotne_ujemne + 1
+}
+ 
+  }
+  
+  
+
+
+lm(ocena~id, data = tylkoBreakingBad)$coef[2]
+
+summary(lm(ocena~id, data = tylkoBreakingBad))$coef[2,4]
+
+summary(lm(ocena~id, data = tylkoThePrisoner))$coef[2]
+                                           
+```
+## 16. Regresja multiplikatywna  
+
+```{r Regresja multiplikatywna}
+# w tym pakiecie znajduje si? zbi?r danych auta2012
+library(PogromcyDanych)      
+# funkcja filter pozostawia wybrane wiersze ze zbioru danych
+volkswagen <- auta2012 %>%
+  filter(Marka == "Volkswagen")
+# pierwsze dwa wiersze
+head(volkswagen, 2)
+
+mlodeVolkswageny <- volkswagen %>%
+  mutate(Wiek = 2012 - Rok.produkcji) %>%
+  filter(Wiek < 20)
+
+modelCenaWiek <- lm(Cena.w.PLN ~ Wiek, data=mlodeVolkswageny)
+# wsp??czynniki modelu
+coef(modelCenaWiek)
+
+ggplot(mlodeVolkswageny, aes(y=Cena.w.PLN, x = Wiek)) + 
+  geom_point() + 
+  geom_smooth(method="lm", col="red", size=2) +
+  # funkcj? ylim() ograniczamy zakres na osiach, by wykres by? czytelniejszy
+  ylim(0,400000)
+
+### wykres z logarytmiczna osi Y #######
+ggplot(mlodeVolkswageny, aes(y=Cena.w.PLN, x = Wiek)) + 
+  geom_point() + 
+  geom_smooth(size=2) + geom_smooth(method="lm", col="red", size=2) +
+  scale_y_continuous(trans="log10", labels = scales::number_format())
+## geom_smooth: method="auto" and size of largest group is >=1000, so using gam with formula: y ~ s(x, bs = "cs"). Use 'method = x' to change the smoothing method.
+
+# dodajemy now? kolumn? logCena.w.PLN
+mlodeVolkswageny <- mlodeVolkswageny %>%
+  mutate(logCena.w.PLN = log10(Cena.w.PLN))
+
+# budujemy model na logarytmach
+modelCenaWiek <- lm(logCena.w.PLN ~ Wiek, data=mlodeVolkswageny)
+wsp <- coef(modelCenaWiek)
+wsp
+
+mean(mlodeVolkswageny$logCena.w.PLN)
+mean(mlodeVolkswageny$Cena.w.PLN)
+
+
+#### 
+
+ggplot(mlodeVolkswageny, aes(y=Przebieg.w.km, x = Wiek)) + 
+  geom_point()
+
+mlodeVolkswageny <-   auta2012 %>%
+  filter(Marka == "Volkswagen") %>%
+  mutate(Wiek = 2012 - Rok.produkcji) %>%
+  filter(Wiek < 20) %>%
+  filter(Przebieg.w.km < 400000)
+
+ggplot(mlodeVolkswageny, aes(y=Przebieg.w.km, x = Wiek)) + 
+  geom_point()+
+  geom_smooth(size=2) + geom_smooth(method="lm", col="red", size=2) 
+
+
+mlodeVolkswageny <- mlodeVolkswageny %>%
+  mutate(Wiek0 = ifelse(Wiek >= 0, Wiek, 0),
+         Wiek5 = ifelse(Wiek >= 5, Wiek - 5, 0))
+
+# model z nowymi zmiennymi
+M1 <- lm(Przebieg.w.km ~ Wiek0 + Wiek5, data=mlodeVolkswageny)
+M1
+
+#?redni przebieg = b1 * wiek[0+] + b2 * wiek[5+]
+M2 <- lm(Przebieg.w.km ~ Wiek0 + Wiek5 - 1, data=mlodeVolkswageny)
+M2
+
+############regresja odcinkami liniowa #############
+# sztuczny zbi?r danych, na potrzeby pokazywania modeli
+topred <- data.frame(Wiek0 = c(0, 5, 20), Wiek5 = c(0, 0, 15))
+topred$M1 <- predict(M1, newdata = topred)
+topred$M2 <- predict(M2, newdata = topred)
+
+
+ggplot(mlodeVolkswageny, aes(y=Przebieg.w.km, x = Wiek)) + 
+  geom_line(data= topred, aes(y=M1, x = Wiek0), size=2, col="green") + 
+  geom_line(data= topred, aes(y=M2, x = Wiek0), size=2, col="blue")
+
+ggplot(mlodeVolkswageny, aes(y=Przebieg.w.km, x = Wiek)) + 
+  geom_point() + 
+  geom_smooth(method="lm", col="red", size=2) +
+  geom_line(data= topred, aes(y=M1, x = Wiek0), size=2, col="green") + 
+  geom_line(data= topred, aes(y=M2, x = Wiek0), size=2, col="blue")
+
+
+###### ZADANIA ######
+
+#Wykonaj modelowanie z u?yciem modelu multiplikatywnego dla innej marki.
+
+tylkoBMW <- auta2012 %>%
+  mutate(Wiek = 2012 - Rok.produkcji) %>%
+  filter(Wiek < 20,
+         Marka == "BMW",
+         Przebieg.w.km < 500000)
+
+
+
+ggplot(data = tylkoBMW, aes(x= Wiek, y= Cena.w.PLN)) +
+  geom_point()+
+  geom_smooth(method = "lm", color = "red", size = 2)+
+  ylim(0,700000)
+
+ggplot(data = tylkoBMW, aes(x= Wiek, y= Cena.w.PLN)) +
+  geom_point()+
+  geom_smooth(method = "lm", color = "red", size = 2)+
+  ylim(0,700000)+
+  scale_y_continuous(trans = "log10", labels = scales::number_format())
+
+tylkoBMW <- tylkoBMW %>%
+  mutate(logCena.w.PLN = log(Cena.w.PLN))
+
+model1 <- lm(logCena.w.PLN ~ Wiek, data = tylkoBMW)
+model1
+
+1 + lm(logCena.w.PLN ~ Wiek, data = tylkoBMW)$coef[2]
+
+#Je?eli model multiplikatywny wygl?da na uzasadniony, policz ile procent corocznie traci na cenie auto danej marki.
+
+1 + lm(logCena.w.PLN ~ Wiek, data = tylkoBMW)$coef[2]
+#Zobacz jak wygl?da zale?no?? pomi?dzy cen? a wiekiem dla innych marek. Dziesi?? najcz?stszych marek w tym zbiorze danych to Volkswagen, Opel, Ford, Renault, Audi, Mercedes-Benz, BMW, Peugeot, Skoda, Fiat
+
+#Wykonaj modelowanie z u?yciem ?amanej regresji dla innych marek.
+
+ggplot(data = tylkoBMW, aes(y= Przebieg.w.km, x= Wiek))+
+  geom_point()+
+  geom_smooth()+
+  geom_smooth(method = "lm", color = "red3")+
+  geom_smooth(method = "mod1")
+
+
+
+tylkoBMW <- tylkoBMW %>%
+  mutate(Wiek0 = ifelse(Wiek >= 0, Wiek, 0),
+         Wiek4 = ifelse(Wiek >= 4, Wiek-4, 0))
+
+mod1<- lm(Przebieg.w.km~Wiek0 + Wiek4, data = tylkoBMW)
+mod1
+
+mod2 <- mod1<- lm(Przebieg.w.km~Wiek0 + Wiek4 -1, data = tylkoBMW)
+mod2
+
+sztuczne <- data.frame(Wiek0 = c(0,4,20),
+                       Wiek4 = c(0,0,16))
+sztuczne$mod1 <- predict(mod1, newdata = sztuczne)
+sztuczne$mod2 <- predict(mod2, newdata = sztuczne)
+
+
+ggplot(data = tylkoBMW, aes(y= Przebieg.w.km, x= Wiek))+
+  geom_point()+
+  geom_smooth()+
+  geom_smooth(method = "lm", color = "red3", size=2)+
+  geom_smooth(method = "mod1", size=2)+
+  geom_line(data = sztuczne, aes(x= Wiek0, y= mod1), color = "green3", size=2)+
+  geom_line(data = sztuczne, aes(x= Wiek0, y= mod2), color = "gold3", size=2)
+  ylim(0,500000)
+
+```
+## 17. Test dla średnich
+```{r Test dla średnich}
+library(PogromcyDanych)
+head(serialeIMDB)
+
+ocenyFriends     <- serialeIMDB[serialeIMDB$serial == "Friends", "ocena"]
+summary(ocenyFriends)
+
+ocenyBreakingBad <- serialeIMDB[serialeIMDB$serial == "Breaking Bad", "ocena"]
+summary(ocenyBreakingBad)
+
+mean(ocenyBreakingBad)
+mean(ocenyFriends)
+(obserwowana_roznica <- abs(mean(ocenyBreakingBad) - mean(ocenyFriends)))
+# po??czony wektor ocen z obu seriali
+ocenyRazem <- c(ocenyFriends, ocenyBreakingBad)
+# ile pierwszych ocen pochodzi z Friends
+liczbaFriends <- length(ocenyFriends)
+# wynikiem funkcji replicate b?dzie 99999 warto?ci, modu??w r??nic ?rednich po wymieszaniu obserwacji pomi?dzy grupami
+roznice <- replicate(99999, {
+  # wymieszaj losowo warto?ci pomi?dzy grupami
+  wymieszane <- sample(ocenyRazem)
+  # losowo dobrane pr?by, pierwsze 'liczbaFriends' warto?ci to grupa pierwsza, reszta to druga
+  oceny1 <- wymieszane[1:liczbaFriends]
+  oceny2 <- wymieszane[-(1:liczbaFriends)]
+  # r??nica pomiedzy losowymi grupami
+  abs(mean(oceny1) - mean(oceny2))
+})
+
+# jedn? z permutacji jest brak permutacji, dodajemy wi?c obserwowan? r??nic?
+roznice <- c(roznice, obserwowana_roznica)
+# wy?wietl 20 r??nic zaobserowanych w przypadku losowego podzia?u na grupy
+head(roznice,20)
+
+# wektor referencyjnych r??nic po losowym podziale na grupy
+hist(roznice, 50, col="grey", main="", las=1, border="white")
+# obserowana r??nica w ?rednich pomi?dzy Friends a Breaking Bad
+abline(v=obserwowana_roznica, col="red", lwd=5)
+
+# p-warto??
+mean(roznice >= obserwowana_roznica) 
+```
+

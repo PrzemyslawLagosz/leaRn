@@ -1,0 +1,16 @@
+---
+title: "Co tu znajdziesz?"
+output:
+  html_document:
+    toc: FALSE  
+---
+    
+Witam. <br>
+
+### **O mnie**  
+Nazywam się Przemysław Łagosz. Mam 24 lata. Z wykształcenia jestem inżynierem budownictwa lądowego.
+Studia ukończylem w marcu 2021r. na Politechnice Gdańskiej.
+
+### **Po co to wszystko?**  
+Ta strona powstaje w celu ułatwienia przechowywania notatek tworzonych podczas nauki R.  
+Być może posłuży jako moje portfolio :)

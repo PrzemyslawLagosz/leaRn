@@ -1,0 +1,247 @@
+---
+title: "pogRomcy 1.3"
+author: "Przemyslaw Lagosz"
+date: "18-03-2021"
+output: html_document
+---
+
+# Instrukcje sterujące, pętle, warunki i funkcje <br>
+
+```{r Ustawienie opcji globalnych}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+Wgranie bibliotek
+
+```{r}
+library(PogromcyDanych)
+```
+
+## 8. Pętle
+```{r Pętle}
+odliczajDo <- 5
+
+for (i in 1:odliczajDo) {
+  cat("Wartość zmiennej i: ", i, "\n")
+}
+
+cat("Wartosc zmiennej i: 1")
+
+
+liczbaStluczek <- round(runif(n=1, min = 0, max = 10))
+
+sumaKosztow <- 0
+
+for (i in 1:liczbaStluczek) {
+  koszt <- runif(n=1, min = 100, max = 1000)
+  sumaKosztow <- sumaKosztow + koszt
+  cat("Stuczka numer :", i, ", a jej koszt to:", koszt, "PLN \n")
+  cat("Suma kosztów to:", sumaKosztow, "PLN \n")
+}
+
+#  Kolumna gatunek 
+# 13 różnych wartośći: Tygrys Lew Jaguar Puma Leopard
+
+kolumna <- colnames(koty_ptaki)
+
+for (i in kolumna) {
+  wartoscWKolumnie <- unique(as.character(koty_ptaki[ ,i]))
+  cat("Kolumna", i, "\n")
+  cat(length(wartoscWKolumnie), "unikalnych wartosci", wartoscWKolumnie, "\n")
+  
+}
+koty_ptaki$gatunek <- as.character(koty_ptaki$gatunek)
+
+for (i in 1:nrow(koty_ptaki)) {
+  cat(koty_ptaki[i,"gatunek"], "może ważyć do", koty_ptaki[i,"waga"], "kg\n")
+}
+
+#To samo co pentla wyzej
+cat(paste(koty_ptaki[,"gatunek"], "może wazyc do", koty_ptaki[,"waga"], "kg \n"))
+
+###################################### ZADANIA ###########################################
+
+# Napisz pętlę, która dla każdego wiersza z tabeli koty_ptaki wypisze żywotność określonego gatunku.
+
+for (i in 1:nrow(koty_ptaki)) {
+  cat("żywotnosc", koty_ptaki[i,"gatunek"], "wynosi", koty_ptaki[i,"zywotnosc"], "lat \n")
+}
+
+#Napisz pętlę, która przedstawi żywotność za pomocą wykresu, na którym każdy rok przedstawiony jest jako 
+#jeden #
+
+for (i in 1:nrow(koty_ptaki)) {
+  nhasz <- koty_ptaki[i, "zywotnosc"]
+  for (j in 1:nhasz) {
+    cat("#")
+  }
+  cat(" ", koty_ptaki[i, "zywotnosc"], "\n")
+}
+
+# Napisz pętlę, która narysuje wykres z żywotnością, ale z nazwami gatunku po lewej stronie. Co więcej, przed każdą nazwą gatunku należy dodać tyle znaków spacja, aby nazwy były wyrównane do prawej strony. Długość napisu, mierzoną w liczbie znaków można odczytać funkcją nchar().
+
+for (i in 1:nrow(koty_ptaki)) {
+  nhasz <- koty_ptaki[i, "zywotnosc"]
+  nspacji <- max(koty_ptaki[,"zywotnosc"] + nchar(koty_ptaki[,"gatunek"])) - (koty_ptaki[i,"zywotnosc"] + nchar(koty_ptaki[i,"gatunek"]))
+   
+  for (k in 1:nspacji) {
+    cat(" ")
+   }
+  
+  cat(koty_ptaki[i, "gatunek"])
+  
+  for (j in 1:nhasz) {
+    cat("#")
+  }
+  
+  cat("\n")
+}
+```
+
+## 9. Instrukcje warunkowe
+```{r Instrukcje warunkowe}
+str(koty_ptaki)
+
+koty_ptaki[,"druzyna"] == "Kot"
+
+for (i in 1:nrow(koty_ptaki)) {
+
+if (koty_ptaki[i,"druzyna"] == "Kot") {
+  cat(koty_ptaki[i,"gatunek"], "to kot \n")
+} else {
+  cat(koty_ptaki[i,"gatunek"], "to ptak \n")
+}}
+
+ifelse(koty_ptaki[,"druzyna"] == "Kot", "Kicia", "Ptaszysko")
+
+
+moneta <- runif(n=1)
+moneta
+ifelse(moneta>0.5, "Orzel", "Reszka")
+
+###################################### ZADANIA ###########################################
+
+#Napisz instrukcję warunkową, która dla zwierząt lżejszych niż 1kg wypisze lekkie, a dla 
+#cięższych niż 1 kg ciężkie.
+
+colnames(koty_ptaki)
+for (i in 1:nrow(koty_ptaki)) {
+  
+if(koty_ptaki[i,"waga"] < 1) {
+  cat(koty_ptaki[i,"gatunek"], "jest lekki i wazy :", koty_ptaki[i,"waga"], "kg \n")
+} else {
+  cat(koty_ptaki[i,"gatunek"], "jest ciezki wazy :", koty_ptaki[i,"waga"], "kg \n")
+}}
+
+
+
+#Napisz instrukcję warunkową, która dla zwierząt lżejszych niż 1kg wypisze lekkie, cięższych niż 
+#100kg wypisze ciężkie a w przedziale 1-100kg wypisze średnie. 
+#Taki efekt można uzyskać stosując dwie instrukcje `if()` lub korzystając z funkcji `switch()` (jak działa funkcja switch()? To już należy wyczytać z dokumentacji).
+
+for (i in 1:nrow(koty_ptaki)) {
+  if(koty_ptaki[i,"waga"] < 1) {
+    cat(koty_ptaki[i,"gatunek"], koty_ptaki[i,"waga"], "lekki \n")
+  } else {
+    if((koty_ptaki[i,"waga"] < 100)) {
+      cat(koty_ptaki[i,"gatunek"], koty_ptaki[i,"waga"], "sredni \n")
+    } else {
+      cat(koty_ptaki[i,"gatunek"], koty_ptaki[i,"waga"], "ciezki \n")
+    }
+  }
+}
+
+
+sapply(cut(koty_ptaki$waga, c(0,1,100,1000)),switch,"lekkie", "srednie", "ciezkie")
+
+# Napisz pętlę i instrukcję warunkową sumującą łączne masy wszystkich ptaków i kotów osobno..
+  
+  wagaKoty <- 0
+  wagaPtaki <- 0
+  
+  for (i in 1:nrow(koty_ptaki)){
+    if(koty_ptaki[i,"druzyna"]=="Kot"){
+      wagaKoty <- wagaKoty + koty_ptaki[i,"waga"]
+    } else {
+      wagaPtaki <- wagaPtaki + koty_ptaki[i,"waga"]
+    }
+  }
+```
+
+## 10. Funkcje
+```{r Funkcje}
+koty_ptaki$gatunek
+
+rysuj_kropki <- function(n_kropek = 20, znak = ".") {
+  if (n_kropek > 0) {
+    for (j in 1:n_kropek) {
+      cat(znak)
+    }
+  }
+}
+
+rysuj_wykres_kropkowy<- function(nazwy, wartosci) {
+  # zakładamy, że oba wektory są tej samej długości
+  # funkcja seq_along(nazwy) tworzy sekwencje od 1 do długości wektora nazwy
+  
+  if(length(nazwy) != length(wartosci)) {
+    stop("Argumenty maja rozna dlugosc ", length(nazwy), " oraz ", length(wartosci))
+  }
+  for (i in seq_along(nazwy)) {
+    rysuj_kropki(wartosci[i])
+    cat(" ", nazwy[i],"\n")
+  }
+}
+
+rysuj_wykres_kropkowy(koty_ptaki$gatunek, koty_ptaki$predkosc/5)
+
+length(koty_ptaki$gatunek)
+
+###################################### ZADANIA ###########################################
+
+#Napisz funkcję, która otrzymuje argument liczbowy, a następnie wypisuje na ekran
+#wartości od argumentu do jeden.
+
+zadanie1 <- function(wartosc) {
+  cat(wartosc:1)
+}
+  zadanie1(4)
+
+# Napisz funkcję, przyjmuje argument liczbowy n, a następnie rysuje kwadrat o 
+# boku n wypełniony znakami X.
+  
+zadanie2 <- function(n) {
+  
+  for(j in 1:n){
+    
+  for (i in 1:n) { cat("X") }
+    
+  cat("\n")}
+}
+
+zadanie2(3)
+
+# Napisz funkcję, przyjmuje argument liczbowy n, a następnie rysuje kwadrat o boku n 
+# ze znakami X na brzegu i pusty w środku.
+
+zadanie3 <- function(n) {
+  
+  for(j in 1:n){
+    for (i in 1:n) {
+      
+      if(i == 1 | j == 1 | i == n | j == n){
+        
+        cat("X")
+        
+      } else {
+        
+        cat(" ")
+      }
+    }
+    
+    cat("\n")}
+}
+
+zadanie3(10)
+```
+
+
