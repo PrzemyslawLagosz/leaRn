@@ -35,7 +35,7 @@ navbar:
     - icon: fa-envelope
       href: mailto:<przemyslawlagosz1@gmail.com>
     - text: "Git"
-      href: https://github.com/PrzemyslawLagosz/learn-R
+      href: https://przemyslawlagosz.github.io/leaRn/
 output:
   html_document:
     theme: yeti
