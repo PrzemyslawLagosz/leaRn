@@ -425,6 +425,9 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="learn_maps.html">Pierwsze mapy - NAUKA</a>
+    </li>
     <li class="dropdown-header">Mapa Polski</li>
   </ul>
 </li>
@@ -455,6 +458,9 @@ div.tocify {
     </li>
     <li>
       <a href="pogRomcy2.3.html">Modelowanie danych ilościowych</a>
+    </li>
+    <li>
+      <a href="pogRomcy2.4.html">Modelowanie danych jakościowych</a>
     </li>
   </ul>
 </li>
@@ -527,19 +533,28 @@ div.tocify {
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(serialeIMDB)</span></code></pre></div>
 <pre><code>## [1] 20122     8</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(serialeIMDB)</span></code></pre></div>
-<pre><code>##   id       serial                         nazwa sezon odcinek ocena glosow    imdbId
-## 1  1 Breaking Bad                         Pilot     1       1   8.7   9357 tt0903747
-## 2  2 Breaking Bad           Cat&#39;s in the Bag...     1       2   8.2   6506 tt0903747
-## 3  3 Breaking Bad ...And the Bag&#39;s in the River     1       3   8.3   6176 tt0903747
-## 4  4 Breaking Bad                    Cancer Man     1       4   7.9   5796 tt0903747
-## 5  5 Breaking Bad                   Gray Matter     1       5   7.9   5664 tt0903747
-## 6  6 Breaking Bad      Crazy Handful of Nothin&#39;     1       6   8.7   6521 tt0903747</code></pre>
+<pre><code>##   id       serial                         nazwa sezon odcinek ocena glosow
+## 1  1 Breaking Bad                         Pilot     1       1   8.7   9357
+## 2  2 Breaking Bad           Cat&#39;s in the Bag...     1       2   8.2   6506
+## 3  3 Breaking Bad ...And the Bag&#39;s in the River     1       3   8.3   6176
+## 4  4 Breaking Bad                    Cancer Man     1       4   7.9   5796
+## 5  5 Breaking Bad                   Gray Matter     1       5   7.9   5664
+## 6  6 Breaking Bad      Crazy Handful of Nothin&#39;     1       6   8.7   6521
+##      imdbId
+## 1 tt0903747
+## 2 tt0903747
+## 3 tt0903747
+## 4 tt0903747
+## 5 tt0903747
+## 6 tt0903747</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wartości zmiennych jakościowych</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>(serialeIMDB<span class="sc">$</span>serial),<span class="dv">10</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>##  [1] &quot;Breaking Bad&quot;                 &quot;Cosmos: A Space-Time Odyssey&quot; &quot;Planet Earth&quot;                 &quot;Game of Thrones&quot;             
-##  [5] &quot;True Detective&quot;               &quot;The Wire&quot;                     &quot;Sherlock&quot;                     &quot;Cosmos&quot;                      
+<pre><code>##  [1] &quot;Breaking Bad&quot;                 &quot;Cosmos: A Space-Time Odyssey&quot;
+##  [3] &quot;Planet Earth&quot;                 &quot;Game of Thrones&quot;             
+##  [5] &quot;True Detective&quot;               &quot;The Wire&quot;                    
+##  [7] &quot;Sherlock&quot;                     &quot;Cosmos&quot;                      
 ##  [9] &quot;The Sopranos&quot;                 &quot;Leyla ile Mecnun&quot;</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># jak wyznaczyć tabelę liczebności i jak posortowaś</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>tabela <span class="ot">&lt;-</span> <span class="fu">table</span>(serialeIMDB<span class="sc">$</span>serial)</span>
@@ -548,28 +563,41 @@ div.tocify {
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(tabela, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>,<span class="dv">15</span>)</span></code></pre></div>
 <pre><code>## 
-## The Daily Show with Jon Stewart              The Colbert Report                      Doctor Who                       One Piece 
-##                            1814                            1067                             819                             679 
-##                   Dragon Ball Z                    The Simpsons               Naruto: Shippuden                        Top Gear 
-##                             589                             564                             397                             276 
-##                     MythBusters                      South Park                         M*A*S*H          The Andy Griffith Show 
-##                             258                             257                             251                             249 
-##                      Family Guy                         Friends        Whose Line Is It Anyway? 
-##                             240                             238                             214</code></pre>
+## The Daily Show with Jon Stewart              The Colbert Report 
+##                            1814                            1067 
+##                      Doctor Who                       One Piece 
+##                             819                             679 
+##                   Dragon Ball Z                    The Simpsons 
+##                             589                             564 
+##               Naruto: Shippuden                        Top Gear 
+##                             397                             276 
+##                     MythBusters                      South Park 
+##                             258                             257 
+##                         M*A*S*H          The Andy Griffith Show 
+##                             251                             249 
+##                      Family Guy                         Friends 
+##                             240                             238 
+##        Whose Line Is It Anyway? 
+##                             214</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Tworzy wektor z ideksami gdzie  serial == &quot;The Office&quot;</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(serialeIMDB<span class="sc">$</span>serial <span class="sc">==</span> <span class="st">&quot;The Office&quot;</span>)</span></code></pre></div>
-<pre><code>##   [1] 5899 5900 5901 5902 5903 5904 5905 5906 5907 5908 5909 5910 5911 5912 5913 5914 5915 5916 5917 5918 5919 5920 5921 5922 5923
-##  [26] 5924 5925 5926 5927 5928 5929 5930 5931 5932 5933 5934 5935 5936 5937 5938 5939 5940 5941 5942 5943 5944 5945 5946 5947 5948
-##  [51] 5949 5950 5951 5952 5953 5954 5955 5956 5957 5958 5959 5960 5961 5962 5963 5964 5965 5966 5967 5968 5969 5970 5971 5972 5973
-##  [76] 5974 5975 5976 5977 5978 5979 5980 5981 5982 5983 5984 5985 5986 5987 5988 5989 5990 5991 5992 5993 5994 5995 5996 5997 5998
-## [101] 5999 6000 6001 6002 6003 6004 6005 6006 6007 6008 6009 6010 6011 6012 6013 6014 6015 6016 6017 6018 6019 6020 6021 6022 6023
-## [126] 6024 6025 6026 6027 6028 6029 6030 6031 6032 6033 6034 6035 6036 6037 6038 6039 6040 6041 6042 6043 6044 6045 6046 6047 6048
-## [151] 6049 6050 6051 6052 6053 6054 6055 6056 6057 6058 6059 6060 6061 6062 6063 6064 6065 6066 6067 6068 6069 6070 6071 6072 6073
-## [176] 6074 6075 6076 6077 6078 6079 6080 6081 6082 6083 6084 6085 9227 9228 9229 9230 9231 9232 9233 9234 9235 9236 9237 9238 9239
-## [201] 9240</code></pre>
+<pre><code>##   [1] 5899 5900 5901 5902 5903 5904 5905 5906 5907 5908 5909 5910 5911 5912 5913
+##  [16] 5914 5915 5916 5917 5918 5919 5920 5921 5922 5923 5924 5925 5926 5927 5928
+##  [31] 5929 5930 5931 5932 5933 5934 5935 5936 5937 5938 5939 5940 5941 5942 5943
+##  [46] 5944 5945 5946 5947 5948 5949 5950 5951 5952 5953 5954 5955 5956 5957 5958
+##  [61] 5959 5960 5961 5962 5963 5964 5965 5966 5967 5968 5969 5970 5971 5972 5973
+##  [76] 5974 5975 5976 5977 5978 5979 5980 5981 5982 5983 5984 5985 5986 5987 5988
+##  [91] 5989 5990 5991 5992 5993 5994 5995 5996 5997 5998 5999 6000 6001 6002 6003
+## [106] 6004 6005 6006 6007 6008 6009 6010 6011 6012 6013 6014 6015 6016 6017 6018
+## [121] 6019 6020 6021 6022 6023 6024 6025 6026 6027 6028 6029 6030 6031 6032 6033
+## [136] 6034 6035 6036 6037 6038 6039 6040 6041 6042 6043 6044 6045 6046 6047 6048
+## [151] 6049 6050 6051 6052 6053 6054 6055 6056 6057 6058 6059 6060 6061 6062 6063
+## [166] 6064 6065 6066 6067 6068 6069 6070 6071 6072 6073 6074 6075 6076 6077 6078
+## [181] 6079 6080 6081 6082 6083 6084 6085 9227 9228 9229 9230 9231 9232 9233 9234
+## [196] 9235 9236 9237 9238 9239 9240</code></pre>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>serialeIMDB<span class="sc">$</span>serial[<span class="dv">5902</span>]</span></code></pre></div>
 <pre><code>## [1] The Office
-## 198 Levels: Breaking Bad Cosmos: A Space-Time Odyssey Planet Earth Game of Thrones True Detective The Wire Sherlock ... The Good Wife</code></pre>
+## 198 Levels: Breaking Bad Cosmos: A Space-Time Odyssey ... The Good Wife</code></pre>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wybieramy tylko dane dotyczące serialu Breaking Bad</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>BreakingBad <span class="ot">&lt;-</span> <span class="fu">filter</span>(serialeIMDB, serial <span class="sc">==</span> <span class="st">&quot;Breaking Bad&quot;</span>) </span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># o ilu odcinkach dost?pna jest informacja dla tego serialu? </span></span>
@@ -577,9 +605,11 @@ div.tocify {
 <pre><code>## [1] 62  8</code></pre>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># różne sposoby oglądania informacji o odcinkach</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>BreakingBad<span class="sc">$</span>ocena</span></code></pre></div>
-<pre><code>##  [1]  8.7  8.2  8.3  7.9  7.9  8.7  8.4  8.1  8.7  7.9  7.8  7.8  8.3  8.2  8.5  8.5  8.0  8.2  8.6  8.6  8.0  8.1  7.8  7.7  8.0  8.6
-## [27]  9.0  8.1  7.8  7.4  7.9  8.9  9.1  8.6  7.8  7.6  8.1  8.1  7.8  8.2  8.6  8.2  9.1  9.2  8.8  9.7  8.8  8.4  8.4  8.3  9.3  8.5
-## [53]  9.0  9.2  9.0  8.7  9.2  8.6  9.6 10.0  9.4  9.9</code></pre>
+<pre><code>##  [1]  8.7  8.2  8.3  7.9  7.9  8.7  8.4  8.1  8.7  7.9  7.8  7.8  8.3  8.2  8.5
+## [16]  8.5  8.0  8.2  8.6  8.6  8.0  8.1  7.8  7.7  8.0  8.6  9.0  8.1  7.8  7.4
+## [31]  7.9  8.9  9.1  8.6  7.8  7.6  8.1  8.1  7.8  8.2  8.6  8.2  9.1  9.2  8.8
+## [46]  9.7  8.8  8.4  8.4  8.3  9.3  8.5  9.0  9.2  9.0  8.7  9.2  8.6  9.6 10.0
+## [61]  9.4  9.9</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(BreakingBad<span class="sc">$</span>ocena)</span></code></pre></div>
 <p><img src="pogRomcy2.3_files/figure-html/Eksploracja%20danych-1.png" width="672" /></p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(BreakingBad<span class="sc">$</span>ocena)</span></code></pre></div>
@@ -635,7 +665,8 @@ div.tocify {
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Wywalenie nieużywanych levels</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>Friday_Night_Lights<span class="sc">$</span>odcinek <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(Friday_Night_Lights<span class="sc">$</span>odcinek)</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(Friday_Night_Lights<span class="sc">$</span>odcinek)</span></code></pre></div>
-<pre><code>##  [1] &quot;1&quot;  &quot;10&quot; &quot;11&quot; &quot;12&quot; &quot;13&quot; &quot;14&quot; &quot;15&quot; &quot;16&quot; &quot;2&quot;  &quot;3&quot;  &quot;4&quot;  &quot;5&quot;  &quot;6&quot;  &quot;7&quot;  &quot;8&quot;  &quot;9&quot;  &quot;17&quot; &quot;18&quot; &quot;19&quot; &quot;20&quot; &quot;21&quot; &quot;22&quot;</code></pre>
+<pre><code>##  [1] &quot;1&quot;  &quot;10&quot; &quot;11&quot; &quot;12&quot; &quot;13&quot; &quot;14&quot; &quot;15&quot; &quot;16&quot; &quot;2&quot;  &quot;3&quot;  &quot;4&quot;  &quot;5&quot;  &quot;6&quot;  &quot;7&quot;  &quot;8&quot; 
+## [16] &quot;9&quot;  &quot;17&quot; &quot;18&quot; &quot;19&quot; &quot;20&quot; &quot;21&quot; &quot;22&quot;</code></pre>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Dostawienie nowej kolumny w celu rozroznienia sezonów</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>Friday_Night_Lights<span class="sc">$</span>dobre <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;s&quot;</span>,Friday_Night_Lights<span class="sc">$</span>sezon,<span class="st">&quot; e&quot;</span>, Friday_Night_Lights<span class="sc">$</span>odcinek)</span>
@@ -818,27 +849,27 @@ div.tocify {
 <span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggvis</span>(<span class="at">x =</span> <span class="sc">~</span>id, <span class="at">y =</span> <span class="sc">~</span>ocena, <span class="at">fill =</span> <span class="sc">~</span>sezon) <span class="sc">%&gt;%</span></span>
 <span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_text</span>(<span class="at">text :=</span> <span class="sc">~</span>nazwa, <span class="at">opacity=</span><span class="dv">0</span>, <span class="at">fontSize:=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_points</span>(<span class="at">fillOpacity:=</span><span class="fl">0.8</span>) </span></code></pre></div>
-<div id="plot_id985356657-container" class="ggvis-output-container">
-<div id="plot_id985356657" class="ggvis-output"></div>
+<div id="plot_id674252896-container" class="ggvis-output-container">
+<div id="plot_id674252896" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id985356657_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id985356657" data-renderer="svg">SVG</a>
+<a id="plot_id674252896_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id674252896" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id985356657_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id985356657" data-renderer="canvas">Canvas</a>
+<a id="plot_id674252896_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id674252896" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id985356657_download" class="ggvis-download" data-plot-id="plot_id985356657">Download</a>
+<a id="plot_id674252896_download" class="ggvis-download" data-plot-id="plot_id674252896">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id985356657_spec = {
+var plot_id674252896_spec = {
   "data": [
     {
       "name": ".0",
@@ -1046,7 +1077,7 @@ var plot_id985356657_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id985356657").parseSpec(plot_id985356657_spec);
+ggvis.getPlot("plot_id674252896").parseSpec(plot_id674252896_spec);
 </script>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres z trendem, pakiet ggvis</span></span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>serialeIMDB <span class="sc">%&gt;%</span></span>
@@ -1057,27 +1088,27 @@ ggvis.getPlot("plot_id985356657").parseSpec(plot_id985356657_spec);
 <span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_text</span>(<span class="at">text :=</span> <span class="sc">~</span>nazwa, <span class="at">opacity=</span><span class="dv">0</span>, <span class="at">fontSize:=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_points</span>(<span class="at">fillOpacity:=</span><span class="fl">0.8</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_model_predictions</span>(<span class="at">model =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<div id="plot_id777779809-container" class="ggvis-output-container">
-<div id="plot_id777779809" class="ggvis-output"></div>
+<div id="plot_id406168402-container" class="ggvis-output-container">
+<div id="plot_id406168402" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id777779809_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id777779809" data-renderer="svg">SVG</a>
+<a id="plot_id406168402_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id406168402" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id777779809_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id777779809" data-renderer="canvas">Canvas</a>
+<a id="plot_id406168402_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id406168402" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id777779809_download" class="ggvis-download" data-plot-id="plot_id777779809">Download</a>
+<a id="plot_id406168402_download" class="ggvis-download" data-plot-id="plot_id406168402">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id777779809_spec = {
+var plot_id406168402_spec = {
   "data": [
     {
       "name": ".0",
@@ -1328,7 +1359,7 @@ var plot_id777779809_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id777779809").parseSpec(plot_id777779809_spec);
+ggvis.getPlot("plot_id406168402").parseSpec(plot_id406168402_spec);
 </script>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres z trendem, pakiet ggvis dla kazdego sezonu</span></span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>serialeIMDB <span class="sc">%&gt;%</span></span>
@@ -1340,27 +1371,27 @@ ggvis.getPlot("plot_id777779809").parseSpec(plot_id777779809_spec);
 <span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_text</span>(<span class="at">text :=</span> <span class="sc">~</span>nazwa, <span class="at">opacity=</span><span class="dv">0</span>, <span class="at">fontSize:=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_points</span>(<span class="at">fillOpacity:=</span><span class="fl">0.8</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_model_predictions</span>(<span class="at">model =</span> <span class="st">&quot;lm&quot;</span>) </span></code></pre></div>
-<div id="plot_id384256986-container" class="ggvis-output-container">
-<div id="plot_id384256986" class="ggvis-output"></div>
+<div id="plot_id888638692-container" class="ggvis-output-container">
+<div id="plot_id888638692" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id384256986_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id384256986" data-renderer="svg">SVG</a>
+<a id="plot_id888638692_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id888638692" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id384256986_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id384256986" data-renderer="canvas">Canvas</a>
+<a id="plot_id888638692_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id888638692" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id384256986_download" class="ggvis-download" data-plot-id="plot_id384256986">Download</a>
+<a id="plot_id888638692_download" class="ggvis-download" data-plot-id="plot_id888638692">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id384256986_spec = {
+var plot_id888638692_spec = {
   "data": [
     {
       "name": ".0/group_by1_flat",
@@ -1650,7 +1681,7 @@ var plot_id384256986_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id384256986").parseSpec(plot_id384256986_spec);
+ggvis.getPlot("plot_id888638692").parseSpec(plot_id888638692_spec);
 </script>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wybierz tylko dwie kolumny i wiersze dla jednego serialu</span></span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>tylkoBreakingBad <span class="ot">&lt;-</span> serialeIMDB <span class="sc">%&gt;%</span></span>
@@ -1687,7 +1718,7 @@ ggvis.getPlot("plot_id384256986").parseSpec(plot_id384256986_spec);
 <span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Wyświetl 2 serial</span></span>
 <span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(serialeIMDB<span class="sc">$</span>serial)[<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## [1] Cosmos: A Space-Time Odyssey
-## 198 Levels: Breaking Bad Cosmos: A Space-Time Odyssey Planet Earth Game of Thrones True Detective The Wire Sherlock ... The Good Wife</code></pre>
+## 198 Levels: Breaking Bad Cosmos: A Space-Time Odyssey ... The Good Wife</code></pre>
 <div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Stworzenie fektora z nazwami seriali</span></span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>nazwy_seriali <span class="ot">&lt;-</span> <span class="fu">levels</span>(serialeIMDB<span class="sc">$</span>serial)</span>
 <span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1706,8 +1737,10 @@ ggvis.getPlot("plot_id384256986").parseSpec(plot_id384256986_spec);
 <span id="cb77-16"><a href="#cb77-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Na początku najsilniejsze wzrosty</span></span>
 <span id="cb77-17"><a href="#cb77-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-18"><a href="#cb77-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="sc">-</span><span class="fu">sort</span>(wspolczynnikTrendu))</span></code></pre></div>
-<pre><code>##                The Prisoner                        FLCL       Black Adder the Third                    Mr. Bean 
-##                  0.05686275                  0.05142857                  0.05142857                  0.03263158 
+<pre><code>##                The Prisoner                        FLCL 
+##                  0.05686275                  0.05142857 
+##       Black Adder the Third                    Mr. Bean 
+##                  0.05142857                  0.03263158 
 ##                     Misfits Are You Afraid of the Dark? 
 ##                  0.03206040                  0.02517121</code></pre>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Najwiekszy i najmniejszy</span></span>
@@ -1756,10 +1789,14 @@ ggvis.getPlot("plot_id384256986").parseSpec(plot_id384256986_spec);
 <span id="cb91-14"><a href="#cb91-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb91-15"><a href="#cb91-15" aria-hidden="true" tabindex="-1"></a><span class="co"># wyświetl pierwsze 20 z tak otrzymanych wartości</span></span>
 <span id="cb91-16"><a href="#cb91-16" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(trendy, <span class="dv">20</span>)</span></code></pre></div>
-<pre><code>##           id           id           id           id           id           id           id           id           id           id 
-## 2.699504e-03 4.628440e-03 4.557931e-03 6.547304e-05 7.529400e-03 2.437612e-03 6.416358e-03 1.390043e-03 7.332981e-03 1.808063e-03 
-##           id           id           id           id           id           id           id           id           id           id 
-## 5.091788e-03 4.396767e-03 1.581426e-03 2.810304e-03 3.988819e-03 3.324016e-03 3.434817e-03 8.128730e-03 9.569137e-05 5.257989e-03</code></pre>
+<pre><code>##           id           id           id           id           id           id 
+## 2.835486e-03 2.417466e-03 6.748760e-04 1.029438e-02 1.249024e-03 3.898164e-03 
+##           id           id           id           id           id           id 
+## 3.636272e-03 5.540027e-05 1.737554e-03 5.499736e-03 1.102969e-03 1.168442e-03 
+##           id           id           id           id           id           id 
+## 2.377175e-03 2.538340e-03 7.202035e-04 8.692806e-03 2.744831e-03 4.280930e-03 
+##           id           id 
+## 1.662008e-03 1.177004e-02</code></pre>
 <div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Pokazanie rzeczywistego trendu na tle trendów wynikających z losowych fluktuacji ocen</span></span>
 <span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="co"># jak wyglądają przypadkowe współczynniki</span></span>
@@ -1793,8 +1830,10 @@ ggvis.getPlot("plot_id384256986").parseSpec(plot_id384256986_spec);
 <span id="cb96-18"><a href="#cb96-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(</span>
 <span id="cb96-19"><a href="#cb96-19" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(wspolczynnikiTrendu)</span>
 <span id="cb96-20"><a href="#cb96-20" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>##                The Prisoner                        FLCL       Black Adder the Third                    Mr. Bean 
-##                 -0.05686275                 -0.05142857                 -0.05142857                 -0.03263158 
+<pre><code>##                The Prisoner                        FLCL 
+##                 -0.05686275                 -0.05142857 
+##       Black Adder the Third                    Mr. Bean 
+##                 -0.05142857                 -0.03263158 
 ##                     Misfits Are You Afraid of the Dark? 
 ##                 -0.03206040                 -0.02517121</code></pre>
 <div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Wektor tylko z seriale The Prisoner</span></span>
@@ -1821,7 +1860,7 @@ ggvis.getPlot("plot_id384256986").parseSpec(plot_id384256986_spec);
 <span id="cb100-14"><a href="#cb100-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">abs</span>(modulThePrisoner), <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">5</span>)</span></code></pre></div>
 <p><img src="pogRomcy2.3_files/figure-html/Testowanie%20trendu2-1.png" width="672" /></p>
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(trendy_losowe_ThePrisoner <span class="sc">&gt;=</span> <span class="fu">abs</span>(modulThePrisoner))</span></code></pre></div>
-<pre><code>## [1] 0.013</code></pre>
+<pre><code>## [1] 0.0117</code></pre>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="do">########################### Wersja 2 ta mi sie bardziej podoba ############</span></span>
 <span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="do">### TU NIE MA WARTOSCI ABSOLUTNYCH PRZY WYZNACZENIU LOSOWYCH SILCZYNNIKÓW #####</span></span>
 <span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1885,17 +1924,32 @@ ggvis.getPlot("plot_id384256986").parseSpec(plot_id384256986_spec);
 <span id="cb112-5"><a href="#cb112-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Marka <span class="sc">==</span> <span class="st">&quot;Volkswagen&quot;</span>)</span>
 <span id="cb112-6"><a href="#cb112-6" aria-hidden="true" tabindex="-1"></a><span class="co"># pierwsze dwa wiersze</span></span>
 <span id="cb112-7"><a href="#cb112-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(volkswagen, <span class="dv">2</span>)</span></code></pre></div>
-<pre><code>##    Cena Waluta Cena.w.PLN Brutto.netto  KM  kW      Marka    Model Wersja Liczba.drzwi Pojemnosc.skokowa Przebieg.w.km
-## 1 79900    PLN      79900        netto 175 129 Volkswagen Multivan                 4/5              2500        157400
-## 2 13600    PLN      13600       brutto  NA  NA Volkswagen     Golf     IV          4/5              1900        195000
-##            Rodzaj.paliwa Rok.produkcji              Kolor Kraj.aktualnej.rejestracji Kraj.pochodzenia Pojazd.uszkodzony
-## 1 olej napedowy (diesel)          2007 niebieski-metallic                     Polska           Polska                  
-## 2 olej napedowy (diesel)          2001                                                         Niemcy                  
-##   Skrzynia.biegow           Status.pojazdu.sprowadzonego
-## 1        manualna                                       
-## 2        manualna przygotowany do rejestracji / oplacony
+<pre><code>##    Cena Waluta Cena.w.PLN Brutto.netto  KM  kW      Marka    Model Wersja
+## 1 79900    PLN      79900        netto 175 129 Volkswagen Multivan       
+## 2 13600    PLN      13600       brutto  NA  NA Volkswagen     Golf     IV
+##   Liczba.drzwi Pojemnosc.skokowa Przebieg.w.km          Rodzaj.paliwa
+## 1          4/5              2500        157400 olej napedowy (diesel)
+## 2          4/5              1900        195000 olej napedowy (diesel)
+##   Rok.produkcji              Kolor Kraj.aktualnej.rejestracji Kraj.pochodzenia
+## 1          2007 niebieski-metallic                     Polska           Polska
+## 2          2001                                                         Niemcy
+##   Pojazd.uszkodzony Skrzynia.biegow           Status.pojazdu.sprowadzonego
+## 1                          manualna                                       
+## 2                          manualna przygotowany do rejestracji / oplacony
 ##                                                                                                                                                                                                                                                                 Wyposazenie.dodatkowe
 ## 1 ABS, el. szyby, el. lusterka, klimatyzacja, alufelgi, centralny zamek, poduszka powietrzna, radio / CD, wspomaganie kierownicy, immobiliser, komputer, tempomat, podgrzewane fotele, ESP, lwiatla przeciwmglowe, kierownica wielofunkcyjna, czujnik parkowania, pod. przednia szyba
+## 2                                                                                                                                                                                                                                                                                    
+##   przedzily_Rok.Produkcji przedzialu_Przebieg.w.km Rok.produkcjiKat
+## 1             [2005,2010)            (1e+05,1e+06]      (2006,2010]
+## 2             [2000,2005)            (1e+05,1e+06]      (2000,2006]
+##             MarkaModel
+## 1 Volkswagen: Multivan
+## 2     Volkswagen: Golf
+##                                                                                                                                                                                                                                                          Wyposazenie.dodatkowe_napisy
+## 1 ABS, el. szyby, el. lusterka, klimatyzacja, alufelgi, centralny zamek, poduszka powietrzna, radio / CD, wspomaganie kierownicy, immobiliser, komputer, tempomat, podgrzewane fotele, ESP, lwiatla przeciwmglowe, kierownica wielofunkcyjna, czujnik parkowania, pod. przednia szyba
+## 2                                                                                                                                                                                                                                                                                    
+##         Kolor_napisy
+## 1 niebieski-metallic
 ## 2</code></pre>
 <div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>mlodeVolkswageny <span class="ot">&lt;-</span> volkswagen <span class="sc">%&gt;%</span></span>
 <span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Wiek =</span> <span class="dv">2012</span> <span class="sc">-</span> Rok.produkcji) <span class="sc">%&gt;%</span></span>
@@ -2167,13 +2221,20 @@ Liczenie różnic na próbach różniących się jedynie losową fluktuacją jes
 </ul>
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PogromcyDanych)</span>
 <span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(serialeIMDB)</span></code></pre></div>
-<pre><code>##   id       serial                         nazwa sezon odcinek ocena glosow    imdbId
-## 1  1 Breaking Bad                         Pilot     1       1   8.7   9357 tt0903747
-## 2  2 Breaking Bad           Cat&#39;s in the Bag...     1       2   8.2   6506 tt0903747
-## 3  3 Breaking Bad ...And the Bag&#39;s in the River     1       3   8.3   6176 tt0903747
-## 4  4 Breaking Bad                    Cancer Man     1       4   7.9   5796 tt0903747
-## 5  5 Breaking Bad                   Gray Matter     1       5   7.9   5664 tt0903747
-## 6  6 Breaking Bad      Crazy Handful of Nothin&#39;     1       6   8.7   6521 tt0903747</code></pre>
+<pre><code>##   id       serial                         nazwa sezon odcinek ocena glosow
+## 1  1 Breaking Bad                         Pilot     1       1   8.7   9357
+## 2  2 Breaking Bad           Cat&#39;s in the Bag...     1       2   8.2   6506
+## 3  3 Breaking Bad ...And the Bag&#39;s in the River     1       3   8.3   6176
+## 4  4 Breaking Bad                    Cancer Man     1       4   7.9   5796
+## 5  5 Breaking Bad                   Gray Matter     1       5   7.9   5664
+## 6  6 Breaking Bad      Crazy Handful of Nothin&#39;     1       6   8.7   6521
+##      imdbId
+## 1 tt0903747
+## 2 tt0903747
+## 3 tt0903747
+## 4 tt0903747
+## 5 tt0903747
+## 6 tt0903747</code></pre>
 <div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a>ocenyFriends     <span class="ot">&lt;-</span> serialeIMDB[serialeIMDB<span class="sc">$</span>serial <span class="sc">==</span> <span class="st">&quot;Friends&quot;</span>, <span class="st">&quot;ocena&quot;</span>]</span>
 <span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ocenyFriends)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
@@ -2206,8 +2267,10 @@ Liczenie różnic na próbach różniących się jedynie losową fluktuacją jes
 <span id="cb160-16"><a href="#cb160-16" aria-hidden="true" tabindex="-1"></a>roznice <span class="ot">&lt;-</span> <span class="fu">c</span>(roznice, obserwowana_roznica)</span>
 <span id="cb160-17"><a href="#cb160-17" aria-hidden="true" tabindex="-1"></a><span class="co"># wyświetl 20 różnic zaobserowanych w przypadku losowego podziału na grupy</span></span>
 <span id="cb160-18"><a href="#cb160-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(roznice,<span class="dv">20</span>)</span></code></pre></div>
-<pre><code>##  [1] 0.056017891 0.027338032 0.086297099 0.047885606 0.049701816 0.078381675 0.063933315 0.037720249 0.001124966 0.068216319
-## [11] 0.055801030 0.078164814 0.053984820 0.047885606 0.043602602 0.076348604 0.053984820 0.027554893 0.080414747 0.003158037</code></pre>
+<pre><code>##  [1] 0.074098672 0.003158037 0.015356465 0.121076172 0.019205747 0.074098672
+##  [7] 0.004974248 0.011290323 0.011073462 0.090580103 0.100528599 0.002941176
+## [13] 0.009257251 0.049701816 0.019422608 0.025304961 0.031621036 0.070032529
+## [19] 0.092396313 0.009257251</code></pre>
 <div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wektor referencyjnych różnic po losowym podziale na grupy</span></span>
 <span id="cb162-2"><a href="#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(roznice, <span class="dv">50</span>, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">border=</span><span class="st">&quot;white&quot;</span>)</span>
 <span id="cb162-3"><a href="#cb162-3" aria-hidden="true" tabindex="-1"></a><span class="co"># obserowana różnica w średnich pomiędzy Friends a Breaking Bad</span></span>
@@ -2215,7 +2278,7 @@ Liczenie różnic na próbach różniących się jedynie losową fluktuacją jes
 <p><img src="pogRomcy2.3_files/figure-html/Test dla średnich-1.png" width="672" /></p>
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p-warto??</span></span>
 <span id="cb163-2"><a href="#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(roznice <span class="sc">&gt;=</span> obserwowana_roznica) </span></code></pre></div>
-<pre><code>## [1] 0.6373</code></pre>
+<pre><code>## [1] 0.6406</code></pre>
 <p>Gdy próby są losowo wymieszane, a więc ich średnie, teoretycznie są równe. Czy wiedząc, że w wyniku losowych przypisać aż w 64% przypadków obserwuje się większą różnicę niż ta pomiędzy Friends a Breaking Bad, czy uznamy różnicę pomiędzy tymi dwoma serialami za istotną?</p>
 <p>Pewnie nie. To jaki próg przyjmiemy zależy od konkretnego zastosowania, ale często za próg wybiera się 0.05. Z powodów historycznych.</p>
 <p>W każdym razie, jeżeli otrzymana p-wartość jest mniejsza niż 0.05, to przyjmiemy, że obserwowana wartość jest istotnie różna od przypadkowej (=0). Jeżeli otrzymana p-wartość jest większa równa 0.05 to przyjmiemy, że nie ma istotnych statystycznie różnic.</p>
@@ -2245,7 +2308,7 @@ Liczenie różnic na próbach różniących się jedynie losową fluktuacją jes
 <span id="cb167-16"><a href="#cb167-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-17"><a href="#cb167-17" aria-hidden="true" tabindex="-1"></a><span class="co"># p-wartość dla różnicy średnich</span></span>
 <span id="cb167-18"><a href="#cb167-18" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(roznice <span class="sc">&gt;=</span> obserwowana_roznica)</span></code></pre></div>
-<pre><code>## [1] 6e-05</code></pre>
+<pre><code>## [1] 2e-05</code></pre>
 <div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wektor referencyjnych różnic po losowym podziale na grupy</span></span>
 <span id="cb169-2"><a href="#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(roznice, <span class="dv">50</span>, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">border=</span><span class="st">&quot;white&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.5</span>))</span>
 <span id="cb169-3"><a href="#cb169-3" aria-hidden="true" tabindex="-1"></a><span class="co"># obserwowana różnica w średnich pomiędzy Friends a Sherlock</span></span>

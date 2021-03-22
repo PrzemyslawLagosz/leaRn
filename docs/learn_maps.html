@@ -979,7 +979,8 @@ div.tocify {
 <li>Jedne mapy bezposrednio na tle innych</li>
 </ul>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(<span class="fu">grep</span>(<span class="st">&quot;United&quot;</span>,world<span class="sc">$</span>admin, <span class="at">value =</span> <span class="cn">TRUE</span>)) <span class="co"># by znalesc jak sie dokladnie nazywa tu USA</span></span></code></pre></div>
-<pre><code>## [1] &quot;United Arab Emirates&quot;         &quot;United Kingdom&quot;               &quot;United Republic of Tanzania&quot;  &quot;United States of America&quot;    
+<pre><code>## [1] &quot;United Arab Emirates&quot;         &quot;United Kingdom&quot;              
+## [3] &quot;United Republic of Tanzania&quot;  &quot;United States of America&quot;    
 ## [5] &quot;United States Virgin Islands&quot;</code></pre>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tworzy sub_set z USA</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>usa <span class="ot">&lt;-</span> <span class="fu">subset</span>(world, admin <span class="sc">==</span> <span class="st">&quot;United States of America&quot;</span>)</span>
