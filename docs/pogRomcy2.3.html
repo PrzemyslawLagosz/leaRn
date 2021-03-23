@@ -428,7 +428,9 @@ div.tocify {
     <li>
       <a href="learn_maps.html">Pierwsze mapy - NAUKA</a>
     </li>
-    <li class="dropdown-header">Mapa Polski</li>
+    <li>
+      <a href="mapa.polski.html">Mapa Polski</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -473,7 +475,7 @@ div.tocify {
   </a>
 </li>
 <li>
-  <a href="https://github.com/PrzemyslawLagosz/learn-R">Git</a>
+  <a href="https://github.com/PrzemyslawLagosz/leaRn">Git</a>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -849,27 +851,27 @@ div.tocify {
 <span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggvis</span>(<span class="at">x =</span> <span class="sc">~</span>id, <span class="at">y =</span> <span class="sc">~</span>ocena, <span class="at">fill =</span> <span class="sc">~</span>sezon) <span class="sc">%&gt;%</span></span>
 <span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_text</span>(<span class="at">text :=</span> <span class="sc">~</span>nazwa, <span class="at">opacity=</span><span class="dv">0</span>, <span class="at">fontSize:=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_points</span>(<span class="at">fillOpacity:=</span><span class="fl">0.8</span>) </span></code></pre></div>
-<div id="plot_id674252896-container" class="ggvis-output-container">
-<div id="plot_id674252896" class="ggvis-output"></div>
+<div id="plot_id603568225-container" class="ggvis-output-container">
+<div id="plot_id603568225" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id674252896_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id674252896" data-renderer="svg">SVG</a>
+<a id="plot_id603568225_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id603568225" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id674252896_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id674252896" data-renderer="canvas">Canvas</a>
+<a id="plot_id603568225_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id603568225" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id674252896_download" class="ggvis-download" data-plot-id="plot_id674252896">Download</a>
+<a id="plot_id603568225_download" class="ggvis-download" data-plot-id="plot_id603568225">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id674252896_spec = {
+var plot_id603568225_spec = {
   "data": [
     {
       "name": ".0",
@@ -1077,7 +1079,7 @@ var plot_id674252896_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id674252896").parseSpec(plot_id674252896_spec);
+ggvis.getPlot("plot_id603568225").parseSpec(plot_id603568225_spec);
 </script>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres z trendem, pakiet ggvis</span></span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>serialeIMDB <span class="sc">%&gt;%</span></span>
@@ -1088,27 +1090,27 @@ ggvis.getPlot("plot_id674252896").parseSpec(plot_id674252896_spec);
 <span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_text</span>(<span class="at">text :=</span> <span class="sc">~</span>nazwa, <span class="at">opacity=</span><span class="dv">0</span>, <span class="at">fontSize:=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_points</span>(<span class="at">fillOpacity:=</span><span class="fl">0.8</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_model_predictions</span>(<span class="at">model =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<div id="plot_id406168402-container" class="ggvis-output-container">
-<div id="plot_id406168402" class="ggvis-output"></div>
+<div id="plot_id823871836-container" class="ggvis-output-container">
+<div id="plot_id823871836" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id406168402_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id406168402" data-renderer="svg">SVG</a>
+<a id="plot_id823871836_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id823871836" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id406168402_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id406168402" data-renderer="canvas">Canvas</a>
+<a id="plot_id823871836_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id823871836" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id406168402_download" class="ggvis-download" data-plot-id="plot_id406168402">Download</a>
+<a id="plot_id823871836_download" class="ggvis-download" data-plot-id="plot_id823871836">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id406168402_spec = {
+var plot_id823871836_spec = {
   "data": [
     {
       "name": ".0",
@@ -1359,7 +1361,7 @@ var plot_id406168402_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id406168402").parseSpec(plot_id406168402_spec);
+ggvis.getPlot("plot_id823871836").parseSpec(plot_id823871836_spec);
 </script>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres z trendem, pakiet ggvis dla kazdego sezonu</span></span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>serialeIMDB <span class="sc">%&gt;%</span></span>
@@ -1371,27 +1373,27 @@ ggvis.getPlot("plot_id406168402").parseSpec(plot_id406168402_spec);
 <span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_text</span>(<span class="at">text :=</span> <span class="sc">~</span>nazwa, <span class="at">opacity=</span><span class="dv">0</span>, <span class="at">fontSize:=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_points</span>(<span class="at">fillOpacity:=</span><span class="fl">0.8</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_model_predictions</span>(<span class="at">model =</span> <span class="st">&quot;lm&quot;</span>) </span></code></pre></div>
-<div id="plot_id888638692-container" class="ggvis-output-container">
-<div id="plot_id888638692" class="ggvis-output"></div>
+<div id="plot_id692582545-container" class="ggvis-output-container">
+<div id="plot_id692582545" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id888638692_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id888638692" data-renderer="svg">SVG</a>
+<a id="plot_id692582545_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id692582545" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id888638692_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id888638692" data-renderer="canvas">Canvas</a>
+<a id="plot_id692582545_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id692582545" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id888638692_download" class="ggvis-download" data-plot-id="plot_id888638692">Download</a>
+<a id="plot_id692582545_download" class="ggvis-download" data-plot-id="plot_id692582545">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id888638692_spec = {
+var plot_id692582545_spec = {
   "data": [
     {
       "name": ".0/group_by1_flat",
@@ -1681,7 +1683,7 @@ var plot_id888638692_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id888638692").parseSpec(plot_id888638692_spec);
+ggvis.getPlot("plot_id692582545").parseSpec(plot_id692582545_spec);
 </script>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wybierz tylko dwie kolumny i wiersze dla jednego serialu</span></span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>tylkoBreakingBad <span class="ot">&lt;-</span> serialeIMDB <span class="sc">%&gt;%</span></span>
@@ -1790,13 +1792,13 @@ ggvis.getPlot("plot_id888638692").parseSpec(plot_id888638692_spec);
 <span id="cb91-15"><a href="#cb91-15" aria-hidden="true" tabindex="-1"></a><span class="co"># wyświetl pierwsze 20 z tak otrzymanych wartości</span></span>
 <span id="cb91-16"><a href="#cb91-16" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(trendy, <span class="dv">20</span>)</span></code></pre></div>
 <pre><code>##           id           id           id           id           id           id 
-## 2.835486e-03 2.417466e-03 6.748760e-04 1.029438e-02 1.249024e-03 3.898164e-03 
+## 0.0025081212 0.0006698396 0.0004935660 0.0028657047 0.0019188638 0.0006698396 
 ##           id           id           id           id           id           id 
-## 3.636272e-03 5.540027e-05 1.737554e-03 5.499736e-03 1.102969e-03 1.168442e-03 
+## 0.0132104455 0.0011382237 0.0048500416 0.0018181360 0.0041348745 0.0038326912 
 ##           id           id           id           id           id           id 
-## 2.377175e-03 2.538340e-03 7.202035e-04 8.692806e-03 2.744831e-03 4.280930e-03 
+## 0.0039737101 0.0018987182 0.0003878019 0.0037420362 0.0003978746 0.0037873637 
 ##           id           id 
-## 1.662008e-03 1.177004e-02</code></pre>
+## 0.0095036640 0.0026441036</code></pre>
 <div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Pokazanie rzeczywistego trendu na tle trendów wynikających z losowych fluktuacji ocen</span></span>
 <span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="co"># jak wyglądają przypadkowe współczynniki</span></span>
@@ -1860,7 +1862,7 @@ ggvis.getPlot("plot_id888638692").parseSpec(plot_id888638692_spec);
 <span id="cb100-14"><a href="#cb100-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">abs</span>(modulThePrisoner), <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">5</span>)</span></code></pre></div>
 <p><img src="pogRomcy2.3_files/figure-html/Testowanie%20trendu2-1.png" width="672" /></p>
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(trendy_losowe_ThePrisoner <span class="sc">&gt;=</span> <span class="fu">abs</span>(modulThePrisoner))</span></code></pre></div>
-<pre><code>## [1] 0.0117</code></pre>
+<pre><code>## [1] 0.0129</code></pre>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="do">########################### Wersja 2 ta mi sie bardziej podoba ############</span></span>
 <span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="do">### TU NIE MA WARTOSCI ABSOLUTNYCH PRZY WYZNACZENIU LOSOWYCH SILCZYNNIKÓW #####</span></span>
 <span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1879,7 +1881,7 @@ ggvis.getPlot("plot_id888638692").parseSpec(plot_id888638692_spec);
 <span id="cb103-16"><a href="#cb103-16" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>modulThePrisoner, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">5</span>)</span></code></pre></div>
 <p><img src="pogRomcy2.3_files/figure-html/Testowanie%20trendu2-2.png" width="672" /></p>
 <div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(trendy_losowe_ThePrisoner <span class="sc">&lt;=</span> modulThePrisoner)</span></code></pre></div>
-<pre><code>## [1] 0.0066</code></pre>
+<pre><code>## [1] 0.0062</code></pre>
 <div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="do">########## NA DESER ##########</span></span>
 <span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="co">#3. [Trudne] Policz dla ilu serialu ich oceny rosną a dla ilu maleją i te wzrosty lub spadki są istotnie większe niż wynikające z przypadku.</span></span>
@@ -2267,10 +2269,10 @@ Liczenie różnic na próbach różniących się jedynie losową fluktuacją jes
 <span id="cb160-16"><a href="#cb160-16" aria-hidden="true" tabindex="-1"></a>roznice <span class="ot">&lt;-</span> <span class="fu">c</span>(roznice, obserwowana_roznica)</span>
 <span id="cb160-17"><a href="#cb160-17" aria-hidden="true" tabindex="-1"></a><span class="co"># wyświetl 20 różnic zaobserowanych w przypadku losowego podziału na grupy</span></span>
 <span id="cb160-18"><a href="#cb160-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(roznice,<span class="dv">20</span>)</span></code></pre></div>
-<pre><code>##  [1] 0.074098672 0.003158037 0.015356465 0.121076172 0.019205747 0.074098672
-##  [7] 0.004974248 0.011290323 0.011073462 0.090580103 0.100528599 0.002941176
-## [13] 0.009257251 0.049701816 0.019422608 0.025304961 0.031621036 0.070032529
-## [19] 0.092396313 0.009257251</code></pre>
+<pre><code>##  [1] 0.04766874 0.14140689 0.01920575 0.10662781 0.03343725 0.04563567
+##  [7] 0.03568718 0.03162104 0.01738954 0.03975332 0.04788561 0.03140417
+## [13] 0.01920575 0.01107346 0.05986717 0.06618325 0.02958796 0.06190024
+## [19] 0.07838168 0.03343725</code></pre>
 <div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wektor referencyjnych różnic po losowym podziale na grupy</span></span>
 <span id="cb162-2"><a href="#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(roznice, <span class="dv">50</span>, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">border=</span><span class="st">&quot;white&quot;</span>)</span>
 <span id="cb162-3"><a href="#cb162-3" aria-hidden="true" tabindex="-1"></a><span class="co"># obserowana różnica w średnich pomiędzy Friends a Breaking Bad</span></span>
@@ -2278,7 +2280,7 @@ Liczenie różnic na próbach różniących się jedynie losową fluktuacją jes
 <p><img src="pogRomcy2.3_files/figure-html/Test dla średnich-1.png" width="672" /></p>
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p-warto??</span></span>
 <span id="cb163-2"><a href="#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(roznice <span class="sc">&gt;=</span> obserwowana_roznica) </span></code></pre></div>
-<pre><code>## [1] 0.6406</code></pre>
+<pre><code>## [1] 0.6433</code></pre>
 <p>Gdy próby są losowo wymieszane, a więc ich średnie, teoretycznie są równe. Czy wiedząc, że w wyniku losowych przypisać aż w 64% przypadków obserwuje się większą różnicę niż ta pomiędzy Friends a Breaking Bad, czy uznamy różnicę pomiędzy tymi dwoma serialami za istotną?</p>
 <p>Pewnie nie. To jaki próg przyjmiemy zależy od konkretnego zastosowania, ale często za próg wybiera się 0.05. Z powodów historycznych.</p>
 <p>W każdym razie, jeżeli otrzymana p-wartość jest mniejsza niż 0.05, to przyjmiemy, że obserwowana wartość jest istotnie różna od przypadkowej (=0). Jeżeli otrzymana p-wartość jest większa równa 0.05 to przyjmiemy, że nie ma istotnych statystycznie różnic.</p>
@@ -2308,7 +2310,7 @@ Liczenie różnic na próbach różniących się jedynie losową fluktuacją jes
 <span id="cb167-16"><a href="#cb167-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb167-17"><a href="#cb167-17" aria-hidden="true" tabindex="-1"></a><span class="co"># p-wartość dla różnicy średnich</span></span>
 <span id="cb167-18"><a href="#cb167-18" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(roznice <span class="sc">&gt;=</span> obserwowana_roznica)</span></code></pre></div>
-<pre><code>## [1] 2e-05</code></pre>
+<pre><code>## [1] 3e-05</code></pre>
 <div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wektor referencyjnych różnic po losowym podziale na grupy</span></span>
 <span id="cb169-2"><a href="#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(roznice, <span class="dv">50</span>, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">border=</span><span class="st">&quot;white&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.5</span>))</span>
 <span id="cb169-3"><a href="#cb169-3" aria-hidden="true" tabindex="-1"></a><span class="co"># obserwowana różnica w średnich pomiędzy Friends a Sherlock</span></span>

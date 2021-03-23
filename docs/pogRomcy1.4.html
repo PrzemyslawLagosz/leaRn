@@ -419,7 +419,9 @@ div.tocify {
     <li>
       <a href="learn_maps.html">Pierwsze mapy - NAUKA</a>
     </li>
-    <li class="dropdown-header">Mapa Polski</li>
+    <li>
+      <a href="mapa.polski.html">Mapa Polski</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -464,7 +466,7 @@ div.tocify {
   </a>
 </li>
 <li>
-  <a href="https://github.com/PrzemyslawLagosz/learn-R">Git</a>
+  <a href="https://github.com/PrzemyslawLagosz/leaRn">Git</a>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -1157,7 +1159,7 @@ div.tocify {
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a>czas2 <span class="sc">-</span> czas1</span></code></pre></div>
 <pre><code>## Time difference of 1 days</code></pre>
 <div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>() <span class="sc">-</span> czas1</span></code></pre></div>
-<pre><code>## Time difference of 2229.113 days</code></pre>
+<pre><code>## Time difference of 2230.013 days</code></pre>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="do">###################################### ZADANIA ###########################################</span></span>
 <span id="cb152-2"><a href="#cb152-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb152-3"><a href="#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
@@ -1179,10 +1181,10 @@ div.tocify {
 <div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sprawdź jaki dzień tygodnia będzie za 100 dni od dziś</span></span>
 <span id="cb160-2"><a href="#cb160-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb160-3"><a href="#cb160-3" aria-hidden="true" tabindex="-1"></a><span class="fu">wday</span>(<span class="fu">today</span>() <span class="sc">+</span> <span class="fu">days</span>(<span class="dv">100</span>), <span class="at">label =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## [1] śr\\.
+<pre><code>## [1] czw\\.
 ## Levels: niedz\\. &lt; pon\\. &lt; wt\\. &lt; śr\\. &lt; czw\\. &lt; pt\\. &lt; sob\\.</code></pre>
 <div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wday</span>(<span class="fu">today</span>(), <span class="at">label =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## [1] pon\\.
+<pre><code>## [1] wt\\.
 ## Levels: niedz\\. &lt; pon\\. &lt; wt\\. &lt; śr\\. &lt; czw\\. &lt; pt\\. &lt; sob\\.</code></pre>
 </div>
 </div>
