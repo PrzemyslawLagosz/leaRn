@@ -10,6 +10,7 @@ navbar:
         - text: "Pierwsze mapy - NAUKA"
           href: learn_maps.html
         - text: "Mapa Polski"
+          href: mapa.polski.html
         
     - text: "pogRomcy"
       menu:
