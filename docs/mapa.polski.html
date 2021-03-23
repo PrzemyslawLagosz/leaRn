@@ -588,13 +588,20 @@ div.tocify {
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>       <span class="fu">select</span>(Województwo, X..głosów.ważnych, Robert.BIEDROŃ, Andrzej.Sebastian.DUDA, Krzysztof.BOSAK, Szymon.Franciszek.HOŁOWNIA)</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(wyniki)</span></code></pre></div>
-<pre><code>##          Województwo X..głosów.ważnych Robert.BIEDROŃ Andrzej.Sebastian.DUDA Krzysztof.BOSAK Szymon.Franciszek.HOŁOWNIA
-## 1       dolnośląskie             99,68           2,61                  38,21            6,44                      14,09
-## 2 kujawsko-pomorskie             99,71           2,31                  39,54            5,88                      15,46
-## 3          lubelskie             99,67           1,63                  56,67            7,99                      10,45
-## 4           lubuskie             99,68           2,20                  34,19            6,07                      17,87
-## 5            łódzkie             99,68           2,30                  46,63            6,15                      12,92
-## 6        małopolskie             99,73           1,92                  51,11            7,76                      11,54</code></pre>
+<pre><code>##          Województwo X..głosów.ważnych Robert.BIEDROŃ Andrzej.Sebastian.DUDA
+## 1       dolnośląskie             99,68           2,61                  38,21
+## 2 kujawsko-pomorskie             99,71           2,31                  39,54
+## 3          lubelskie             99,67           1,63                  56,67
+## 4           lubuskie             99,68           2,20                  34,19
+## 5            łódzkie             99,68           2,30                  46,63
+## 6        małopolskie             99,73           1,92                  51,11
+##   Krzysztof.BOSAK Szymon.Franciszek.HOŁOWNIA
+## 1            6,44                      14,09
+## 2            5,88                      15,46
+## 3            7,99                      10,45
+## 4            6,07                      17,87
+## 5            6,15                      12,92
+## 6            7,76                      11,54</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Zamiana char na numeric</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Dziwne ze gsub bez nawiasow ale działa</span></span>
@@ -630,7 +637,8 @@ div.tocify {
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Sprawdzenie czy sie pokrywa</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(wyniki<span class="sc">$</span>Województwo) <span class="sc">==</span> <span class="fu">sort</span>(polska<span class="sc">$</span>NAME_1)</span></code></pre></div>
-<pre><code>##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
+<pre><code>##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+## [16] TRUE</code></pre>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Wybranie tylko wykorzystywanych kolumn</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>polska_do_wyborow <span class="ot">&lt;-</span> polska <span class="sc">%&gt;%</span></span>
