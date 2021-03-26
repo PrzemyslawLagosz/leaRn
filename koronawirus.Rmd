@@ -20,6 +20,19 @@ Wczytanie danych.
 library(dplyr, warn.conflicts = FALSE)
 library(readr)
 
+```
+
+```{r Function, echo=FALSE}
+mine_kable <- function(data) {
+  kbl(data) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+}
+library(kableExtra)
+```
+
+
+```{r First look}
 # Load the data
 confirmed <- read.csv("C:/R/CodeAcademy/CoronavirusProject/corona_confirmed.csv", sep = ",")
 deaths <- read.csv("C:/R/CodeAcademy/CoronavirusProject/corona_deaths.csv", sep = ",")
@@ -28,8 +41,11 @@ recovered <- read.csv("C:/R/CodeAcademy/CoronavirusProject/corona_recovered.csv"
 
 # Inspect the data
 
-head(confirmed)
+head(confirmed) %>%
+  mine_kable()
 ```
+
+
 
 # Looking At March 22nd, 2020
 
@@ -130,7 +146,8 @@ USA_rocovered <- recovered %>%
   #select(Country.Region,X3.22.20) %>%
   filter(Country.Region == "US")
 
-USA_rocovered 
+USA_rocovered %>%
+  mine_kable()
 ```
 
 You may see some surprising results &mdash; are there really zero recovered cases in the US? Let's take a closer look at the `US` row in the `recovered` table. Either view the table in RStudio's interface, or print the row in the cell block below. What do you notice about the values as you scroll to March 22nd?
@@ -169,7 +186,8 @@ max_recovered / max_confirmed * 100
 # Transpose the data frame
 confirmed_transposed <- as.data.frame(t(confirmed_grouped))
 
-head(confirmed_transposed)
+head(confirmed_transposed) %>%
+  mine_kable()
 ```
 
 
@@ -216,7 +234,7 @@ str(confirmed_transposed)
 confirmed_transposed <- apply(confirmed_transposed, MARGIN = 2, as.numeric)
 
 # Sprawdzenie
-str(confirmed_transposed)
+str(confirmed_transposed)[6, ]
 
 # Zamiana spowrotem na DF
 confirmed_transposed <- as.data.frame(confirmed_transposed)

@@ -19,6 +19,7 @@ mine_kable <- function(data) {
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), font_size = 10) %>%
   scroll_box(width = "100%", height = "300px")
 }
+
 ```
 
 ```{r data, message=FALSE}
@@ -28,7 +29,7 @@ library(ggplot2)
 library(stringr)
 library(tidyr)
 library(plotrix)
-library(kableExtra)
+
 
 ```
 
