@@ -1,0 +1,275 @@
+---
+title: "Predicting Income with Social Data"
+author: "Przemyslaw Lagosz"
+date: "25 03 2021"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+
+# Predicting Income with Social Data  
+
+The Panel Survey of Income Data is the longest running longitudinal household survey in the world. Survey responses related to social, economic, and health outcomes have been collected from the families and their descendants since 1968. This dataset is widely used by social scientists to investigate the relationship between individual characteristics, like gender or age, and broader socioeconomic outcomes like education achievement and lifetime income. In this project, you’ll have the chance to use PSID data and linear regression to predict the labor-derived income of survey respondents based on the following set of variables:
+
+* `gender`: the gender, female-identifying, male-identifying, or other, of a respondent
+* `age`: the age of the respondent
+* `married`: the marital status, unmarried, married, or divorced, of a respondent
+* `employed`: the employment status of the respondent at the time of survey collection
+* `educated_in_us`: whether the respondent went to primary school in the United Statues
+* `highest_degree`: the highest educational degree obtained by the respondent
+* `education_years`: the total number of years of formal education completed by the respondent
+* `labor_income`: the yearly income earned by the respondent from a salary or hourly employment  
+
+```{r Ustawienie opcji globalnych, echo=FALSE}
+
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+
+mine_kable <- function(data) {
+  kbl(data) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+}
+```
+
+```{r biblioteki, message=FALSE, warning=FALSE}
+
+# load packages and data
+library(ggplot2)
+library(dplyr)
+library(modelr) # Funkcja add_predictions()
+library(kableExtra) # Wyświetlanie tabel na stronie
+
+psid <- read.csv("C:/R/CodeAcademy/Linear Regression/psid_2017.csv")
+
+```
+
+# Przygotowanie danych  
+
+## Wiek  
+
+```{r age}
+# view data structure
+
+str(psid)
+
+head(psid)%>%
+  mine_kable()
+
+
+# plot age
+
+psid_age_plot <- psid %>%
+  ggplot(aes(x = age)) +
+  geom_bar()
+
+psid_age_plot
+
+# filter to reasonable age group
+
+psid <- psid %>%
+  filter(age > 18 & age < 75)
+
+# plot flitered age
+
+psid_age_plot <- psid %>%
+  ggplot(aes(x = age)) +
+  geom_bar()
+
+psid_age_plot
+```
+
+## Lata edukacji  
+
+```{r education}
+# plot education
+
+psid_education_plot <- psid %>%
+  ggplot(aes(education_years,education_years)) +
+  geom_boxplot()
+
+psid_education_plot
+
+# filter to reasonable education levels
+
+psid <- psid %>%
+  filter(education_years > 5 & education_years < 25)
+
+psid_education_plot <- psid %>%
+  ggplot(aes(education_years,education_years)) +
+  geom_boxplot() +
+  labs(title = 'Years of education')
+
+psid_education_plot
+```
+
+## Przychody  
+
+```{r income}
+# plot income
+
+psid_income_plot <- psid %>%
+  ggplot(aes(labor_income, labor_income)) +
+  geom_boxplot()
+
+psid_income_plot
+
+# Odfiltrowanie 0 pzychodów
+
+psid <- psid %>%
+  filter(labor_income > 1)
+
+# Ponowne sprawdzenie wykresu
+
+psid_income_plot <- psid %>%
+  ggplot(aes(labor_income, labor_income)) +
+  geom_boxplot()
+
+psid_income_plot
+
+# view income summary statistics
+
+summary(psid$labor_income)
+
+# Sprawdzenie kwantylu 95
+
+kwantyl95 <- quantile(psid$labor_income, probs = 0.95)
+kwantyl95
+
+## Odfiltrowanie skrajnych górnych wartości.
+psid <- psid %>%
+  filter(labor_income < kwantyl95)
+
+# Ponowne sprawdzenie wykresu
+
+psid_income_plot <- psid %>%
+  ggplot(aes(labor_income, labor_income)) +
+  geom_boxplot()
+
+psid_income_plot
+```
+
+
+```{r mean income by age}
+# plot mean income by age
+
+psid_income_by_age <- psid %>%
+  group_by(age) %>%
+  summarise(mean_income = mean(labor_income)) %>%
+  ggplot(aes(x = age, y = mean_income)) +
+  geom_point()
+
+psid_income_by_age
+
+# Odfiltrowanie poniewaz wszyskie obserwacje powyzej 50 roku życia = 0
+
+psid <- psid %>%
+  filter(age < 50)
+
+# plot mean income by 
+
+psid_income_by_age <- psid %>%
+  group_by(age) %>%
+  summarise(mean_income = mean(labor_income)) %>%
+  ggplot(aes(x = age, y = mean_income)) +
+  geom_point()
+
+psid_income_by_age
+```
+
+# Modelowanie  
+  
+## Model 1 zmiennej
+
+```{r model1}
+# subset data points into train and test sets
+
+set.seed(123)
+
+sample <- sample(c(TRUE, FALSE), nrow(psid), replace = T, prob = c(0.6,0.4))
+
+# define train and test
+
+train <- psid[sample, ]
+test <- psid[!sample, ]
+
+
+# build model
+
+model <- lm(labor_income ~ education_years, data = train)
+
+model$coef
+
+summary(model)
+
+
+
+# plot against LOESS model
+
+plot_model <- train %>%
+  ggplot(aes(x = education_years, y = labor_income)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  geom_smooth(se = F, colour = 'red')+
+  coord_cartesian(ylim = c(0,55000))
+
+plot_model
+
+# compute r-squared
+
+r_sq <- round(summary(model)$r.squared * 100, 2)
+
+## Interpretacja
+
+sprintf("Based on a simple linear regression model, we have determined that %s percent of the variation in respondent income can be predicted by a respondent's education level.", r_sq)
+```
+
+
+## Model kilku zmiennych  
+
+```{r model2}
+# build second model
+
+model_2 <- lm(labor_income ~ education_years + age + gender, data = train)
+
+r_sq_2 <- round(summary(model_2)$r.squared * 100,2)
+
+## Interpretacja
+
+ sprintf("Based on a simple linear regression model, we have determined that %s percent of the variation in respondent income can be predicted by a respondent's education level, age and gender.", r_sq_2)
+
+# plot predictions versus observed
+
+test <- add_predictions(data = test, model = model_2)
+
+plot_model <-  ggplot(data = test, aes(age, labor_income)) +
+  geom_point() +
+  geom_line(aes(y = pred), color = "blue")+
+  coord_cartesian(ylim = c(0,55000))
+
+plot_model
+
+# write out model results
+
+summary(model_2)
+
+model_2$coefficients
+```
+  
+* **Do education_years, age, and gender all have a significant impact on labor_income ?** All variables are highly significant, with a p-value < 0.01.  
+  
+* **gender is a boolean categorical variable; how should we interpret its’ coefficient value?** In this case, the gender coefficient represents the effect of changing the gender of the respondent to woman.  
+  
+* **Which variable has the largest effect on labor_income?* *gender has the largest absolute effect on labor_income.  
+  
+
+```{r interpretacja model 2}
+# extract education coefficent
+
+education_coefficent <- round(model_2$coefficients[2],2)
+
+## Interpretacja
+
+sprintf("Based on a multiple linear regression model of education, age, and gender, for every additional year of formal education, the average American resident's income increases by $%s.", education_coefficent)
+
+```

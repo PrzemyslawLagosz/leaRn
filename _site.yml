@@ -31,6 +31,21 @@ navbar:
           href: pogRomcy2.3.html
         - text: "Modelowanie danych jakościowych"
           href: pogRomcy2.4.html
+    - text: "CodeAcademy"
+      menu:
+        - text: "Manipulatig Data"
+        - text: "Koronawirus - projekt"
+          href: koronawirus.html
+        - text: '---------'
+        - text: 'Vizualization'
+        - text: "City Bike"
+          href: citibike.html
+        - text: "Muzea w Ameryce"
+          href: museums.html
+        - text: '---------'
+        - text: 'Regresja'
+        - text: "Linear Regresion"
+          href: linearproject.html
         
   right: 
     - icon: fa-envelope

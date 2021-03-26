@@ -456,6 +456,32 @@ div.tocify {
     </li>
   </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    CodeAcademy
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Manipulatig Data</li>
+    <li>
+      <a href="koronawirus.html">Koronawirus - projekt</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Vizualization</li>
+    <li>
+      <a href="citibike.html">City Bike</a>
+    </li>
+    <li>
+      <a href="museums.html">Muzea w Ameryce</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Regresja</li>
+    <li>
+      <a href="linearproject.html">Linear Regresion</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -585,23 +611,23 @@ div.tocify {
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Pokazanie wyników poszczególnych kandytatów</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>wyniki <span class="ot">&lt;-</span> wyniki_wojewodztwo <span class="sc">%&gt;%</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>       <span class="fu">select</span>(Województwo, X..głosów.ważnych, Robert.BIEDROŃ, Andrzej.Sebastian.DUDA, Krzysztof.BOSAK, Szymon.Franciszek.HOŁOWNIA)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>       <span class="fu">select</span>(Województwo, X..głosów.ważnych, Rafał.Kazimierz.TRZASKOWSKI, Andrzej.Sebastian.DUDA, Krzysztof.BOSAK, Szymon.Franciszek.HOŁOWNIA)</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(wyniki)</span></code></pre></div>
-<pre><code>##          Województwo X..głosów.ważnych Robert.BIEDROŃ Andrzej.Sebastian.DUDA
-## 1       dolnośląskie             99,68           2,61                  38,21
-## 2 kujawsko-pomorskie             99,71           2,31                  39,54
-## 3          lubelskie             99,67           1,63                  56,67
-## 4           lubuskie             99,68           2,20                  34,19
-## 5            łódzkie             99,68           2,30                  46,63
-## 6        małopolskie             99,73           1,92                  51,11
-##   Krzysztof.BOSAK Szymon.Franciszek.HOŁOWNIA
-## 1            6,44                      14,09
-## 2            5,88                      15,46
-## 3            7,99                      10,45
-## 4            6,07                      17,87
-## 5            6,15                      12,92
-## 6            7,76                      11,54</code></pre>
+<pre><code>##          Województwo X..głosów.ważnych Rafał.Kazimierz.TRZASKOWSKI
+## 1       dolnośląskie             99,68                       35,92
+## 2 kujawsko-pomorskie             99,71                       33,59
+## 3          lubelskie             99,67                       19,32
+## 4           lubuskie             99,68                       36,94
+## 5            łódzkie             99,68                       28,74
+## 6        małopolskie             99,73                       23,92
+##   Andrzej.Sebastian.DUDA Krzysztof.BOSAK Szymon.Franciszek.HOŁOWNIA
+## 1                  38,21            6,44                      14,09
+## 2                  39,54            5,88                      15,46
+## 3                  56,67            7,99                      10,45
+## 4                  34,19            6,07                      17,87
+## 5                  46,63            6,15                      12,92
+## 6                  51,11            7,76                      11,54</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Zamiana char na numeric</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Dziwne ze gsub bez nawiasow ale działa</span></span>
@@ -663,20 +689,21 @@ div.tocify {
 <span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> przygotowane)<span class="sc">+</span></span>
 <span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">&quot;cornsilk&quot;</span>)<span class="sc">+</span></span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin=</span>X<span class="fl">-0.2</span>, <span class="at">xmax=</span>X, <span class="at">ymin=</span>Y, <span class="at">ymax=</span>Y<span class="sc">+</span>Andrzej.Sebastian.DUDA<span class="sc">/</span><span class="dv">50</span>), </span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>            <span class="at">fill=</span><span class="st">&quot;blue&quot;</span>, <span class="at">color=</span> <span class="st">&quot;white&quot;</span>)<span class="sc">+</span></span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin=</span>X, <span class="at">xmax=</span>X<span class="fl">+0.2</span>, <span class="at">ymin=</span>Y, <span class="at">ymax=</span>Y<span class="sc">+</span>Robert.BIEDROŃ<span class="sc">/</span><span class="dv">50</span>), </span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">fill=</span><span class="st">&quot;red&quot;</span>, <span class="at">color=</span> <span class="st">&quot;white&quot;</span>)<span class="sc">+</span></span>
-<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin=</span>X<span class="fl">+0.2</span>, <span class="at">xmax=</span>X<span class="fl">+0.4</span>, <span class="at">ymin=</span>Y, <span class="at">ymax=</span>Y<span class="sc">+</span>Krzysztof.BOSAK<span class="sc">/</span><span class="dv">50</span>), </span>
-<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>            <span class="at">fill=</span><span class="st">&quot;green3&quot;</span>, <span class="at">color=</span> <span class="st">&quot;white&quot;</span>)<span class="sc">+</span></span>
-<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin=</span>X<span class="fl">+0.4</span>, <span class="at">xmax=</span>X<span class="fl">+0.6</span>, <span class="at">ymin=</span>Y, <span class="at">ymax=</span>Y<span class="sc">+</span>Szymon.Franciszek.HOŁOWNIA<span class="sc">/</span><span class="dv">50</span>), </span>
-<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>            <span class="at">fill=</span><span class="st">&quot;orange3&quot;</span>, <span class="at">color=</span> <span class="st">&quot;white&quot;</span>)<span class="sc">+</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin=</span>X<span class="fl">-0.2</span>, <span class="at">xmax=</span>X, <span class="at">ymin=</span>Y, <span class="at">ymax=</span>Y<span class="sc">+</span>Andrzej.Sebastian.DUDA<span class="sc">/</span><span class="dv">50</span>, </span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>            <span class="at">fill=</span><span class="st">&quot;Duda Andrzej&quot;</span>), <span class="at">color=</span> <span class="st">&quot;white&quot;</span>)<span class="sc">+</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin=</span>X, <span class="at">xmax=</span>X<span class="fl">+0.2</span>, <span class="at">ymin=</span>Y, <span class="at">ymax=</span>Y<span class="sc">+</span>Rafał.Kazimierz.TRZASKOWSKI<span class="sc">/</span><span class="dv">50</span>, </span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">fill=</span><span class="st">&quot;Trzaskowski Andrzej&quot;</span>), <span class="at">color=</span> <span class="st">&quot;white&quot;</span>)<span class="sc">+</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin=</span>X<span class="fl">+0.2</span>, <span class="at">xmax=</span>X<span class="fl">+0.4</span>, <span class="at">ymin=</span>Y, <span class="at">ymax=</span>Y<span class="sc">+</span>Krzysztof.BOSAK<span class="sc">/</span><span class="dv">50</span>, </span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>            <span class="at">fill=</span><span class="st">&quot;Bosak Krzysztof&quot;</span>), <span class="at">color=</span> <span class="st">&quot;white&quot;</span>)<span class="sc">+</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin=</span>X<span class="fl">+0.4</span>, <span class="at">xmax=</span>X<span class="fl">+0.6</span>, <span class="at">ymin=</span>Y, <span class="at">ymax=</span>Y<span class="sc">+</span>Szymon.Franciszek.HOŁOWNIA<span class="sc">/</span><span class="dv">50</span>, </span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>            <span class="at">fill=</span><span class="st">&quot;Hołownia Szymon&quot;</span>), <span class="at">color=</span> <span class="st">&quot;white&quot;</span>)<span class="sc">+</span></span>
 <span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
-<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),     <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor=</span><span class="fu">element_blank</span>(), <span class="at">panel.grid.major=</span><span class="fu">element_blank</span>(),</span>
-<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),   <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>())<span class="sc">+</span></span>
-<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Wyniki wyborów prezydenckich 2020&quot;</span>, <span class="at">subtitle =</span> <span class="st">&quot;I tura&quot;</span>)</span></code></pre></div>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),     <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>         <span class="at">panel.grid.minor=</span><span class="fu">element_blank</span>(), <span class="at">panel.grid.major=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),   <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>())<span class="sc">+</span></span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name=</span> <span class="st">&quot;Kandydat&quot;</span>)<span class="sc">+</span></span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Wyniki wyborów prezydenckich 2020&quot;</span>, <span class="at">subtitle =</span> <span class="st">&quot;I tura&quot;</span>)</span></code></pre></div>
 <p><img src="mapa.polski_files/figure-html/Wyniki wyborów-1.png" width="672" /></p>
 </div>
 <div id="jak-uszczęśliwić-czechów." class="section level2">
