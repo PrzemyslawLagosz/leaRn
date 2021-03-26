@@ -117,7 +117,7 @@ wyniki_wojewodztwo <- read.csv("C:/R/NAUKA/Dane/wyniki_gl_na_kand_po_wojewodztwa
 ## Pokazanie wyników poszczególnych kandytatów
 
 wyniki <- wyniki_wojewodztwo %>%
-       select(Województwo, X..głosów.ważnych, Robert.BIEDROŃ, Andrzej.Sebastian.DUDA, Krzysztof.BOSAK, Szymon.Franciszek.HOŁOWNIA)
+       select(Województwo, X..głosów.ważnych, Rafał.Kazimierz.TRZASKOWSKI, Andrzej.Sebastian.DUDA, Krzysztof.BOSAK, Szymon.Franciszek.HOŁOWNIA)
 
 head(wyniki)
 
@@ -165,19 +165,20 @@ przygotowane <- inner_join(polska_do_wyborow,wyniki, by="Województwo")
 
 ggplot(data = przygotowane)+
   geom_sf(fill = "cornsilk")+
-  geom_rect(aes(xmin=X-0.2, xmax=X, ymin=Y, ymax=Y+Andrzej.Sebastian.DUDA/50), 
-            fill="blue", color= "white")+
-  geom_rect(aes(xmin=X, xmax=X+0.2, ymin=Y, ymax=Y+Robert.BIEDROŃ/50), 
-            fill="red", color= "white")+
-  geom_rect(aes(xmin=X+0.2, xmax=X+0.4, ymin=Y, ymax=Y+Krzysztof.BOSAK/50), 
-            fill="green3", color= "white")+
-  geom_rect(aes(xmin=X+0.4, xmax=X+0.6, ymin=Y, ymax=Y+Szymon.Franciszek.HOŁOWNIA/50), 
-            fill="orange3", color= "white")+
+  geom_rect(aes(xmin=X-0.2, xmax=X, ymin=Y, ymax=Y+Andrzej.Sebastian.DUDA/50, 
+            fill="Duda Andrzej"), color= "white")+
+  geom_rect(aes(xmin=X, xmax=X+0.2, ymin=Y, ymax=Y+Rafał.Kazimierz.TRZASKOWSKI/50, 
+            fill="Trzaskowski Andrzej"), color= "white")+
+  geom_rect(aes(xmin=X+0.2, xmax=X+0.4, ymin=Y, ymax=Y+Krzysztof.BOSAK/50, 
+            fill="Bosak Krzysztof"), color= "white")+
+  geom_rect(aes(xmin=X+0.4, xmax=X+0.6, ymin=Y, ymax=Y+Szymon.Franciszek.HOŁOWNIA/50, 
+            fill="Hołownia Szymon"), color= "white")+
   theme_bw()+
-  theme(axis.ticks = element_blank(),     panel.border = element_blank(),
-        axis.text.x = element_blank(),    axis.text.y = element_blank(),
-        panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
-        axis.title.x = element_blank(),   axis.title.y = element_blank())+
+   theme(axis.ticks = element_blank(),     panel.border = element_blank(),
+         axis.text.x = element_blank(),    axis.text.y = element_blank(),
+         panel.grid.minor=element_blank(), panel.grid.major=element_blank(),
+         axis.title.x = element_blank(),   axis.title.y = element_blank())+
+  scale_fill_discrete(name= "Kandydat")+
   labs(title = "Wyniki wyborów prezydenckich 2020", subtitle = "I tura")
  
 ```

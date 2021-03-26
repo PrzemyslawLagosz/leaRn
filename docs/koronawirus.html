@@ -1,0 +1,6339 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Przemyslaw Lagosz" />
+
+
+<title>Investigating the Coronavirus Pandemic</title>
+
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Notebook</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fas fa-home"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Spatial Objects
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="learn_maps.html">Pierwsze mapy - NAUKA</a>
+    </li>
+    <li>
+      <a href="mapa.polski.html">Mapa Polski</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    pogRomcy
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">SEZON 1</li>
+    <li>
+      <a href="pogRomcy1.2.html">Odczytywanie, zapisywanie i indeksowanie danych</a>
+    </li>
+    <li>
+      <a href="pogRomcy1.3.html">Instrukcje sterujące, pętle, warunki i funkcje</a>
+    </li>
+    <li>
+      <a href="pogRomcy1.4.html">Podstawowe typy danych i ich statystyki opisowe</a>
+    </li>
+    <li>
+      <a href="pogRomcy1.5.html">Przetwarzanie potokowe danych</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">SEZON 2</li>
+    <li>
+      <a href="pogRomcy2.2.html">Jak zrobić wykres w pakiecie ggplot2?</a>
+    </li>
+    <li>
+      <a href="pogRomcy2.3.html">Modelowanie danych ilościowych</a>
+    </li>
+    <li>
+      <a href="pogRomcy2.4.html">Modelowanie danych jakościowych</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    CodeAcademy
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Manipulatig Data</li>
+    <li>
+      <a href="koronawirus.html">Koronawirus - projekt</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Vizualization</li>
+    <li>
+      <a href="citibike.html">City Bike</a>
+    </li>
+    <li>
+      <a href="museums.html">Muzea w Ameryce</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Regresja</li>
+    <li>
+      <a href="linearproject.html">Linear Regresion</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:&lt;przemyslawlagosz1@gmail.com&gt;">
+    <span class="fas fa-envelope"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/PrzemyslawLagosz/leaRn">Git</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Investigating the Coronavirus Pandemic</h1>
+<h4 class="author">Przemyslaw Lagosz</h4>
+<h4 class="date">24-03-2021</h4>
+
+</div>
+
+
+<div id="co-to-będzie" class="section level1">
+<h1>Co to będzie?</h1>
+<ul>
+<li>Projekt wykonany w ramach kursy Learn R na CODEACADEMY.<br />
+Praca z danymi, wizualizacja</li>
+</ul>
+</div>
+<div id="collect-and-investigate-the-data" class="section level1">
+<h1>Collect and Investigate the Data</h1>
+<p>We’ve provided three datasets named <code>corona_confirmed.csv</code>, <code>corona_recovered.csv</code> and <code>corona_deaths.csv</code>. For the entirety of this project, we’ll be using these datasets. You can find more recent versions of this data at Johns Hopkins’ data repository on <a href="https://github.com/CSSEGISandData/COVID-19">GitHub</a>.</p>
+<p>Wczytanie danych.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>confirmed <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;C:/R/CodeAcademy/CoronavirusProject/corona_confirmed.csv&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>deaths <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;C:/R/CodeAcademy/CoronavirusProject/corona_deaths.csv&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>recovered <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;C:/R/CodeAcademy/CoronavirusProject/corona_recovered.csv&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the data</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(confirmed) <span class="sc">%&gt;%</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mine_kable</span>()</span></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover table-condensed" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Province.State
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Country.Region
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Lat
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Long
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.22.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.23.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.24.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.25.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.26.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.27.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.28.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.29.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.30.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.31.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.1.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.2.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.3.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.4.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.5.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.6.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.7.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.8.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.9.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.10.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.11.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.12.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.13.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.14.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.15.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.16.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.17.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.18.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.19.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.20.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.21.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.22.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.23.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.24.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.25.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.26.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.27.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.28.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.29.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.1.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.2.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.3.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.4.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.5.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.6.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.7.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.8.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.9.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.10.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.11.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.12.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.13.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.14.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.15.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.16.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.17.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.18.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.19.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.20.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.21.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.22.20
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Thailand
+</td>
+<td style="text-align:right;">
+15.0000
+</td>
+<td style="text-align:right;">
+101.0000
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+37
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+41
+</td>
+<td style="text-align:right;">
+42
+</td>
+<td style="text-align:right;">
+42
+</td>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+48
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+53
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+82
+</td>
+<td style="text-align:right;">
+114
+</td>
+<td style="text-align:right;">
+147
+</td>
+<td style="text-align:right;">
+177
+</td>
+<td style="text-align:right;">
+212
+</td>
+<td style="text-align:right;">
+272
+</td>
+<td style="text-align:right;">
+322
+</td>
+<td style="text-align:right;">
+411
+</td>
+<td style="text-align:right;">
+599
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Japan
+</td>
+<td style="text-align:right;">
+36.0000
+</td>
+<td style="text-align:right;">
+138.0000
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:right;">
+74
+</td>
+<td style="text-align:right;">
+84
+</td>
+<td style="text-align:right;">
+94
+</td>
+<td style="text-align:right;">
+105
+</td>
+<td style="text-align:right;">
+122
+</td>
+<td style="text-align:right;">
+147
+</td>
+<td style="text-align:right;">
+159
+</td>
+<td style="text-align:right;">
+170
+</td>
+<td style="text-align:right;">
+189
+</td>
+<td style="text-align:right;">
+214
+</td>
+<td style="text-align:right;">
+228
+</td>
+<td style="text-align:right;">
+241
+</td>
+<td style="text-align:right;">
+256
+</td>
+<td style="text-align:right;">
+274
+</td>
+<td style="text-align:right;">
+293
+</td>
+<td style="text-align:right;">
+331
+</td>
+<td style="text-align:right;">
+360
+</td>
+<td style="text-align:right;">
+420
+</td>
+<td style="text-align:right;">
+461
+</td>
+<td style="text-align:right;">
+502
+</td>
+<td style="text-align:right;">
+511
+</td>
+<td style="text-align:right;">
+581
+</td>
+<td style="text-align:right;">
+639
+</td>
+<td style="text-align:right;">
+639
+</td>
+<td style="text-align:right;">
+701
+</td>
+<td style="text-align:right;">
+773
+</td>
+<td style="text-align:right;">
+839
+</td>
+<td style="text-align:right;">
+825
+</td>
+<td style="text-align:right;">
+878
+</td>
+<td style="text-align:right;">
+889
+</td>
+<td style="text-align:right;">
+924
+</td>
+<td style="text-align:right;">
+963
+</td>
+<td style="text-align:right;">
+1007
+</td>
+<td style="text-align:right;">
+1086
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Singapore
+</td>
+<td style="text-align:right;">
+1.2833
+</td>
+<td style="text-align:right;">
+103.8333
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:right;">
+72
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+77
+</td>
+<td style="text-align:right;">
+81
+</td>
+<td style="text-align:right;">
+84
+</td>
+<td style="text-align:right;">
+84
+</td>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:right;">
+89
+</td>
+<td style="text-align:right;">
+89
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:right;">
+102
+</td>
+<td style="text-align:right;">
+106
+</td>
+<td style="text-align:right;">
+108
+</td>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:right;">
+117
+</td>
+<td style="text-align:right;">
+130
+</td>
+<td style="text-align:right;">
+138
+</td>
+<td style="text-align:right;">
+150
+</td>
+<td style="text-align:right;">
+150
+</td>
+<td style="text-align:right;">
+160
+</td>
+<td style="text-align:right;">
+178
+</td>
+<td style="text-align:right;">
+178
+</td>
+<td style="text-align:right;">
+200
+</td>
+<td style="text-align:right;">
+212
+</td>
+<td style="text-align:right;">
+226
+</td>
+<td style="text-align:right;">
+243
+</td>
+<td style="text-align:right;">
+266
+</td>
+<td style="text-align:right;">
+313
+</td>
+<td style="text-align:right;">
+345
+</td>
+<td style="text-align:right;">
+385
+</td>
+<td style="text-align:right;">
+432
+</td>
+<td style="text-align:right;">
+455
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Nepal
+</td>
+<td style="text-align:right;">
+28.1667
+</td>
+<td style="text-align:right;">
+84.2500
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Malaysia
+</td>
+<td style="text-align:right;">
+2.5000
+</td>
+<td style="text-align:right;">
+112.5000
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+83
+</td>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:right;">
+99
+</td>
+<td style="text-align:right;">
+117
+</td>
+<td style="text-align:right;">
+129
+</td>
+<td style="text-align:right;">
+149
+</td>
+<td style="text-align:right;">
+149
+</td>
+<td style="text-align:right;">
+197
+</td>
+<td style="text-align:right;">
+238
+</td>
+<td style="text-align:right;">
+428
+</td>
+<td style="text-align:right;">
+566
+</td>
+<td style="text-align:right;">
+673
+</td>
+<td style="text-align:right;">
+790
+</td>
+<td style="text-align:right;">
+900
+</td>
+<td style="text-align:right;">
+1030
+</td>
+<td style="text-align:right;">
+1183
+</td>
+<td style="text-align:right;">
+1306
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+British Columbia
+</td>
+<td style="text-align:left;">
+Canada
+</td>
+<td style="text-align:right;">
+49.2827
+</td>
+<td style="text-align:right;">
+-123.1207
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+39
+</td>
+<td style="text-align:right;">
+46
+</td>
+<td style="text-align:right;">
+64
+</td>
+<td style="text-align:right;">
+64
+</td>
+<td style="text-align:right;">
+73
+</td>
+<td style="text-align:right;">
+103
+</td>
+<td style="text-align:right;">
+103
+</td>
+<td style="text-align:right;">
+186
+</td>
+<td style="text-align:right;">
+231
+</td>
+<td style="text-align:right;">
+271
+</td>
+<td style="text-align:right;">
+424
+</td>
+<td style="text-align:right;">
+424
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="looking-at-march-22nd-2020" class="section level1">
+<h1>Looking At March 22nd, 2020</h1>
+<p>Sprawdzenie łącznej liczby potwierdzonych przyadków.<br />
+NOTE: Jeśli nazwy kolumn zawierały by <code>/</code> nalezy objąc nazwe danej kolumny bactickasmy ``</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sum the total number of cases on March 22nd</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>confirmed_sum <span class="ot">&lt;-</span> confirmed <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(X3.<span class="fl">22.20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>confirmed_sum</span></code></pre></div>
+<pre><code>## [1] 335955</code></pre>
+</div>
+<div id="filter-by-values" class="section level1">
+<h1>Filter By Values</h1>
+<p>Let’s start to filter the data a bit more. Give these three tasks a try:</p>
+<ul>
+<li>How many confirmed cases are there in countries on March 22nd that are north of the equator? (If a country is north of the equator, its latitude is greater than <code>0</code>)</li>
+<li>How many confirmed cases are there in March 22nd in Australia?</li>
+<li>Can you report both of those values as a percentage of the total number of cases in the world on March 22nd?</li>
+</ul>
+<p>You may want to save these results to variables as they will be useful later!</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for countries in the northern hemisphere</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>confirmed_north <span class="ot">&lt;-</span> confirmed <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Lat <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(X3.<span class="fl">22.20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>confirmed_north </span></code></pre></div>
+<pre><code>## [1] 329794</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for Australia cases</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>confirmed_Australia <span class="ot">&lt;-</span> confirmed <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country.Region <span class="sc">==</span> <span class="st">&quot;Australia&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(X3.<span class="fl">22.20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>confirmed_Australia</span></code></pre></div>
+<pre><code>## [1] 1314</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display percentages</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>confirmed_north<span class="sc">/</span>confirmed_sum<span class="sc">*</span><span class="dv">100</span></span></code></pre></div>
+<pre><code>## [1] 98.16612</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>confirmed_Australia<span class="sc">/</span>confirmed_sum<span class="sc">*</span><span class="dv">100</span></span></code></pre></div>
+<pre><code>## [1] 0.3911238</code></pre>
+</div>
+<div id="group-by-country" class="section level1">
+<h1>Group By Country</h1>
+<p>Notice that some countries have multiple rows of data. This happens when a country has information about specific states or provinces. While this information might be useful, it makes it a bit tricky to see the total number of cases by country.</p>
+<p>We were able to get the total number of cases in Australia by using <code>filter()</code>, but what if we wanted to do this for every country? It would be a pain to have to type every country name into a filter function. Use <code>group_by()</code> to create a new data frame containing one row for every <code>Country/Region</code>.</p>
+<p>Every column of those new rows should have the sum of the total number of cases for that country for every day. We can use the <a href="https://dplyr.tidyverse.org/reference/summarise_all.html"><code>summarize_at()</code></a> function to do this. <code>summarize_at()</code> takes two parameters:</p>
+<ol style="list-style-type: decimal">
+<li>A vector of the columns you want to summarize. In this case we want every column other than <code>Lat</code>, <code>Long</code>, and <code>Province/State</code>. <code>summarize_at()</code> only works with numbers, so we’ll want to remove the column containing country names. We also don’t need to add the latitudes and longitudes. Remember, you can use the <code>-</code> symbol to list columns you want to exclude. Also don’t forget to use backticks around columns with <code>/</code> symbols. For example -`Province/State` will exclude that column. These small details get complicated!</li>
+<li>The function that you want to apply to the column. In this case, <code>sum</code>.</li>
+</ol>
+<p>After creating this new data frame inspect it. To confirm you did the <code>group_by()</code> correctly, find the row for Australia and confirm the number of cases on March 22nd matches your results from the previous step</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by countries</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>confirmed_grouped <span class="ot">&lt;-</span> confirmed <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Country.Region) <span class="sc">%&gt;%</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">&quot;X&quot;</span>), sum))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Alternatywne rozwiązanie</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># countries_confirmed &lt;- confirmed %&gt;% </span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(`Country/Region`) %&gt;% </span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarize_at(vars(-Lat,-Long,-`Province/State`), sum)</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># countries_confirmed</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the grouped data set for Australia</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>confirmed_grouped <span class="sc">%&gt;%</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country.Region <span class="sc">==</span> <span class="st">&quot;Australia&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(X3.<span class="fl">22.20</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 1
+##   X3.22.20
+##      &lt;int&gt;
+## 1     1314</code></pre>
+</div>
+<div id="investigating-the-recovered-dataset" class="section level1">
+<h1>Investigating The Recovered Dataset</h1>
+<p>Do the same process of grouping by country using the recovered dataset. What percentage of the cases in the <code>US</code> have recovered on March 22nd?</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by countries</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>USA_rocovered <span class="ot">&lt;-</span> recovered <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Country.Region) <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">&quot;X&quot;</span>), sum)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">#select(Country.Region,X3.22.20) %&gt;%</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country.Region <span class="sc">==</span> <span class="st">&quot;US&quot;</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>USA_rocovered <span class="sc">%&gt;%</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mine_kable</span>()</span></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover table-condensed" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Country.Region
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.22.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.23.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.24.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.25.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.26.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.27.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.28.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.29.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.30.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X1.31.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.1.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.2.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.3.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.4.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.5.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.6.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.7.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.8.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.9.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.10.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.11.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.12.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.13.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.14.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.15.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.16.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.17.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.18.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.19.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.20.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.21.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.22.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.23.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.24.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.25.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.26.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.27.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.28.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X2.29.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.1.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.2.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.3.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.4.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.5.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.6.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.7.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.8.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.9.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.10.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.11.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.12.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.13.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.14.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.15.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.16.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.17.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.18.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.19.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.20.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.21.20
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+X3.22.20
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+US
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>You may see some surprising results — are there really zero recovered cases in the US? Let’s take a closer look at the <code>US</code> row in the <code>recovered</code> table. Either view the table in RStudio’s interface, or print the row in the cell block below. What do you notice about the values as you scroll to March 22nd?</p>
+<p>It seems like the number of recovered cases is steadily increasing to 17, until March 18th, when it suddenly drops back to 0. This is surprising, and not what we expected! Perhaps we’re misunderstanding the format of the data, or perhaps there’s an error in reporting the data.</p>
+<p>What’s the best course of action at this point? One strategy is to investigate the source of the data to truly understand what it is reporting. When we went back to <a href="https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series">Johns Hopkins’ repository</a>, we found a note saying that the data had moved into a different file. It might be best to use that file!</p>
+<p>If we wanted to use the current file, instead of reporting the number of confirmed and recovered cases in the US on March 22nd, we could report the maximum number of confirmed and recovered cases. Let’s give that a shot using the <code>max()</code> function. Make sure to also use <code>select()</code> to remove the <code>Country/Region</code> column — we can’t take the max of a row if it contains a string.</p>
+<ul>
+<li>Pozostawienie tylko kolumn z wartosciami liczbowymi pozwala za pomocą funkcji <code>max()</code> znalesc najwieksza wartosc w rzędach</li>
+</ul>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the maximum number of confirmed and recovered cases</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pozostawienie tylko kolumn z wartosciami liczbowymi pozwala za pomocą funkcji `max()` znalesc najwieksza wartosc w rzędach</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>max_confirmed <span class="ot">&lt;-</span> confirmed <span class="sc">%&gt;%</span> </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country.Region <span class="sc">==</span> <span class="st">&#39;US&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(X1.<span class="fl">22.20</span><span class="sc">:</span>X3.<span class="fl">22.20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>()</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>max_recovered <span class="ot">&lt;-</span> recovered <span class="sc">%&gt;%</span> </span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country.Region <span class="sc">==</span> <span class="st">&#39;US&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(X1.<span class="fl">22.20</span><span class="sc">:</span>X3.<span class="fl">22.20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>()</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>max_recovered <span class="sc">/</span> max_confirmed <span class="sc">*</span> <span class="dv">100</span></span></code></pre></div>
+<pre><code>## [1] 0.03799152</code></pre>
+</div>
+<div id="transposing-data-frames" class="section level1">
+<h1>Transposing Data Frames</h1>
+<p><code>t()</code> obraca tabele i zamienia ją na matrik <code>as.data.frame()</code> Zamienia spowrotem na DF</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transpose the data frame</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>confirmed_transposed <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">t</span>(confirmed_grouped))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(confirmed_transposed) <span class="sc">%&gt;%</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mine_kable</span>()</span></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover table-condensed" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V1
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V2
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V3
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V4
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V5
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V6
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V7
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V8
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V9
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V10
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V11
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V12
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V13
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V14
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V15
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V16
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V17
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V18
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V19
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V20
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V21
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V22
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V23
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V24
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V25
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V26
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V27
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V28
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V29
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V30
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V31
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V32
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V33
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V34
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V35
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V36
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V37
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V38
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V39
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V40
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V41
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V42
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V43
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V44
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V45
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V46
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V47
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V48
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V49
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V50
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V51
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V52
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V53
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V54
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V55
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V56
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V57
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V58
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V59
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V60
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V61
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V62
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V63
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V64
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V65
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V66
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V67
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V68
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V69
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V70
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V71
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V72
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V73
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V74
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V75
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V76
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V77
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V78
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V79
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V80
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V81
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V82
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V83
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V84
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V85
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V86
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V87
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V88
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V89
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V90
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V91
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V92
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V93
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V94
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V95
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V96
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V97
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V98
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V99
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V100
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V101
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V102
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V103
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V104
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V105
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V106
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V107
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V108
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V109
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V110
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V111
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V112
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V113
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V114
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V115
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V116
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V117
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V118
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V119
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V120
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V121
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V122
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V123
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V124
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V125
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V126
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V127
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V128
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V129
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V130
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V131
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V132
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V133
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V134
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V135
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V136
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V137
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V138
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V139
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V140
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V141
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V142
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V143
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V144
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V145
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V146
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V147
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V148
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V149
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V150
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V151
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V152
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V153
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V154
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V155
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V156
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V157
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V158
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V159
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V160
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V161
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V162
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V163
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V164
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V165
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V166
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V167
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V168
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V169
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V170
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+V171
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Country.Region
+</td>
+<td style="text-align:left;">
+Afghanistan
+</td>
+<td style="text-align:left;">
+Albania
+</td>
+<td style="text-align:left;">
+Algeria
+</td>
+<td style="text-align:left;">
+Andorra
+</td>
+<td style="text-align:left;">
+Angola
+</td>
+<td style="text-align:left;">
+Antigua and Barbuda
+</td>
+<td style="text-align:left;">
+Argentina
+</td>
+<td style="text-align:left;">
+Armenia
+</td>
+<td style="text-align:left;">
+Australia
+</td>
+<td style="text-align:left;">
+Austria
+</td>
+<td style="text-align:left;">
+Azerbaijan
+</td>
+<td style="text-align:left;">
+Bahamas, The
+</td>
+<td style="text-align:left;">
+Bahrain
+</td>
+<td style="text-align:left;">
+Bangladesh
+</td>
+<td style="text-align:left;">
+Barbados
+</td>
+<td style="text-align:left;">
+Belarus
+</td>
+<td style="text-align:left;">
+Belgium
+</td>
+<td style="text-align:left;">
+Benin
+</td>
+<td style="text-align:left;">
+Bhutan
+</td>
+<td style="text-align:left;">
+Bolivia
+</td>
+<td style="text-align:left;">
+Bosnia and Herzegovina
+</td>
+<td style="text-align:left;">
+Brazil
+</td>
+<td style="text-align:left;">
+Brunei
+</td>
+<td style="text-align:left;">
+Bulgaria
+</td>
+<td style="text-align:left;">
+Burkina Faso
+</td>
+<td style="text-align:left;">
+Cabo Verde
+</td>
+<td style="text-align:left;">
+Cambodia
+</td>
+<td style="text-align:left;">
+Cameroon
+</td>
+<td style="text-align:left;">
+Canada
+</td>
+<td style="text-align:left;">
+Cape Verde
+</td>
+<td style="text-align:left;">
+Central African Republic
+</td>
+<td style="text-align:left;">
+Chad
+</td>
+<td style="text-align:left;">
+Chile
+</td>
+<td style="text-align:left;">
+China
+</td>
+<td style="text-align:left;">
+Colombia
+</td>
+<td style="text-align:left;">
+Congo (Brazzaville)
+</td>
+<td style="text-align:left;">
+Congo (Kinshasa)
+</td>
+<td style="text-align:left;">
+Costa Rica
+</td>
+<td style="text-align:left;">
+Cote d’Ivoire
+</td>
+<td style="text-align:left;">
+Croatia
+</td>
+<td style="text-align:left;">
+Cruise Ship
+</td>
+<td style="text-align:left;">
+Cuba
+</td>
+<td style="text-align:left;">
+Cyprus
+</td>
+<td style="text-align:left;">
+Czechia
+</td>
+<td style="text-align:left;">
+Denmark
+</td>
+<td style="text-align:left;">
+Djibouti
+</td>
+<td style="text-align:left;">
+Dominica
+</td>
+<td style="text-align:left;">
+Dominican Republic
+</td>
+<td style="text-align:left;">
+East Timor
+</td>
+<td style="text-align:left;">
+Ecuador
+</td>
+<td style="text-align:left;">
+Egypt
+</td>
+<td style="text-align:left;">
+El Salvador
+</td>
+<td style="text-align:left;">
+Equatorial Guinea
+</td>
+<td style="text-align:left;">
+Eritrea
+</td>
+<td style="text-align:left;">
+Estonia
+</td>
+<td style="text-align:left;">
+Eswatini
+</td>
+<td style="text-align:left;">
+Ethiopia
+</td>
+<td style="text-align:left;">
+Fiji
+</td>
+<td style="text-align:left;">
+Finland
+</td>
+<td style="text-align:left;">
+France
+</td>
+<td style="text-align:left;">
+Gabon
+</td>
+<td style="text-align:left;">
+Gambia, The
+</td>
+<td style="text-align:left;">
+Georgia
+</td>
+<td style="text-align:left;">
+Germany
+</td>
+<td style="text-align:left;">
+Ghana
+</td>
+<td style="text-align:left;">
+Greece
+</td>
+<td style="text-align:left;">
+Grenada
+</td>
+<td style="text-align:left;">
+Guatemala
+</td>
+<td style="text-align:left;">
+Guinea
+</td>
+<td style="text-align:left;">
+Guyana
+</td>
+<td style="text-align:left;">
+Haiti
+</td>
+<td style="text-align:left;">
+Holy See
+</td>
+<td style="text-align:left;">
+Honduras
+</td>
+<td style="text-align:left;">
+Hungary
+</td>
+<td style="text-align:left;">
+Iceland
+</td>
+<td style="text-align:left;">
+India
+</td>
+<td style="text-align:left;">
+Indonesia
+</td>
+<td style="text-align:left;">
+Iran
+</td>
+<td style="text-align:left;">
+Iraq
+</td>
+<td style="text-align:left;">
+Ireland
+</td>
+<td style="text-align:left;">
+Israel
+</td>
+<td style="text-align:left;">
+Italy
+</td>
+<td style="text-align:left;">
+Jamaica
+</td>
+<td style="text-align:left;">
+Japan
+</td>
+<td style="text-align:left;">
+Jordan
+</td>
+<td style="text-align:left;">
+Kazakhstan
+</td>
+<td style="text-align:left;">
+Kenya
+</td>
+<td style="text-align:left;">
+Korea, South
+</td>
+<td style="text-align:left;">
+Kosovo
+</td>
+<td style="text-align:left;">
+Kuwait
+</td>
+<td style="text-align:left;">
+Kyrgyzstan
+</td>
+<td style="text-align:left;">
+Latvia
+</td>
+<td style="text-align:left;">
+Lebanon
+</td>
+<td style="text-align:left;">
+Liberia
+</td>
+<td style="text-align:left;">
+Liechtenstein
+</td>
+<td style="text-align:left;">
+Lithuania
+</td>
+<td style="text-align:left;">
+Luxembourg
+</td>
+<td style="text-align:left;">
+Madagascar
+</td>
+<td style="text-align:left;">
+Malaysia
+</td>
+<td style="text-align:left;">
+Maldives
+</td>
+<td style="text-align:left;">
+Malta
+</td>
+<td style="text-align:left;">
+Martinique
+</td>
+<td style="text-align:left;">
+Mauritania
+</td>
+<td style="text-align:left;">
+Mauritius
+</td>
+<td style="text-align:left;">
+Mexico
+</td>
+<td style="text-align:left;">
+Moldova
+</td>
+<td style="text-align:left;">
+Monaco
+</td>
+<td style="text-align:left;">
+Mongolia
+</td>
+<td style="text-align:left;">
+Montenegro
+</td>
+<td style="text-align:left;">
+Morocco
+</td>
+<td style="text-align:left;">
+Mozambique
+</td>
+<td style="text-align:left;">
+Namibia
+</td>
+<td style="text-align:left;">
+Nepal
+</td>
+<td style="text-align:left;">
+Netherlands
+</td>
+<td style="text-align:left;">
+New Zealand
+</td>
+<td style="text-align:left;">
+Nicaragua
+</td>
+<td style="text-align:left;">
+Niger
+</td>
+<td style="text-align:left;">
+Nigeria
+</td>
+<td style="text-align:left;">
+North Macedonia
+</td>
+<td style="text-align:left;">
+Norway
+</td>
+<td style="text-align:left;">
+Oman
+</td>
+<td style="text-align:left;">
+Pakistan
+</td>
+<td style="text-align:left;">
+Panama
+</td>
+<td style="text-align:left;">
+Papua New Guinea
+</td>
+<td style="text-align:left;">
+Paraguay
+</td>
+<td style="text-align:left;">
+Peru
+</td>
+<td style="text-align:left;">
+Philippines
+</td>
+<td style="text-align:left;">
+Poland
+</td>
+<td style="text-align:left;">
+Portugal
+</td>
+<td style="text-align:left;">
+Qatar
+</td>
+<td style="text-align:left;">
+Romania
+</td>
+<td style="text-align:left;">
+Russia
+</td>
+<td style="text-align:left;">
+Rwanda
+</td>
+<td style="text-align:left;">
+Saint Lucia
+</td>
+<td style="text-align:left;">
+Saint Vincent and the Grenadines
+</td>
+<td style="text-align:left;">
+San Marino
+</td>
+<td style="text-align:left;">
+Saudi Arabia
+</td>
+<td style="text-align:left;">
+Senegal
+</td>
+<td style="text-align:left;">
+Serbia
+</td>
+<td style="text-align:left;">
+Seychelles
+</td>
+<td style="text-align:left;">
+Singapore
+</td>
+<td style="text-align:left;">
+Slovakia
+</td>
+<td style="text-align:left;">
+Slovenia
+</td>
+<td style="text-align:left;">
+Somalia
+</td>
+<td style="text-align:left;">
+South Africa
+</td>
+<td style="text-align:left;">
+Spain
+</td>
+<td style="text-align:left;">
+Sri Lanka
+</td>
+<td style="text-align:left;">
+Sudan
+</td>
+<td style="text-align:left;">
+Suriname
+</td>
+<td style="text-align:left;">
+Sweden
+</td>
+<td style="text-align:left;">
+Switzerland
+</td>
+<td style="text-align:left;">
+Syria
+</td>
+<td style="text-align:left;">
+Taiwan*
+</td>
+<td style="text-align:left;">
+Tanzania
+</td>
+<td style="text-align:left;">
+Thailand
+</td>
+<td style="text-align:left;">
+Timor-Leste
+</td>
+<td style="text-align:left;">
+Togo
+</td>
+<td style="text-align:left;">
+Trinidad and Tobago
+</td>
+<td style="text-align:left;">
+Tunisia
+</td>
+<td style="text-align:left;">
+Turkey
+</td>
+<td style="text-align:left;">
+Uganda
+</td>
+<td style="text-align:left;">
+Ukraine
+</td>
+<td style="text-align:left;">
+United Arab Emirates
+</td>
+<td style="text-align:left;">
+United Kingdom
+</td>
+<td style="text-align:left;">
+Uruguay
+</td>
+<td style="text-align:left;">
+US
+</td>
+<td style="text-align:left;">
+Uzbekistan
+</td>
+<td style="text-align:left;">
+Venezuela
+</td>
+<td style="text-align:left;">
+Vietnam
+</td>
+<td style="text-align:left;">
+Zambia
+</td>
+<td style="text-align:left;">
+Zimbabwe
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+X1.22.20
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+548
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+X1.23.20
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+643
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+X1.24.20
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+920
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+X1.25.20
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+1406
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+X1.26.20
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+2075
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>Zmiana nazw kolumna na takie jak w 1 rzedzie</li>
+<li>Usunięcie 1 wiersza</li>
+</ul>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Zmiana nazw kolumna na takie jak w 1 rzedzie</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(confirmed_transposed) <span class="ot">&lt;-</span> confirmed_transposed[<span class="dv">1</span>, ]</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#head(confirmed_transposed)</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>confirmed_transposed[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code></pre></div>
+<pre><code>##                Afghanistan Albania Algeria Andorra Angola Antigua and Barbuda
+## Country.Region Afghanistan Albania Algeria Andorra Angola Antigua and Barbuda
+## X1.22.20                 0       0       0       0      0                   0
+## X1.23.20                 0       0       0       0      0                   0
+## X1.24.20                 0       0       0       0      0                   0
+## X1.25.20                 0       0       0       0      0                   0
+## X1.26.20                 0       0       0       0      0                   0</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usunięcie 1 wiersza</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>confirmed_transposed <span class="ot">&lt;-</span> confirmed_transposed[<span class="sc">-</span><span class="dv">1</span>, ]</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># head(confirmed_transposed)</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>confirmed_transposed[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code></pre></div>
+<pre><code>##          Afghanistan Albania Algeria Andorra Angola Antigua and Barbuda
+## X1.22.20           0       0       0       0      0                   0
+## X1.23.20           0       0       0       0      0                   0
+## X1.24.20           0       0       0       0      0                   0
+## X1.25.20           0       0       0       0      0                   0
+## X1.26.20           0       0       0       0      0                   0
+## X1.27.20           0       0       0       0      0                   0</code></pre>
+<p>Taki sam efekt można uzyskać korzystajac z pakietu <code>janitor</code></p>
+<p>First, we installed and loaded the <code>janitor</code> package. Then we passed our transposed data frame into the <code>row_to_names()</code> function and used the parameter <code>row_number = 1</code>.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(janitor)</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Make the first row the column titles</span></span></code></pre></div>
+<ul>
+<li><code>MARGIN = 2</code> określa że ma być zastosowane tylko do kolumn</li>
+<li>Nalzey nastepnie zamienic spowrotem na DF za pomoca <code>as.data.frame()</code></li>
+</ul>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform the columns to numeric values</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Wartości tutaj są klasy character</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(confirmed_transposed)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    61 obs. of  171 variables:
+##  $ Afghanistan                     : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Albania                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Algeria                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Andorra                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Angola                          : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Antigua and Barbuda             : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Argentina                       : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Armenia                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Australia                       : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Austria                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Azerbaijan                      : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Bahamas, The                    : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Bahrain                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Bangladesh                      : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Barbados                        : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Belarus                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Belgium                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Benin                           : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Bhutan                          : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Bolivia                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Bosnia and Herzegovina          : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Brazil                          : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Brunei                          : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Bulgaria                        : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Burkina Faso                    : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Cabo Verde                      : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Cambodia                        : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Cameroon                        : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Canada                          : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Cape Verde                      : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Central African Republic        : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Chad                            : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Chile                           : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ China                           : chr  &quot;548&quot; &quot;643&quot; &quot;920&quot; &quot;1406&quot; ...
+##  $ Colombia                        : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Congo (Brazzaville)             : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Congo (Kinshasa)                : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Costa Rica                      : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Cote d&#39;Ivoire                   : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Croatia                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Cruise Ship                     : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Cuba                            : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Cyprus                          : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Czechia                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Denmark                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Djibouti                        : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Dominica                        : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Dominican Republic              : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ East Timor                      : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Ecuador                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Egypt                           : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ El Salvador                     : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Equatorial Guinea               : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Eritrea                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Estonia                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Eswatini                        : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Ethiopia                        : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Fiji                            : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Finland                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ France                          : chr  &quot;  0&quot; &quot;  0&quot; &quot;  2&quot; &quot;   3&quot; ...
+##  $ Gabon                           : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Gambia, The                     : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Georgia                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Germany                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Ghana                           : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Greece                          : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Grenada                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Guatemala                       : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Guinea                          : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Guyana                          : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Haiti                           : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Holy See                        : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Honduras                        : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Hungary                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Iceland                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ India                           : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Indonesia                       : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Iran                            : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Iraq                            : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Ireland                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Israel                          : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Italy                           : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Jamaica                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Japan                           : chr  &quot;  2&quot; &quot;  1&quot; &quot;  2&quot; &quot;   2&quot; ...
+##  $ Jordan                          : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Kazakhstan                      : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Kenya                           : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Korea, South                    : chr  &quot;  1&quot; &quot;  1&quot; &quot;  2&quot; &quot;   2&quot; ...
+##  $ Kosovo                          : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Kuwait                          : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Kyrgyzstan                      : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Latvia                          : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Lebanon                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Liberia                         : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Liechtenstein                   : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Lithuania                       : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Luxembourg                      : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Madagascar                      : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   0&quot; ...
+##  $ Malaysia                        : chr  &quot;  0&quot; &quot;  0&quot; &quot;  0&quot; &quot;   3&quot; ...
+##   [list output truncated]</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># MARGIN = 2 określa że ma być zastosowane tylko do kolumn</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>confirmed_transposed <span class="ot">&lt;-</span> <span class="fu">apply</span>(confirmed_transposed, <span class="at">MARGIN =</span> <span class="dv">2</span>, as.numeric)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sprawdzenie</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(confirmed_transposed)[<span class="dv">6</span>, ]</span></code></pre></div>
+<pre><code>##  num [1:61, 1:171] 0 0 0 0 0 0 0 0 0 0 ...
+##  - attr(*, &quot;dimnames&quot;)=List of 2
+##   ..$ : NULL
+##   ..$ : chr [1:171] &quot;Afghanistan&quot; &quot;Albania&quot; &quot;Algeria&quot; &quot;Andorra&quot; ...</code></pre>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Zamiana spowrotem na DF</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>confirmed_transposed <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(confirmed_transposed)</span></code></pre></div>
+<p>Nice work - we got there! Let’s see what our hard work allows us to do. Let’s once again find the maximum number of cases reported in the <code>US</code>. To do so, simply select the <code>US</code> column and pipe the result to the <code>max()</code> function. This should be the same value that we found before we rotate the data frame.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the maximum number of confirmed cases in the US</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(confirmed_transposed<span class="sc">$</span>US)</span></code></pre></div>
+<pre><code>## [1] 33272</code></pre>
+</div>
+<div id="visualization" class="section level1">
+<h1>Visualization</h1>
+<ul>
+<li>Podczas obracania straciliśmy nazwy wierszy. Dzień pierwszy, 1 = 22 Stycznia</li>
+</ul>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Podczas obracania straciliśmy nazwy wierszy. Dzień pierwszy, 1 = 22 Stycznia</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the date column</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>confirmed_transposed <span class="ot">&lt;-</span> confirmed_transposed <span class="sc">%&gt;%</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(confirmed_transposed))</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a line graph with date on the X axis and number of cases in Italy on the Y axis</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> confirmed_transposed, <span class="fu">aes</span>(<span class="at">x=</span>date, <span class="at">y=</span>Italy)) <span class="sc">+</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Potwierdzone przypadki zachorowan SAR-COVID19&quot;</span>, <span class="at">subtitle =</span> <span class="st">&quot;Włochy&quot;</span>)<span class="sc">+</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="koronawirus_files/figure-html/Wiz-1.png" width="672" /></p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a proper title, x label, and y label</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> confirmed_transposed) <span class="sc">+</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>date, <span class="at">y=</span>Italy, <span class="at">color=</span> <span class="st">&quot;Włochy&quot;</span>), <span class="at">size =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>( <span class="fu">aes</span>(<span class="at">x=</span>date, <span class="at">y=</span>US, <span class="at">color=</span> <span class="st">&quot;USA&quot;</span>), <span class="at">size =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>( <span class="fu">aes</span>(<span class="at">x=</span>date, <span class="at">y=</span>China, <span class="at">color=</span> <span class="st">&quot;Chiny&quot;</span>), <span class="at">size =</span> <span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Potwierdzone przypadki zachorowan SAR-COVID19&quot;</span>, </span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Włochy vs Chiny vs USA&quot;</span>,</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span> <span class="st">&quot;Ilość przypadków&quot;</span>,</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span> <span class="st">&quot;Dzień 0 -&gt; 22 styczeń&quot;</span>)<span class="sc">+</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Kraj&quot;</span>)<span class="sc">+</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_clean</span>()</span></code></pre></div>
+<p><img src="koronawirus_files/figure-html/Wiz2-1.png" width="672" /></p>
+</div>
+<div id="further-work" class="section level1">
+<h1>Further Work</h1>
+<p>If you’d like to continue working with this data, here are some challenges:</p>
+<ul>
+<li>Find the rate of change. Instead of reporting the total number of confirmed cases in a country, report how many <em>new</em> cases there were that day. Which countries are slowing their rate of infection?</li>
+<li>Graph multiple countries on a single graph. Let’s visually compare the difference between countries.</li>
+<li>Create a <a href="https://rpubs.com/dvdunne/ggplot_two_bars">side by side bar plot</a> that shows the number of confirmed cases, recoveries, and deaths every day for a particular country.</li>
+<li>Find more data. Now that you’ve gotten comfortable with this dataset, try finding another that can expand your understanding of this pandemic. <a href="https://github.com/nytimes/covid-19-data">The New York Times GitHub page</a> has a dataset containing information about specific counties in the US. Trying to format this dataset to find more useful information would be a fantastic exercise!</li>
+</ul>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

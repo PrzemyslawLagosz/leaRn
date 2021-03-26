@@ -1,0 +1,302 @@
+---
+title: "Investigating the Coronavirus Pandemic"
+author: "Przemyslaw Lagosz"
+date: "24-03-2021"
+output: html_document
+---
+
+# Co to będzie?
+
+* Projekt wykonany w ramach kursy Learn R na CODEACADEMY.  
+Praca z danymi, wizualizacja
+
+# Collect and Investigate the Data
+
+We’ve provided three datasets named `corona_confirmed.csv`, `corona_recovered.csv` and `corona_deaths.csv`. For the entirety of this project, we’ll be using these datasets. You can find more recent versions of this data at Johns Hopkins’ data repository on [GitHub](https://github.com/CSSEGISandData/COVID-19).
+
+Wczytanie danych.
+
+```{r Wczytanie danych, message = FALSE}
+library(dplyr, warn.conflicts = FALSE)
+library(readr)
+
+```
+
+```{r Function, echo=FALSE}
+mine_kable <- function(data) {
+  kbl(data) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), font_size = 10) %>%
+  scroll_box(width = "100%", height = "300px")
+}
+library(kableExtra)
+```
+
+
+```{r First look}
+# Load the data
+confirmed <- read.csv("C:/R/CodeAcademy/CoronavirusProject/corona_confirmed.csv", sep = ",")
+deaths <- read.csv("C:/R/CodeAcademy/CoronavirusProject/corona_deaths.csv", sep = ",")
+recovered <- read.csv("C:/R/CodeAcademy/CoronavirusProject/corona_recovered.csv", sep = ",")
+
+
+# Inspect the data
+
+head(confirmed) %>%
+  mine_kable()
+```
+
+
+
+# Looking At March 22nd, 2020
+
+Sprawdzenie łącznej liczby potwierdzonych przyadków.  
+NOTE: Jeśli nazwy kolumn zawierały by `/` nalezy objąc nazwe danej kolumny bactickasmy ``
+
+
+```{r Suma przypadków}
+# Sum the total number of cases on March 22nd
+confirmed_sum <- confirmed %>%
+  select(X3.22.20) %>%
+  sum()
+
+confirmed_sum
+```
+
+# Filter By Values
+
+Let's start to filter the data a bit more. Give these three tasks a try:
+
+* How many confirmed cases are there in countries on March 22nd that are north of the equator? (If a country is north of the equator, its latitude is greater than `0`)
+* How many confirmed cases are there in March 22nd in Australia?
+* Can you report both of those values as a percentage of the total number of cases in the world on March 22nd?
+
+You may want to save these results to variables as they will be useful later!
+
+```{r Suma przypadków cz.2}
+# Filter for countries in the northern hemisphere
+confirmed_north <- confirmed %>%
+  filter(Lat > 0) %>%
+  select(X3.22.20) %>%
+  sum()
+
+confirmed_north 
+
+# Filter for Australia cases
+
+confirmed_Australia <- confirmed %>%
+  filter(Country.Region == "Australia") %>%
+  select(X3.22.20) %>%
+  sum()
+
+confirmed_Australia
+
+# Display percentages
+
+confirmed_north/confirmed_sum*100
+
+confirmed_Australia/confirmed_sum*100
+
+```
+
+# Group By Country
+
+Notice that some countries have multiple rows of data. This happens when a country has information about specific states or provinces. While this information might be useful, it makes it a bit tricky to see the total number of cases by country.
+
+We were able to get the total number of cases in Australia by using `filter()`, but what if we wanted to do this for every country? It would be a pain to have to type every country name into a filter function. Use `group_by()` to create a new data frame containing one row for every `Country/Region`. 
+
+Every column of those new rows should have the sum of the total number of cases for that country for every day. We can use the [`summarize_at()`](https://dplyr.tidyverse.org/reference/summarise_all.html) function to do this. `summarize_at()` takes two parameters:
+
+1. A vector of the columns you want to summarize. In this case we want every column other than `Lat`, `Long`, and `Province/State`. `summarize_at()` only works with numbers, so we'll want to remove the column containing country names. We also don't need to add the latitudes and longitudes. Remember, you can use the `-` symbol to list columns you want to exclude. Also don't forget to use backticks around columns with `/` symbols. For example -\`Province/State\` will exclude that column. These small details get complicated!
+2. The function that you want to apply to the column. In this case, `sum`.
+
+After creating this new data frame inspect it. To confirm you did the `group_by()` correctly, find the row for Australia and confirm the number of cases on March 22nd matches your results from the previous step
+
+```{r Grupowanie}
+# Group by countries
+
+confirmed_grouped <- confirmed %>%
+  group_by(Country.Region) %>%
+  summarise(across(starts_with("X"), sum))
+
+## Alternatywne rozwiązanie
+
+# countries_confirmed <- confirmed %>% 
+#   group_by(`Country/Region`) %>% 
+#   summarize_at(vars(-Lat,-Long,-`Province/State`), sum)
+# 
+# countries_confirmed
+
+# Filter the grouped data set for Australia
+
+confirmed_grouped %>%
+  filter(Country.Region == "Australia") %>%
+  select(X3.22.20)
+
+```
+
+# Investigating The Recovered Dataset
+
+Do the same process of grouping by country using the recovered dataset. What percentage of the cases in the `US` have recovered on March 22nd?
+
+```{r Wyzdrowienia}
+# Group by countries
+USA_rocovered <- recovered %>%
+  group_by(Country.Region) %>%
+  summarise(across(starts_with("X"), sum)) %>%
+  #select(Country.Region,X3.22.20) %>%
+  filter(Country.Region == "US")
+
+USA_rocovered %>%
+  mine_kable()
+```
+
+You may see some surprising results &mdash; are there really zero recovered cases in the US? Let's take a closer look at the `US` row in the `recovered` table. Either view the table in RStudio's interface, or print the row in the cell block below. What do you notice about the values as you scroll to March 22nd?
+
+It seems like the number of recovered cases is steadily increasing to 17, until March 18th, when it suddenly drops back to 0. This is surprising, and not what we expected! Perhaps we're misunderstanding the format of the data, or perhaps there's an error in reporting the data.
+
+What's the best course of action at this point? One strategy is to investigate the source of the data to truly understand what it is reporting. When we went back to [Johns Hopkins' repository](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series), we found a note saying that the data had moved into a different file. It might be best to use that file!
+
+If we wanted to use the current file, instead of reporting the number of confirmed and recovered cases in the US on March 22nd, we could report the maximum number of confirmed and recovered cases. Let's give that a shot using the `max()` function. Make sure to also use `select()` to remove the `Country/Region` column &mdash; we can't take the max of a row if it contains a string.
+
+* Pozostawienie tylko kolumn z wartosciami liczbowymi pozwala za pomocą funkcji `max()` znalesc najwieksza wartosc w rzędach
+```{r Znajdowanie maksymalnej wartosci}
+# Find the maximum number of confirmed and recovered cases
+
+# Pozostawienie tylko kolumn z wartosciami liczbowymi pozwala za pomocą funkcji `max()` znalesc najwieksza wartosc w rzędach
+max_confirmed <- confirmed %>% 
+  filter(Country.Region == 'US') %>% 
+  select(X1.22.20:X3.22.20) %>%
+  max()
+
+
+max_recovered <- recovered %>% 
+  filter(Country.Region == 'US') %>%
+  select(X1.22.20:X3.22.20) %>%
+  max()
+
+max_recovered / max_confirmed * 100
+```
+
+# Transposing Data Frames
+
+`t()` obraca tabele i zamienia ją na matrik
+`as.data.frame()` Zamienia spowrotem na DF
+
+```{r transposing}
+# Transpose the data frame
+confirmed_transposed <- as.data.frame(t(confirmed_grouped))
+
+head(confirmed_transposed) %>%
+  mine_kable()
+```
+
+
+* Zmiana nazw kolumna na takie jak w 1 rzedzie
+* Usunięcie 1 wiersza
+
+```{r Naprawa DF}
+# Zmiana nazw kolumna na takie jak w 1 rzedzie
+
+colnames(confirmed_transposed) <- confirmed_transposed[1, ]
+
+#head(confirmed_transposed)
+confirmed_transposed[1:6,1:6]
+
+# Usunięcie 1 wiersza
+confirmed_transposed <- confirmed_transposed[-1, ]
+
+# head(confirmed_transposed)
+confirmed_transposed[1:6,1:6]
+```
+ 
+Taki sam efekt można uzyskać korzystajac z pakietu `janitor`
+
+First, we installed and loaded the `janitor` package. Then we passed our transposed data frame into the `row_to_names()` function and used the parameter `row_number = 1`.
+
+```{r janitor}
+
+# library(janitor)
+
+# Make the first row the column titles
+
+```
+
+* `MARGIN = 2` określa że ma być zastosowane tylko do kolumn
+* Nalzey nastepnie zamienic spowrotem na DF za pomoca `as.data.frame()`
+
+```{r Naprawa}
+# Transform the columns to numeric values
+
+# Wartości tutaj są klasy character
+str(confirmed_transposed)
+
+# MARGIN = 2 określa że ma być zastosowane tylko do kolumn
+confirmed_transposed <- apply(confirmed_transposed, MARGIN = 2, as.numeric)
+
+# Sprawdzenie
+str(confirmed_transposed)[6, ]
+
+# Zamiana spowrotem na DF
+confirmed_transposed <- as.data.frame(confirmed_transposed)
+```
+
+Nice work - we got there! Let's see what our hard work allows us to do. Let's once again find the maximum number of cases reported in the `US`. To do so, simply select the `US` column and pipe the result to the `max()` function. This should be the same value that we found before we rotate the data frame.
+
+```{r Maks w USA}
+
+# Find the maximum number of confirmed cases in the US
+
+max(confirmed_transposed$US)
+```
+
+# Visualization
+
+* Podczas obracania straciliśmy nazwy wierszy. Dzień pierwszy, 1 = 22 Stycznia
+
+```{r Dodanie kolumny}
+# Podczas obracania straciliśmy nazwy wierszy. Dzień pierwszy, 1 = 22 Stycznia
+# Add the date column
+confirmed_transposed <- confirmed_transposed %>%
+  mutate(date = 1:nrow(confirmed_transposed))
+```
+
+
+
+```{r Wiz}
+library(ggplot2)
+# Create a line graph with date on the X axis and number of cases in Italy on the Y axis
+
+ggplot(data = confirmed_transposed, aes(x=date, y=Italy)) +
+  geom_line()+
+  labs(title = "Potwierdzone przypadki zachorowan SAR-COVID19", subtitle = "Włochy")+
+  theme_minimal()
+
+```
+
+
+
+```{r Wiz2}
+# Add a proper title, x label, and y label
+library(ggthemes)
+
+ggplot(data = confirmed_transposed) +
+  geom_line(aes(x=date, y=Italy, color= "Włochy"), size = 1)+
+  geom_line( aes(x=date, y=US, color= "USA"), size = 1)+
+  geom_line( aes(x=date, y=China, color= "Chiny"), size = 1)+
+  labs(title = "Potwierdzone przypadki zachorowan SAR-COVID19", 
+       subtitle = "Włochy vs Chiny vs USA",
+       y= "Ilość przypadków",
+       x= "Dzień 0 -> 22 styczeń")+
+  scale_color_discrete(name = "Kraj")+
+  theme_clean()
+```
+
+# Further Work
+
+If you'd like to continue working with this data, here are some challenges:
+
+- Find the rate of change. Instead of reporting the total number of confirmed cases in a country, report how many _new_ cases there were that day. Which countries are slowing their rate of infection?
+- Graph multiple countries on a single graph. Let's visually compare the difference between countries.
+- Create a [side by side bar plot](https://rpubs.com/dvdunne/ggplot_two_bars) that shows the number of confirmed cases, recoveries, and deaths every day for a particular country.
+- Find more data. Now that you've gotten comfortable with this dataset, try finding another that can expand your understanding of this pandemic. [The New York Times GitHub page](https://github.com/nytimes/covid-19-data) has a dataset containing information about specific counties in the US. Trying to format this dataset to find more useful information would be a fantastic exercise!
+

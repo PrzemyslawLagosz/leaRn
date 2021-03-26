@@ -14,3 +14,39 @@ Studia ukończylem w marcu 2021r. na Politechnice Gdańskiej.
 ### **Po co to wszystko?**  
 Ta strona powstaje w celu ułatwienia przechowywania notatek tworzonych podczas nauki R.  
 Być może posłuży jako moje portfolio :)
+
+### **Spis treści**
+
+#### **Spatail Objects**  
+
+- Pierwsze mapy - NAUKA  
+  - Opracowanie przykładów ze [STRONY](https://www.r-spatial.org/r/2018/10/25/ggplot2-sf.html). Podstawowe działania na mapach.  
+  <br>
+- Mapa Polski   
+  - Działania na danych pobranych ze strony ([GADM](https://gadm.org/download_country_v3.html)).    
+  - Opracowanie wyników wyobrów prezydenckich w Polske w 2020r. Dane ze strony [wybory.gov.pl](https://wybory.gov.pl/index/?language=pl&tab=wybory&accessibility=off).  
+
+#### **pogRomcy** 
+
+Notatki powstałe podczas kursu [PogRomcy Danych](http://pogromcydanych.icm.edu.pl/#).  
+
+- SEZON 1  
+  - Przetwarzanie danych w programnie R.  
+- SEZON 2  
+  - Wizualizacja i Modelowanie  
+ 
+#### **CodeAcademy**  
+
+Projekty wykonywane w ramach kursy [Learn R](https://www.codecademy.com/learn/paths/analyze-data-with-r)  
+
+- Koronawirus - projekt  
+  - Podstawowe działania na danych.  
+  - Wstęp do wizualizacji.  
+- City Bike  
+  - Opracowanie i wizualizacja. Dane [System Data](https://www.citibikenyc.com/system-data).  
+- Muzea w Ameryce  
+  - Wizualizacja danych dotycząca muzeów w Ameryce.  
+  - Praca nad szczegółami na wykresach.  
+- Linear Regresion  
+  - Modelowanie danych ([The Panel Survey of Income Data](https://psidonline.isr.umich.edu/)).  
+  - Przewidywania przychodu w zależności od lat edukacji, płci oraz wieku.
