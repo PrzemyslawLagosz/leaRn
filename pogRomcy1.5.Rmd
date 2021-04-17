@@ -15,6 +15,7 @@ Wgranie bibliotek
 ```{r Wgranie bibliotek}
 library(PogromcyDanych)
 library(dplyr)
+set.seed(123)
 ```
 
 ## 16. Czyszczenie i wprowadzenie do obróbki danych

@@ -16,6 +16,7 @@ library(PogromcyDanych)
 library(grid)
 library(gridExtra)
 library(ggthemes)
+set.seed(123)
 ```
 
 

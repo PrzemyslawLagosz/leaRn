@@ -483,6 +483,18 @@ div.tocify {
     </li>
   </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    SQL
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://docs.google.com/presentation/d/1tuMTekNUCk41AXpcw1F0GEjaU2Jb5goExVZaFq9Q8T4/edit?usp=sharing">Usage Funnel with Warby Parker</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -514,7 +526,8 @@ div.tocify {
 <h1>Podstawowe typy danych i ich statystyki opisowe <br></h1>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">warning =</span> <span class="cn">FALSE</span>, <span class="at">message =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>Wgranie bibliotek</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PogromcyDanych)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PogromcyDanych)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span></code></pre></div>
 <div id="cechy-ilościowe" class="section level2">
 <h2>11. Cechy ilościowe</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PogromcyDanych)</span>
@@ -1185,7 +1198,7 @@ div.tocify {
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a>czas2 <span class="sc">-</span> czas1</span></code></pre></div>
 <pre><code>## Time difference of 1 days</code></pre>
 <div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>() <span class="sc">-</span> czas1</span></code></pre></div>
-<pre><code>## Time difference of 2232.993 days</code></pre>
+<pre><code>## Time difference of 2254.865 days</code></pre>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="do">###################################### ZADANIA ###########################################</span></span>
 <span id="cb152-2"><a href="#cb152-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb152-3"><a href="#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
@@ -1207,10 +1220,10 @@ div.tocify {
 <div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sprawdź jaki dzień tygodnia będzie za 100 dni od dziś</span></span>
 <span id="cb160-2"><a href="#cb160-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb160-3"><a href="#cb160-3" aria-hidden="true" tabindex="-1"></a><span class="fu">wday</span>(<span class="fu">today</span>() <span class="sc">+</span> <span class="fu">days</span>(<span class="dv">100</span>), <span class="at">label =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## [1] niedz\\.
+<pre><code>## [1] pon\\.
 ## Levels: niedz\\. &lt; pon\\. &lt; wt\\. &lt; śr\\. &lt; czw\\. &lt; pt\\. &lt; sob\\.</code></pre>
 <div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wday</span>(<span class="fu">today</span>(), <span class="at">label =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## [1] pt\\.
+<pre><code>## [1] sob\\.
 ## Levels: niedz\\. &lt; pon\\. &lt; wt\\. &lt; śr\\. &lt; czw\\. &lt; pt\\. &lt; sob\\.</code></pre>
 </div>
 </div>
