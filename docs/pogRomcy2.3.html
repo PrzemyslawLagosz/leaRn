@@ -492,6 +492,18 @@ div.tocify {
     </li>
   </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    SQL
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://docs.google.com/presentation/d/1tuMTekNUCk41AXpcw1F0GEjaU2Jb5goExVZaFq9Q8T4/edit?usp=sharing">Usage Funnel with Warby Parker</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -524,7 +536,8 @@ div.tocify {
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">warning =</span> <span class="cn">FALSE</span>, <span class="at">message =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>Wgranie bibliotek</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PogromcyDanych)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span></code></pre></div>
 <div id="wprowadzenie-do-modelowania" class="section level2">
 <h2>11. Wprowadzenie do modelowania</h2>
 <p>Materiały o modelowaniu, zostały podzielone na następujące odcinki</p>
@@ -877,27 +890,27 @@ div.tocify {
 <span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggvis</span>(<span class="at">x =</span> <span class="sc">~</span>id, <span class="at">y =</span> <span class="sc">~</span>ocena, <span class="at">fill =</span> <span class="sc">~</span>sezon) <span class="sc">%&gt;%</span></span>
 <span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_text</span>(<span class="at">text :=</span> <span class="sc">~</span>nazwa, <span class="at">opacity=</span><span class="dv">0</span>, <span class="at">fontSize:=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_points</span>(<span class="at">fillOpacity:=</span><span class="fl">0.8</span>) </span></code></pre></div>
-<div id="plot_id175049870-container" class="ggvis-output-container">
-<div id="plot_id175049870" class="ggvis-output"></div>
+<div id="plot_id309906356-container" class="ggvis-output-container">
+<div id="plot_id309906356" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id175049870_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id175049870" data-renderer="svg">SVG</a>
+<a id="plot_id309906356_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id309906356" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id175049870_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id175049870" data-renderer="canvas">Canvas</a>
+<a id="plot_id309906356_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id309906356" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id175049870_download" class="ggvis-download" data-plot-id="plot_id175049870">Download</a>
+<a id="plot_id309906356_download" class="ggvis-download" data-plot-id="plot_id309906356">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id175049870_spec = {
+var plot_id309906356_spec = {
   "data": [
     {
       "name": ".0",
@@ -1105,7 +1118,7 @@ var plot_id175049870_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id175049870").parseSpec(plot_id175049870_spec);
+ggvis.getPlot("plot_id309906356").parseSpec(plot_id309906356_spec);
 </script>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres z trendem, pakiet ggvis</span></span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>serialeIMDB <span class="sc">%&gt;%</span></span>
@@ -1116,27 +1129,27 @@ ggvis.getPlot("plot_id175049870").parseSpec(plot_id175049870_spec);
 <span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_text</span>(<span class="at">text :=</span> <span class="sc">~</span>nazwa, <span class="at">opacity=</span><span class="dv">0</span>, <span class="at">fontSize:=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_points</span>(<span class="at">fillOpacity:=</span><span class="fl">0.8</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_model_predictions</span>(<span class="at">model =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<div id="plot_id266610854-container" class="ggvis-output-container">
-<div id="plot_id266610854" class="ggvis-output"></div>
+<div id="plot_id718817813-container" class="ggvis-output-container">
+<div id="plot_id718817813" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id266610854_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id266610854" data-renderer="svg">SVG</a>
+<a id="plot_id718817813_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id718817813" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id266610854_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id266610854" data-renderer="canvas">Canvas</a>
+<a id="plot_id718817813_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id718817813" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id266610854_download" class="ggvis-download" data-plot-id="plot_id266610854">Download</a>
+<a id="plot_id718817813_download" class="ggvis-download" data-plot-id="plot_id718817813">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id266610854_spec = {
+var plot_id718817813_spec = {
   "data": [
     {
       "name": ".0",
@@ -1387,7 +1400,7 @@ var plot_id266610854_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id266610854").parseSpec(plot_id266610854_spec);
+ggvis.getPlot("plot_id718817813").parseSpec(plot_id718817813_spec);
 </script>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres z trendem, pakiet ggvis dla kazdego sezonu</span></span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>serialeIMDB <span class="sc">%&gt;%</span></span>
@@ -1399,27 +1412,27 @@ ggvis.getPlot("plot_id266610854").parseSpec(plot_id266610854_spec);
 <span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_text</span>(<span class="at">text :=</span> <span class="sc">~</span>nazwa, <span class="at">opacity=</span><span class="dv">0</span>, <span class="at">fontSize:=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_points</span>(<span class="at">fillOpacity:=</span><span class="fl">0.8</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_model_predictions</span>(<span class="at">model =</span> <span class="st">&quot;lm&quot;</span>) </span></code></pre></div>
-<div id="plot_id970324698-container" class="ggvis-output-container">
-<div id="plot_id970324698" class="ggvis-output"></div>
+<div id="plot_id994014535-container" class="ggvis-output-container">
+<div id="plot_id994014535" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id970324698_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id970324698" data-renderer="svg">SVG</a>
+<a id="plot_id994014535_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id994014535" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id970324698_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id970324698" data-renderer="canvas">Canvas</a>
+<a id="plot_id994014535_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id994014535" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id970324698_download" class="ggvis-download" data-plot-id="plot_id970324698">Download</a>
+<a id="plot_id994014535_download" class="ggvis-download" data-plot-id="plot_id994014535">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id970324698_spec = {
+var plot_id994014535_spec = {
   "data": [
     {
       "name": ".0/group_by1_flat",
@@ -1709,7 +1722,7 @@ var plot_id970324698_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id970324698").parseSpec(plot_id970324698_spec);
+ggvis.getPlot("plot_id994014535").parseSpec(plot_id994014535_spec);
 </script>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wybierz tylko dwie kolumny i wiersze dla jednego serialu</span></span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>tylkoBreakingBad <span class="ot">&lt;-</span> serialeIMDB <span class="sc">%&gt;%</span></span>
@@ -1818,13 +1831,13 @@ ggvis.getPlot("plot_id970324698").parseSpec(plot_id970324698_spec);
 <span id="cb91-15"><a href="#cb91-15" aria-hidden="true" tabindex="-1"></a><span class="co"># wyświetl pierwsze 20 z tak otrzymanych wartości</span></span>
 <span id="cb91-16"><a href="#cb91-16" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(trendy, <span class="dv">20</span>)</span></code></pre></div>
 <pre><code>##           id           id           id           id           id           id 
-## 0.0067286142 0.0024627937 0.0042154567 0.0060587746 0.0025887034 0.0027448314 
+## 7.453854e-04 8.914407e-03 1.510916e-05 2.326811e-03 3.026869e-03 6.501977e-03 
 ##           id           id           id           id           id           id 
-## 0.0052529526 0.0066782504 0.0001410189 0.0056407545 0.0023368840 0.0094331545 
+## 2.870741e-04 2.659213e-03 2.372139e-03 5.187480e-04 1.515953e-03 5.963083e-03 
 ##           id           id           id           id           id           id 
-## 0.0024879756 0.0029613961 0.0041449472 0.0060688474 0.0002165647 0.0038528367 
+## 3.575835e-03 5.399008e-03 7.272544e-03 7.358163e-03 2.221047e-03 5.696155e-03 
 ##           id           id 
-## 0.0029815416 0.0001309461</code></pre>
+## 2.462794e-03 4.215457e-03</code></pre>
 <div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Pokazanie rzeczywistego trendu na tle trendów wynikających z losowych fluktuacji ocen</span></span>
 <span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="co"># jak wyglądają przypadkowe współczynniki</span></span>
@@ -2295,10 +2308,10 @@ Liczenie różnic na próbach różniących się jedynie losową fluktuacją jes
 <span id="cb160-16"><a href="#cb160-16" aria-hidden="true" tabindex="-1"></a>roznice <span class="ot">&lt;-</span> <span class="fu">c</span>(roznice, obserwowana_roznica)</span>
 <span id="cb160-17"><a href="#cb160-17" aria-hidden="true" tabindex="-1"></a><span class="co"># wyświetl 20 różnic zaobserowanych w przypadku losowego podziału na grupy</span></span>
 <span id="cb160-18"><a href="#cb160-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(roznice,<span class="dv">20</span>)</span></code></pre></div>
-<pre><code>##  [1] 0.025521822 0.027554893 0.067999458 0.019422608 0.009257251 0.084480889
-##  [7] 0.094646246 0.068216319 0.037720249 0.088330171 0.011073462 0.082447818
-## [13] 0.043602602 0.031621036 0.039753321 0.090580103 0.009040390 0.053984820
-## [19] 0.017172676 0.072065600</code></pre>
+<pre><code>##  [1] 0.0458525346 0.0966793169 0.0598671727 0.0456356736 0.0497018162
+##  [6] 0.0478856059 0.0740986717 0.0377202494 0.1190431011 0.0051911087
+## [11] 0.0173895365 0.0356871781 0.0275548929 0.1025616698 0.0824478178
+## [16] 0.0009081052 0.0171726755 0.0253049607 0.0600840336 0.0131065329</code></pre>
 <div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wektor referencyjnych różnic po losowym podziale na grupy</span></span>
 <span id="cb162-2"><a href="#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(roznice, <span class="dv">50</span>, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">border=</span><span class="st">&quot;white&quot;</span>)</span>
 <span id="cb162-3"><a href="#cb162-3" aria-hidden="true" tabindex="-1"></a><span class="co"># obserowana różnica w średnich pomiędzy Friends a Breaking Bad</span></span>
@@ -2306,7 +2319,7 @@ Liczenie różnic na próbach różniących się jedynie losową fluktuacją jes
 <p><img src="pogRomcy2.3_files/figure-html/Test dla średnich-1.png" width="672" /></p>
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p-warto??</span></span>
 <span id="cb163-2"><a href="#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(roznice <span class="sc">&gt;=</span> obserwowana_roznica) </span></code></pre></div>
-<pre><code>## [1] 0.6434</code></pre>
+<pre><code>## [1] 0.6442</code></pre>
 <p>Gdy próby są losowo wymieszane, a więc ich średnie, teoretycznie są równe. Czy wiedząc, że w wyniku losowych przypisać aż w 64% przypadków obserwuje się większą różnicę niż ta pomiędzy Friends a Breaking Bad, czy uznamy różnicę pomiędzy tymi dwoma serialami za istotną?</p>
 <p>Pewnie nie. To jaki próg przyjmiemy zależy od konkretnego zastosowania, ale często za próg wybiera się 0.05. Z powodów historycznych.</p>
 <p>W każdym razie, jeżeli otrzymana p-wartość jest mniejsza niż 0.05, to przyjmiemy, że obserwowana wartość jest istotnie różna od przypadkowej (=0). Jeżeli otrzymana p-wartość jest większa równa 0.05 to przyjmiemy, że nie ma istotnych statystycznie różnic.</p>

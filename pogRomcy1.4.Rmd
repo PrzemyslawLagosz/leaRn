@@ -14,6 +14,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 Wgranie bibliotek
 ```{r Wgranie bibliotek}
 library(PogromcyDanych)
+set.seed(123)
 ```
 
 ## 11. Cechy ilościowe

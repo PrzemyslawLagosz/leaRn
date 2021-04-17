@@ -14,6 +14,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 ```{r Tabele 2x2 }
 library(PogromcyDanych)
+set.seed(123)
 
 #Wyswietlenie danych
 diagnoza[1:6, c("imie_2011", "wiek2013", "plec", "eduk4_2013", "gp29")]
