@@ -46,6 +46,10 @@ navbar:
         - text: 'Regresja'
         - text: "Linear Regresion"
           href: linearproject.html
+    - text: SQL
+      menu:
+        - text: Usage Funnel with Warby Parker
+          href: https://docs.google.com/presentation/d/1tuMTekNUCk41AXpcw1F0GEjaU2Jb5goExVZaFq9Q8T4/edit?usp=sharing
         
   right: 
     - icon: fa-envelope
