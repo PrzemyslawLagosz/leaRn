@@ -50,6 +50,8 @@ navbar:
       menu:
         - text: "Usage Funnel with Warby Parker"
           href: https://docs.google.com/presentation/d/1tuMTekNUCk41AXpcw1F0GEjaU2Jb5goExVZaFq9Q8T4/edit?usp=sharing
+        - text: "Analyze real data with SQL"
+          href: https://docs.google.com/presentation/d/1F7awzs14uRIWNvsCkmc7cmKK0UbLYbltk8lGTrPIaks/edit#slide=id.p2
         
   right: 
     - icon: fa-envelope
