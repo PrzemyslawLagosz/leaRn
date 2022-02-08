@@ -8,6 +8,8 @@ output: html_document
 
 ```{r Ustawienie opcji globalnych}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+
+#knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file()) ## 1
 ```
 
 ## 5. Jak wczytać dane do R  
@@ -19,17 +21,23 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 data(package="PogromcyDanych")
 
 library(PogromcyDanych)
-
+#install.packages("xlsx")
+#install.packages("tidyverse")
+library(readxl)
 #wczytanie biblioteki z read.xls
 
 library(gdata)
 
 ###################################### ZADANIA ###########################################ddddddd
 
-read.table(file = "http://biecek.pl/MOOC/dane/koty_ptaki.csv", 
-           sep=";", dec=",", header=TRUE)
+koty_ptaki <- read.table(file = "http://biecek.pl/MOOC/dane/koty_ptaki.csv", 
+                         sep=";", dec=",", header=TRUE)
 
-auta <- read.xls("http://biecek.pl/MOOC/dane/auta2012mini.xls", sheet = 1)
+koty_ptaki
+
+## Wczytanie z ściezki, wymagane podwójny backslash albo forwardsash
+auta <- read_excel("C:\\Users\\Przemo\\Desktop\\IT\\R\\auta2012mini.xls", sheet = 1)
+
 
 autacsv <- read.csv("http://biecek.pl/MOOC/dane/auta2012mini.csv", sep= ";", dec = '.', header = T)
 
@@ -67,11 +75,14 @@ l1 <- LETTERS[1:10]
 library(PogromcyDanych)
 
 # Zapisz zbiór danych koty_ptaki do pliku tekstowego, w którym dane są rozdzielane przecinkiem a separatorem dziesiętnym jest . (kropka).
+# 
 
-## write.table(koty_ptaki, 
-##            file = 'C:/R/Pogromcy Danych/Pogromcy/koty_ptaki.csv', 
-##            sep = ",", 
-##            dec = ".")
+## ODNOŚNIK ##1 na samym początku https://stackoverflow.com/questions/58272375/how-to-fix-error-in-filefile-ifelseappend-a-w-cannot-open-the-conne
+
+write.table(koty_ptaki,
+           file = '~/R/leaRn/reminder/koty_ptaki.csv',
+           sep = ",",
+           dec = ".")
 
 # Zapisz zbiór danych koty_ptaki do formatu pliku Excela. Sprawdź czy dane poprawnie się zapisały.
 
@@ -103,10 +114,12 @@ pierwsze_10
 #Zbuduj sekwencje dziesięciu kolejnych liczb nieparzystych zaczynaj?c od 3.
 
 nieparzyste <- seq(from = 3, by = 2, length.out = 10)
+nieparzyste
 
 #Z wektora LETTERS wybierz litery na pozycjach 5, 10, 15, 20 i 25.
 
 co5 <- LETTERS[seq(from = 5, by = 5, to = 25)]
+co5
 
 #Wypisz wartosci wektora LETTERS od ko?ca.
 
@@ -115,7 +128,7 @@ odtylca <- LETTERS[length(LETTERS):1]
 
 nrow(koty_ptaki)
 ncol(koty_ptaki)
-koty_ptaki[2,3]
+koty_ptaki[2,5]
 
 # Tworzy wektor T/F jeśli warunek jest spełniony, nastepnie ten wektor używty do indeksowania
 najszybsze <- koty_ptaki$predkosc > 100
@@ -125,13 +138,14 @@ koty_ptaki[najszybsze, ]
 
 # Tworzy wektor sample z o dlugosci `nrow(koty_ptaki)`, `prob` określa stosunek
 
-sample <- sample(c("TRUE","DUPA"), size = nrow(koty_ptaki), replace = T, prob = c(0.1, 0.9))
+sample <- sample(c("TRUE","FALSE"), size = nrow(koty_ptaki), replace = T, prob = c(0.1, 0.9))
+sample
 
 # Tworzy wektor z ujemnymi wartosciami
 -c(1:5)   
 koty_ptaki[-1:-5,]
 koty_ptaki[-c(1:5),]
-
+  
 #wybiera kolumne predkosc, przeksztalca na wektor
 koty_ptaki[,"predkosc"]
 
@@ -141,7 +155,7 @@ koty_ptaki[,"predkosc", drop = F]
 kolumny <- colnames(koty_ptaki)
 kolumny[1:3]
 
-# Przypisuje pod nazwy wierzy garunki
+# Przypisuje pod nazwy wierszy garunki
 
 rownames(koty_ptaki) <- koty_ptaki$gatunek
 
@@ -156,13 +170,13 @@ koty_ptaki <- koty_ptaki %>%
 
 ###################################### ZADANIA ###########################################
 
-#Wybierz z ramki danych koty_ptaki wszystkie wiersze poza "Sokołami" (wiersz 11 i 12).
+#Wybierz z ramki danych koty_ptaki wszystkie wiersze poza "Sokołami" (wiersz 8 i 9).
+
+nrow(koty_ptaki)
 
 wektor <- 1:nrow(koty_ptaki)
 
 rownames(koty_ptaki) <- wektor
-
-nrow(koty_ptaki)
 
 koty_ptaki[-c(8,9), ]
 
