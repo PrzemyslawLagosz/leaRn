@@ -19,6 +19,9 @@ set.seed(123)
 
 ## 8. Pętle
 ```{r Pętle}
+
+sapply(1:3, function(i) {i + 1 })
+
 odliczajDo <- 5
 
 for (i in 1:odliczajDo) {
@@ -27,6 +30,7 @@ for (i in 1:odliczajDo) {
 
 cat("Wartosc zmiennej i: 1")
 
+## n- okresla ilośc wygenerowanych liczb, min max zasieg z jakiego maja byc generowane
 
 liczbaStluczek <- round(runif(n=1, min = 0, max = 10))
 
@@ -35,7 +39,7 @@ sumaKosztow <- 0
 for (i in 1:liczbaStluczek) {
   koszt <- runif(n=1, min = 100, max = 1000)
   sumaKosztow <- sumaKosztow + koszt
-  cat("Stuczka numer :", i, ", a jej koszt to:", koszt, "PLN \n")
+  cat("Stłuczka numer :", i, ", a jej koszt to:", koszt, "PLN \n")
   cat("Suma kosztów to:", sumaKosztow, "PLN \n")
 }
 
@@ -50,6 +54,7 @@ for (i in kolumna) {
   cat(length(wartoscWKolumnie), "unikalnych wartosci", wartoscWKolumnie, "\n")
   
 }
+
 koty_ptaki$gatunek <- as.character(koty_ptaki$gatunek)
 
 for (i in 1:nrow(koty_ptaki)) {
@@ -83,7 +88,7 @@ for (i in 1:nrow(koty_ptaki)) {
 for (i in 1:nrow(koty_ptaki)) {
   nhasz <- koty_ptaki[i, "zywotnosc"]
   nspacji <- max(koty_ptaki[,"zywotnosc"] + nchar(koty_ptaki[,"gatunek"])) - (koty_ptaki[i,"zywotnosc"] + nchar(koty_ptaki[i,"gatunek"]))
-   
+ 
   for (k in 1:nspacji) {
     cat(" ")
    }
@@ -119,6 +124,16 @@ moneta <- runif(n=1)
 moneta
 ifelse(moneta>0.5, "Orzel", "Reszka")
 
+my_list <- c()
+
+for (i in 1:999) {
+  moneta <- runif(n=1)
+  moneta
+  wynik = ifelse(moneta>0.5, "Orzel", "Reszka")
+  my_list[i] <- wynik
+}
+
+
 ###################################### ZADANIA ###########################################
 
 #Napisz instrukcję warunkową, która dla zwierząt lżejszych niż 1kg wypisze lekkie, a dla 
@@ -142,17 +157,16 @@ if(koty_ptaki[i,"waga"] < 1) {
 for (i in 1:nrow(koty_ptaki)) {
   if(koty_ptaki[i,"waga"] < 1) {
     cat(koty_ptaki[i,"gatunek"], koty_ptaki[i,"waga"], "lekki \n")
-  } else {
-    if((koty_ptaki[i,"waga"] < 100)) {
+  }
+  if((koty_ptaki[i,"waga"] < 100)) {
       cat(koty_ptaki[i,"gatunek"], koty_ptaki[i,"waga"], "sredni \n")
-    } else {
+  } else {
       cat(koty_ptaki[i,"gatunek"], koty_ptaki[i,"waga"], "ciezki \n")
-    }
   }
 }
 
-
 sapply(cut(koty_ptaki$waga, c(0,1,100,1000)),switch,"lekkie", "srednie", "ciezkie")
+
 
 # Napisz pętlę i instrukcję warunkową sumującą łączne masy wszystkich ptaków i kotów osobno..
   
@@ -213,13 +227,13 @@ zadanie1 <- function(wartosc) {
 zadanie2 <- function(n) {
   
   for(j in 1:n){
-    
-  for (i in 1:n) { cat("X") }
+    for (i in 1:n){
+      cat("X") }
     
   cat("\n")}
 }
 
-zadanie2(3)
+zadanie2(9)
 
 # Napisz funkcję, przyjmuje argument liczbowy n, a następnie rysuje kwadrat o boku n 
 # ze znakami X na brzegu i pusty w środku.
@@ -227,6 +241,7 @@ zadanie2(3)
 zadanie3 <- function(n) {
   
   for(j in 1:n){
+    
     for (i in 1:n) {
       
       if(i == 1 | j == 1 | i == n | j == n){

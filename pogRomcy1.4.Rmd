@@ -31,6 +31,7 @@ colnames(auta2012)
 auta <- auta2012
 
 mean(auta2012$Rok.produkcji)
+
 2012 - median(auta2012$Rok.produkcji)
 
 summary(auta2012)
@@ -42,6 +43,7 @@ summary(auta2012$Przebieg.w.km)
 boxplot(auta2012$Przebieg.w.km, horizontal = TRUE, range = 0)
 
 #usuwa wartosci NA pzy filtrowaniu
+
 auta <- auta2012 %>%
   filter(Przebieg.w.km < 1000000)
 
@@ -64,7 +66,7 @@ plot(auta2012wybrane$Przebieg.w.km, auta2012wybrane$Cena,
 ###################################### ZADANIA ###########################################
 
 # Przedstaw graficznie za pomocą wykresu pudełko-wąsy oraz histogramu rozkład cechy Cena.w.PLN.
-auta_box <- auta2012wybrane[auta2012wybrane$Cena < 100000, ]
+auta_box <- auta2012wybrane[auta2012wybrane$Cena < 10000, ]
 
 boxplot(auta_box$Cena.w.PLN, range = 0, horizontal = T, xlab= "Cena")
 quantile(auta_box$Cena.w.PLN, 0.95, na.rm=TRUE)
@@ -78,7 +80,13 @@ quantile(auta_box$Cena.w.PLN, 0.95, na.rm=TRUE)
 hist(auta_box$Cena.w.PLN, col = "skyblue", breaks = 100)
 mode(auta_box$Cena.w.PLN)
 
-which.max(table(cut(auta_box$Cena.w.PLN, 1000)))
+# cut dzieli kolumne Cena.w.PLN na 100 czesci
+# table sumuje produkt cut i pokazuje ile cen wpada do danego predziału np. (1,1000] 23. tzn ze w przedzialae od 1zl do 1000zl jest 23 samochod
+#wchich.max wskazuje ten w ktorym jest najwiecej samochodow
+
+
+which.max(table(cut(auta_box$Cena.w.PLN, 100)))
+
 
 ```
 
@@ -102,6 +110,10 @@ for (i in 1:ncol(auta2012)) {
   }
 }
 
+# sapply(wektor, funkcja) -> dla kazdego wystapienie sprawdza klase
+# sprawdza czy ta klasa to wektor
+# which pozwazal zobaczy indeks kolumny gdzie TRUE. 
+# names -> zwraca nazwy kolumn bez jej ideksy
 names(which(sapply(auta2012, class) == "factor"))
 
 (waluty <- table(auta2012$Waluta))
@@ -151,16 +163,16 @@ table(auta2012$Kraj.pochodzenia, auta2012$Waluta)
 
 # `right =` okresla z ktorej storny przedzialy domkniete
 
-auta2012$przedzily_Rok.Produkcji <- cut(auta2012$Rok.produkcji, c(1900,1990,1995,2000,2005,2010,2012), right = FALSE)
-table(auta2012$przedzily_Rok.Produkcji)
+auta2012$przedzialy_Rok.Produkcji <- cut(auta2012$Rok.produkcji, c(1900,1990,1995,2000,2005,2010,2012), right = FALSE)
+table(auta2012$przedzialy_Rok.Produkcji)
 
-auta2012$przedzialu_Przebieg.w.km <- cut(auta2012$Przebieg.w.km, c(0,1000,10000,100000, 1000000, 10000000))
-table(auta2012$przedzialu_Przebieg.w.km)
+auta2012$przedzialy_Przebieg.w.km <- cut(auta2012$Przebieg.w.km, c(0,1000,10000,100000, 1000000, 10000000))
+table(auta2012$przedzialy_Przebieg.w.km)
 
 
 #Wyznacz tabel? liczebno?ci dla tych dw?ch nowych zmiennych.
 
-tabela_podukcja_przebieg <- xtabs(~przedzialu_Przebieg.w.km + przedzily_Rok.Produkcji, auta2012)
+tabela_podukcja_przebieg <- xtabs(~przedzialy_Przebieg.w.km + przedzialy_Rok.Produkcji, auta2012)
 tabela_podukcja_przebieg
 
 #Przedstaw tą tabelę graficznie.
@@ -252,7 +264,7 @@ table(zarejestrowany_polska, cena2000)
 
 pojemnosc_i_naped <- auta2012$Pojemnosc.skokowa > 1500 & auta2012$Rodzaj.paliwa == "olej napedowy (diesel)"
 
-table(pojemnosc_i_naped)
+prop.table(table(pojemnosc_i_naped))*100
 
 ```
 
@@ -277,9 +289,9 @@ grep("A", koty_ptaki$habitat_napis)
 
 #### []  vs [[]] ####
 
-list_data <-
-  list(c("Jan", "Feb", "Mar"), matrix(c(3, 9, 5, 1, -2, 8), nrow = 2),
-       list("green", 12.3))
+list_data <- list(c("Jan", "Feb", "Mar"), 
+                  matrix(c(3, 9, 5, 1, -2, 8), nrow = 2),
+                  list("green", 12.3))
 
 names(list_data) <- c("1st Quarter", "A_Matrix", "A Inner list")
 
@@ -292,9 +304,7 @@ daty <- c("2014-01-01", "2015-03-15", "2010-12-01")
 substr(daty, 1, 4)
 
 ####
-zdanie <-
-  c("W Szczebrzeszynie chrz?szcz brzmi w trzcinie",
-    "Z?b zupa z?bowa d?b zupa d?bowa")
+zdanie <- c("W Szczebrzeszynie chrz?szcz brzmi w trzcinie", "Z?b zupa z?bowa d?b zupa d?bowa")
 (podzielony <- strsplit(zdanie, " "))
 
 #Wyznacz indeksy wierszy w zbiorze danych koty_ptaki, w kt?rych gatunek zawiera du?? lub ma?? liter? S.
