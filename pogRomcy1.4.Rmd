@@ -329,11 +329,9 @@ paste(litery, cyfry, ".")
 paste(litery, cyfry, ".", sep = "-")
 
 
-auta2012$MarkaModel <-
-  paste(auta2012$Marka, auta2012$Model, sep = ": ")
+auta2012$MarkaModel <- paste(auta2012$Marka, auta2012$Model, sep = ": ")
 
-statystykiMarkiModelu <-
-  sort(table(auta2012$MarkaModel), decreasing = TRUE)
+statystykiMarkiModelu <- sort(table(auta2012$MarkaModel), decreasing = TRUE)
 
 head(statystykiMarkiModelu, 25)
 

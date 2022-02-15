@@ -21,7 +21,7 @@ set.seed(123)
 
 
 ```{r Podstawy ggplot2}
-
+koty_ptaki <- koty_ptaki
 
 plot(koty_ptaki$waga, koty_ptaki$predkosc)
 
@@ -46,11 +46,13 @@ ggplot(koty_ptaki, aes(x= waga, y=predkosc, label=gatunek)) +
 ###
 ggplot(koty_ptaki, aes(x= waga, y=predkosc, label=gatunek)) +
   geom_text(hjust=-0.1) + 
-  geom_point() + xlim(0,350)
+  geom_point() + 
+  xlim(0,350)
 
 ggplot(koty_ptaki, aes(x=waga, y=predkosc, label=gatunek)) +
   geom_text(hjust=-0.1, aes(color=druzyna)) + 
-  geom_point() + xlim(0,350)
+  geom_point() + 
+  xlim(0,350)
 
 #### wykres liniowy
 ggplot(WIG, aes(x=Data, y=Kurs.zamkniecia)) + 
@@ -61,6 +63,10 @@ colnames(WIG)
 
 ggplot(WIG, aes(x=Data, ymin=Kurs.minimalny, ymax=Kurs.maksymalny)) + 
   geom_ribbon()
+
+ggplot(WIG, aes(x=Data))+
+  geom_line(aes(y=Kurs.minimalny))+
+  geom_line(aes(y=Kurs.maksymalny))
 
 ######################### ZADANIA ####################################
 
@@ -262,9 +268,9 @@ ggplot(koty_ptaki, aes(x=waga, y=predkosc, size=zywotnosc, color=zywotnosc)) +
 
 ggplot(koty_ptaki, aes(x=waga, y=predkosc, shape=druzyna)) +
   geom_point(size=5) +
-  # zmiana napisów w legendzie dotycz?cych mapowania na kształt
+  # zmiana napisów w legendzie dotyczących mapowania na kształt
   scale_shape_manual(values=c("K", "P"), 
-                     labels=c("Du?e Koty", "W?ciek?e Ptaki"), 
+                     labels=c("Duże Koty", "Wściekłe Ptaki"), 
                      name="Jakie \n to \n zwierze?") +
   # dodanie szarego tła, większego tytu?u oraz zmiana po?o?enia legendy
   # 0.8, 0.8 to wspołrzędne gdzie ma pojawić się legenda
@@ -316,7 +322,6 @@ grid.arrange( pl_waga + ggtitle("Wykres 1"),
 
 ###### zadania lekcja 9 ############
 
-colnames(VW_Passat)
 library(ggthemes)
 
 #1. Podobnie jak w poprzednim odcinku, wybierz samochody marki Volkswagen model Passat a następnie narysuj jak średnia cena zależy od roku produkcji za pomocą geometrii geom_smooth(). Następnie zobacz jak ten wykres będzie wyglądał z motywami theme_bw(), theme_excel() i theme_economist().
@@ -330,7 +335,9 @@ VW_Passat <- auta2012 %>%
   filter(Marka == "Volkswagen",
          Model == "Passat")
 
-ggplot(data = VW_Passat, aes(x= Rok.produkcji, y= Cena.w.PLN))+
+colnames(VW_Passat)
+
+ggplot(data = VW_Passat, aes(x= Rok.produkcji, y= Cena.w.PLN/1000))+
   geom_smooth(se = FALSE)+
   labs(x= "Rok prdukcji",
        y= "Cena [PLN]",

@@ -139,9 +139,11 @@ srednie_sezon <- Friday_Night_Lights %>%
   group_by(sezon) %>%
   summarise(srednia = mean(ocena))
 
-
-ggplot(Friday_Night_Lights, aes(x= dobre, y= ocena, color= sezon))+
+## DO OGARNIECIA! 1.
+ggplot(Friday_Night_Lights, aes(x= id, y= ocena, color= sezon))+
   geom_point()+
+  # 1. scale_x_continuous(name = "ELO", labels = Friday_Night_Lights$dobre)+
+  scale_x_discrete(name = "Odcinki")+
   #Wstawienie odcinka prostego by zaznaczyc średnią dla sezonu
   geom_segment(aes(x=1, xend=20, y=as.numeric(srednie_sezon[1,2]), yend=as.numeric(srednie_sezon[1,2])))+
   theme(axis.text.x = element_text(angle = 90))
@@ -233,9 +235,10 @@ wspolczynniki[1]+173*wspolczynniki[2]
 
 
 srednie <- srednie %>%
-  mutate(m.liniowy = wspolczynniki[1] + rodzic*wspolczynniki[2],
-         roznica_srednia_model = sredni_wzrost_dla_grupy - m.liniowy)
+  mutate(m_liniowy = (wspolczynniki[1] + rodzic*wspolczynniki[2]),
+         roznica_srednia_model = sredni_wzrost_dla_grupy - m_liniowy)
 
+srednie
 #4 W pakiecie PogromcyDanych udostępniony jest również zbiór danych pearson zebrany
 #przez Pearsona. W tym zbiorze danych zebrane są wzrosty ojców i synów.
 head(pearson)
@@ -317,9 +320,11 @@ wspolczynnikTrendu <- c()
 #Petla która pokolei dla każdego serialu, dodaje jego wspoólczynnik do wektora `wspolczynnikTrendu`
 
 for (ser in nazwy_seriali) {
+  
   jedenSerial <- serialeIMDB %>%
     filter(serial == ser) %>% 
     select(id, ocena)
+  
   wspolczynnikTrendu[ser] <- lm(ocena~id, jedenSerial)$coef[2]
 }
 
@@ -351,6 +356,7 @@ lm(ocena~id, tylkoBreakingBad)$coef
 trendy <- replicate(9999, {
   # wymieszaj losowo wartości, robi to funkcja sample()
   tylkoBreakingBad$wymieszane <- sample(tylkoBreakingBad$ocena)
+
   
   # wyznacz moduł współczynnika wzrostu dla losowo wymieszanych danych
   wspolczynnikiTrendu <- lm(wymieszane~id, tylkoBreakingBad)$coef

@@ -41,15 +41,17 @@ colnames(DF)[4] <- "oczy"
 (DF$wiek <- as.numeric(tmp))
 
 
-
-# tylko centrowanie: scale(DF$wiek, center = TRUE, scale = FALSE)
+# tylko centrowanie: scale(DF$wiek, center = TRUE, scale = FALSE) <- ODCHYLENIE OD ŚREDNIEJ
 # tylko skalowanie:  scale(DF$wiek, center = FALSE, scale = TRUE)
 # normalizacja
 (DF$wiekNorm <- scale(DF$wiek))
 
+DF$wiekNorma2 <- mean(DF$wiek)
+DF$kalkulacja <- DF$wiek - DF$wiekNorma2
+
 levels(DF$oczy) <- c("ciemne", "niebieskie", "niebieskie")
 
-levels((DF$oczy))
+levels(DF$oczy)
 
 # Pominiecie wierszy z wartośćią NA
 na.omit(DF)
@@ -85,8 +87,8 @@ df[c(1,3),"litery"] <- c("A","B")
 class(df$liczby)
 
 #zmiana "," na "."
-gsub(pattern = ",",replacement = ".", df$liczby)
-df$liczby <- as.numeric(df$liczby)
+tmp <- gsub(pattern = ",",replacement = ".", df$liczby)
+df$liczby <- as.numeric(tmp)
 
 class(df$liczby)
 
@@ -114,11 +116,11 @@ mlodeAuta <- auta2012 %>%
   filter(Rok.produkcji > 2007)
 
 #Z przed chwil? stworzonego zbioru danych mlodeAuta wybierz tylko Fiaty 500.
- mlodeAuta <- mlodeAuta %>%
+mlodeAuta <- mlodeAuta %>%
    filter(Marka == "Fiat", Model == "500")
  
 #Ile jest takich aut? (wymiary ramki danych mo?esz sprawdzi? funkcj? dim())
- dim(mlodeAuta)
+dim(mlodeAuta)
 ```
 
 ## 18. Sortowanie wierszy
@@ -129,18 +131,19 @@ mlodeAuta <- auta2012 %>%
 auta2012_silniki <- arrange(auta2012, desc(Pojemnosc.skokowa))
 
 head(auta2012_silniki %>%
-  select(Marka, Pojemnosc.skokowa),3)
+       select(Marka, Pojemnosc.skokowa),3)
 
 #Wybierz tylko auta marki ?Rolls-Royce? i posortuj je po cenie.
- 
- rr_cena <- auta2012 %>%
-   filter(Marka == "Rolls-Royce") %>%
-arrange(desc(Cena.w.PLN))
+
+rr_cena <- auta2012 %>%
+  filter(Marka == "Rolls-Royce") %>%
+  arrange(desc(Cena.w.PLN))
 ```
 
 ## 19. Przetwarzanie potokowe
 ```{r Przetwarzanie potokowe}
 #U?yj operatora %>% by ze zbioru danych auta2012 wybra? tylko 10 najta?szych aut marki Rolls-Royce.
+
 tanierojse <- auta2012 %>%
   filter(Marka == "Rolls-Royce") %>%
   arrange(Cena.w.PLN) %>%
@@ -218,6 +221,8 @@ przebieg_sum <- auta2012 %>%
 
 przebieg_sum
 
+(sum(auta2012$Przebieg.w.km, na.rm = T))
+
 #Wybierz tylko samochody marki ?Rolls-Royce? i policz ich ?redni przebieg oraz ?redni? cen?.
 
 rojsy <- auta2012 %>%
@@ -246,16 +251,18 @@ head(
 
 head(
   auta2012 %>%
-   filter(Model == "206") %>%
-  group_by(Rok.produkcji) %>%
-  summarise(cena_sr = mean(Cena.w.PLN))
+    filter(Model == "206") %>%
+    group_by(Rok.produkcji) %>%
+    summarise(cena_sr = mean(Cena.w.PLN))
 )
 ```
 ## 24. Reprezentacja wąska i szeroka danych
 ```{r Reprezentacja wąska i szeroka danych}
+install.packages("PBImisc")
 library(PBImisc) #w tym pakiecie znajduje sie DF kidney
 library(dplyr)
 library(tidyr)
+kidney <- kidney
 
 kidney$id <- rownames(kidney)
 
@@ -274,7 +281,7 @@ library(SmarterPoland)
 #head(tsdtr210)
 
 daty_df <- data.frame(daty = c("2004-01-01", "2012-04-15", "2006-10-29", "2010-03-03"),
-                 id = 1:4)
+                      id = 1:4)
 daty_df
 
 separate(daty_df, daty, c("rok", "miesiac", "dzien"), "-")
