@@ -49,3 +49,4 @@ ggplot() +
   geom_point(aes_string(x = 1, y = 2), colour = "red") +
   annotate('segment', x = 1, y = 2, xend = 5, yend = 7, inherit.aes = FALSE)
   #geom_segment(aes_string(x = 1, y = 2, xend = 5, yend = 7), size = 1, inherit.aes = TRUE)
+

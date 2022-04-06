@@ -6,6 +6,7 @@ library(dplyr)
 #library(shinydashboard)
 library(semantic.dashboard)
 library(shiny.semantic)
+library(DT)
 
 source("C:/Users/Przemo/Documents/R/leaRn/Shiny/my_functions.R")
 
@@ -36,8 +37,20 @@ ui <-  dashboardPage (
               fluidRow(
                 column(width = 14,
                        box(title = "Decription", title_side = "top left", ribbon = FALSE,
-                           p("ELO TU BEDZIE OPIS"), hr(), p("ELO TU BEDZIE OPIS")
-                           
+                           p("Plot below display the choosen statistics of 2 fighters in maner to comparise them."),
+                           p("Application is based on data, that are avalible in the About tab. 
+                             I also described featuers there, that I would like to implement or improve."),
+                           p(h4("About plot")),
+                           hr(), 
+                           p("Plot is renderd dynamicly, based on choosen weight class, fighters, and characteristics. 
+                             Functions which generate the plot are in my repository in leaRn/Shiny/my_functions.R file."),
+                           p("Short description: "),
+                           p("Script takes choosen columns from dataset and normalize them to range from 0 to 1, due to display characteristics evenly on the plot.
+                             Then, based of HOW MANY characteristics are choosen it split the 360 degree evenly, 
+                             and with the help of sinus and cosinus functions it calculate the X an Y coordinates of each point.
+                             Later on, based on this coordinates geom_point and geom_segment is generated.
+                             Originally plot is suposed to show a short description of each point, but I could't find and fix that bug. 
+                             The example is presented in About tab")
                            )
                        ),
                 column(width = 2,
@@ -82,16 +95,50 @@ ui <-  dashboardPage (
                        ),
                 
                 column(width = 6,
-                       box(title="Legend", title_side = "top left", ribbon = FALSE))
+                       box(title="Legend", title_side = "top left", ribbon = FALSE,
+                           div(
+                            div("Height - Height of the fighter"),
+                            div("Reach - Reach of the arms"),
+                            div("Weight - Weight of the fighter"),
+                            div("SLpM - Significant Strikes Landed per Minute"),
+                            div("Str. Def. - Significant Strike Defence (the % of opponents strikes that did not land)"),
+                            div("Sub. Avg. - Average Submissions Attempted per 15 minutes"),
+                            div("TD Acc. - Takedown Accuracy"),
+                            div("TD Avg. - Average Takedowns Landed per 15 minutes")
+                             
+                           )
+                       )
+                       )
               )
       )),
       
       
       tabItem(tabName = "cars",
-              p("DUPA"))
+              p("DUPA")),
+      
+      tabItem(tabName = "about",
+              fluidRow(
+                column(width = 16,
+                  box(title = "Decription", title_side = "top left", ribbon = FALSE,
+                      p("Whole application is based only on data shown in the Data Table below."),
+                      p(h4("TO DO: ")),
+                      p(h5("Overall")),
+                      p("Implement of the dark mode. With shiny.semantic library, changing theme of the app only change the color of the boxes' descriptions"),
+                      p(h5("Fighter vs fighter tab")),
+                      p("Fix the points' description on plot."),
+                      p("Split the Legend box below, and make the abbreviations in bold font.")
+                  
+                )
+              ),
+              fluidRow(
+                column(width = 16,
+                  box(
+                    DTOutput(outputId = "data_table")
+                ))
+              ))
               
-      )
-    ))#dashboardPage
+      ) #tabItems
+    )))#dashboardPage
   
 
 
@@ -100,10 +147,10 @@ server <- function(input, output, session) {
   observeEvent(input$v_fighter_1_selector, message(input$v_fighter_1_selector))
   
   main_df <- reactive(if (input$units == "EU") {
-    raw_fighter_details_EU
-  } else {
-    raw_fighter_details_USA
-  }
+      raw_fighter_details_EU
+    } else {
+     raw_fighter_details_USA
+    }
   )
   
   output$weight_class_selector <- renderUI({
@@ -181,6 +228,8 @@ server <- function(input, output, session) {
       list_of_geom_segments_2 +
       theme(axis.title = element_blank())
   })
+  
+  output$data_table <- renderDataTable(raw_fighter_details_EU, width = "100%")
 }
 
 shinyApp(ui, server)
