@@ -50,29 +50,47 @@ selectVarServer <- function(id, data, filter = is.numeric) {
     })
     
     reactive(data()[[input$var]])
-})
+  })
 }
 
+# Margeing dataset abd selectVar UI module, in to one piece
+
+selectDataVarUI <- function(id) {
+  tagList(
+    datasetInput(NS(id, "data"), filter = is.data.frame),
+    selectVarInput(NS(id, "var"))
+  )
+}
+
+# Margeing dataset abd selectVar SERVER module, in to one piece
+
+selectDataVarServer <- function(id, filter = is.numeric) {
+  moduleServer(id, function(input, output, session) {
+    data <- datasetServer("data")
+    var <- selectVarServer("var", data, filter = filter)
+    var
+  })
+}
 
 ### APP ###
 
 # Złączenie modułów, podpisanie pod zmienną. 
 # Przypisanie data <- datasetServer pozwala wykorzystac ten modul serwera
 
-selectVarApp <- function(filter = is.numeric) {
+selectDataVarApp <- function(filter = is.numeric) {
   ui <- fluidPage(
-    datasetInput("data", is.data.frame),
-    selectVarInput("var"),
-    verbatimTextOutput("out")
+    sidebarLayout(
+      sidebarPanel(selectDataVarUI("var")),
+      mainPanel(verbatimTextOutput("out"))
+    )
   )
   server <- function(input, output, session) {
-    data <- datasetServer("data")
-    var <- selectVarServer("var", data, filter = filter)
-    output$out <- renderPrint(var())
+    var <- selectDataVarServer("var", filter)
+    output$out <- renderPrint(var(), width = 40)
   }
-  
   shinyApp(ui, server)
 }
-
 # Uruchamia aplikacje
-selectVarApp()
+
+selectDataVarApp()
+

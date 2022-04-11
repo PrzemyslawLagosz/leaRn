@@ -35,4 +35,4 @@ datasetApp <- function(filter = NULL) {
 }
 
 # Uruchamia aplikacje
-datasetApp(filter = is.matrix)
+datasetApp(filter = NULL)

@@ -1,9 +1,25 @@
 library(shiny)
-# https://mastering-shiny.org/scaling-modules.html#getting-started-ui-input-server-output
+library(zeallot)
 
-# Jest to rozwiniecie app_mastering_shiny_5a.2_Inputs_and_outputs.R !!!!!!
+histogramOutput <- function(id) {
+  tagList(
+    numericInput(NS(id, "bins"), "bins", 10, min = 1, step = 1),
+    plotOutput(NS(id, "hist"))
+  )
+}
 
-### MODULES ###
+histogramServer <- function(id, x, title = reactive("Histogram")) {
+  stopifnot(is.reactive(x))
+  stopifnot(is.reactive(title))
+  
+  moduleServer(id, function(input, output, session) {
+    output$hist <- renderPlot({
+      req(is.numeric(x()))
+      main <- paste0(title(), " [", input$bins, "]")
+      hist(x(), breaks = input$bins, main = main)
+    }, res = 96)
+  })
+}
 
 # Definicja UI z opcja filtra by pokazywac tylko matrix albo tylko DF
 datasetInput <- function(id, filter = NULL) {
@@ -37,10 +53,9 @@ find_vars <- function(data, filter) {
 
 # observeEvent() sprawdza jaki Data Frame jest podany w zmiennej funkcji DATE, 
 # nastpenie aktualizuje selectVarInput (który domyslnie ma podany choices = NULL), wykorzystujac funkcje find_vars.
-# Zwraca zmienną reaktywną DataFrame[[wybrana zmienna]]
+# Zwraca zmienną reaktywną DataFrame[[wybrana zmienna]] oraz NAZWE wybrana zmienna w postaci listy
 
 selectVarServer <- function(id, data, filter = is.numeric) {
-  
   stopifnot(is.reactive(data))
   stopifnot(!is.reactive(filter))
   
@@ -49,30 +64,39 @@ selectVarServer <- function(id, data, filter = is.numeric) {
       updateSelectInput(session, "var", choices = find_vars(data(), filter))
     })
     
-    reactive(data()[[input$var]])
-})
+    list(
+      name = reactive(input$var),
+      value = reactive(data()[[input$var]])
+    )
+  })
 }
 
 
 ### APP ###
-
-# Złączenie modułów, podpisanie pod zmienną. 
-# Przypisanie data <- datasetServer pozwala wykorzystac ten modul serwera
-
-selectVarApp <- function(filter = is.numeric) {
+histogramApp <- function() {
   ui <- fluidPage(
-    datasetInput("data", is.data.frame),
-    selectVarInput("var"),
-    verbatimTextOutput("out")
+    sidebarLayout(
+      sidebarPanel(
+        datasetInput("data", is.data.frame),
+        selectVarInput("var"),
+      ),
+      mainPanel(
+        histogramOutput("hist")    
+      )
+    )
   )
+
+# %<-% multiple asigment from zeallot package, becouse selectVarServer returns list of reactive values
+  
   server <- function(input, output, session) {
     data <- datasetServer("data")
-    var <- selectVarServer("var", data, filter = filter)
-    output$out <- renderPrint(var())
+    
+    c(name, value) %<-% selectVarServer("var", data)
+    
+    histogramServer("hist", value, name)
   }
-  
   shinyApp(ui, server)
-}
+} 
 
-# Uruchamia aplikacje
-selectVarApp()
+histogramApp()
+
