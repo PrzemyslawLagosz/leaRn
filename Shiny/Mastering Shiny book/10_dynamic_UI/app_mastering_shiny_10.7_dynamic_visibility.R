@@ -18,6 +18,7 @@ parameter_tabs <- tabsetPanel(
 )
 
 ui <- fluidPage(
+  useShinyjs(),
   sidebarLayout(
     sidebarPanel(
       selectInput("dist", "Distribution", 
@@ -26,7 +27,10 @@ ui <- fluidPage(
       numericInput("n", "Number of samples", value = 100),
       parameter_tabs,
       checkboxInput("edit", "Edit"),
-      uiOutput("title")
+      uiOutput("title"),
+      actionButton("test", "Test"),
+      uiOutput("tester"),
+      textInput("special2", "Special2", value = "Special2")
       #textInput("main", "Name your chart", value = "Chart")
     ),
     mainPanel(
@@ -47,6 +51,11 @@ server <- function(input, output, session) {
            exponential = rexp(input$n, input$rate)
     )
   })
+  
+  observeEvent(input$test ,{
+    shinyjs::show("special2")
+  })
+  
   
   #observeEvent(input$edit, message(input$edit))
   
