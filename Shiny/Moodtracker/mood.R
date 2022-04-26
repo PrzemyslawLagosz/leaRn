@@ -51,6 +51,15 @@ new_user_row <- function(username, password) {
   newUserRow <- c(username, password, paste0(username, password))
 }
 
+modal_confirm <- modalDialog(
+  "Are you sure you want to override this day?",
+  title = "This day is already reated",
+  footer = tagList(
+    actionButton("cancel_modal_btn", "Cancel"),
+    actionButton("ok_modal_btn", "Override it", class = "btn btn-primary")
+  )
+)
+
 login_page <-
   fluidRow(
     column(4),
@@ -101,8 +110,8 @@ main_page <-
       
   ),
   mainPanel(
-    plotlyOutput("humor_plot"),
-    tableOutput("test_table")
+    plotlyOutput("humor_plot")
+    #,tableOutput("test_table")
   )
 )
 
@@ -159,8 +168,8 @@ server <- function(input, output, session) {
       hideFeedback("username")
       hideFeedback("password")
       showToast("success", "You loged in succesfully!", .options = myToastOptions)
-      # Check wchic usere have been loged in
-      message(loged_user_id())
+      updateTextAreaInput(inputId = "comment", value = "")
+      updateTextAreaInput(inputId = "important_comment", value = "")
       
       switch_page("main_page")
     } else {
@@ -219,7 +228,7 @@ server <- function(input, output, session) {
     updateTextInput(inputId = "username", value = "")
     updateTextInput(inputId = "password", value = "")
     
-    # Clear preovius feedback
+    # Clear previous feedback
     hideFeedback("username")
     hideFeedback("password")
     
@@ -236,9 +245,10 @@ server <- function(input, output, session) {
       new_registered_user <- list(data.frame(date = c(as.Date(today())),
                                              rate = 0,
                                              day_comment = ""))
-      users_list(append(users_list(), new_registered_user))
-      saveRDS(users_list(), "C:\\Users\\Przemo\\Documents\\R\\leaRn\\Shiny\\Moodtracker\\users_list.RData")
       
+      cache$saved_users <- append(cache$saved_users, new_registered_user)
+      
+      saveRDS(cache$saved_users, "C:\\Users\\Przemo\\Documents\\R\\leaRn\\Shiny\\Moodtracker\\users_list.RData")
       
       switch_page("login_page")
     } else {
@@ -304,8 +314,6 @@ server <- function(input, output, session) {
     
   })
   
-  
-  
   # Add button - main_page
     new_day_rate <- reactive(
       data.frame(
@@ -313,22 +321,60 @@ server <- function(input, output, session) {
         rate = input$day_rate,
         day_comment = input$comment)
       )
-    
-    #choosen_user <- reactive(users_list()[[loged_user_id()]])
-    
+  
   observeEvent(input$add_btn, {
+    date_column_length <- length(cache$saved_users[[loged_user_id()]]$date)
+    day_rate_already_exists <- (input$date %in% cache$saved_users[[loged_user_id()]]$date)
     
-    cache$saved_users[[loged_user_id()]] <- rbind(cache$saved_users[[loged_user_id()]], new_day_rate())
+    # 1st if for first time logged in users
+    if (day_rate_already_exists == TRUE & date_column_length == 1){
+      cache$saved_users[[loged_user_id()]][cache$saved_users[[loged_user_id()]]$date == input$date, ] <- new_day_rate()
+      saveRDS(cache$saved_users, "C:\\Users\\Przemo\\Documents\\R\\leaRn\\Shiny\\Moodtracker\\users_list.RData")
+      updateTextAreaInput(inputId = "comment", value = "")
+    } else if (day_rate_already_exists == TRUE) {
+      showModal(modal_confirm)
+    } else {
+      cache$saved_users[[loged_user_id()]] <- rbind(cache$saved_users[[loged_user_id()]], new_day_rate())
+      saveRDS(cache$saved_users, "C:\\Users\\Przemo\\Documents\\R\\leaRn\\Shiny\\Moodtracker\\users_list.RData")
+      updateTextAreaInput(inputId = "comment", value = "")
+    }
+  })
+  
+  # Modal - login_page - ok_modal_btn
+  observeEvent(input$ok_modal_btn, {
+    # It checks which row in DF$date evaluate to currently choosen date, and replace after confirmation
+    cache$saved_users[[loged_user_id()]][cache$saved_users[[loged_user_id()]]$date == input$date, ] <- new_day_rate()
     saveRDS(cache$saved_users, "C:\\Users\\Przemo\\Documents\\R\\leaRn\\Shiny\\Moodtracker\\users_list.RData")
+    removeModal()
+    updateTextAreaInput(inputId = "comment", value = "")
+  })
+  # Modal - login_page - cancel_modal_btn
+  observeEvent(input$cancel_modal_btn, {
+    removeModal()
   })
   
-  output$test_table <- renderTable({
-    cache$saved_users[loged_user_id()]
-  })
+  # Table to check value while testing
+  # output$test_table <- renderTable({
+  #   cache$saved_users[loged_user_id()]
+  # })
+  
   # Humor plot
-  
   output$humor_plot <- renderPlotly({
-    ggplotly(p)
+    ggplotly(
+    ggplot(data = cache$saved_users[[loged_user_id()]], aes(x = date, y = rate, label = day_comment, color = rate)) +
+      geom_point() +
+      ylim(c(0,10)) +
+      ggtitle("Moodtracker Plot")+
+      labs(x = element_blank(),
+           y= element_blank()) +
+      theme(axis.text.x=element_text(angle=50, vjust=0.5),
+            plot.title = element_text(hjust = 0.5,  margin = margin(0, 0, 10, 0)),
+            panel.background = element_blank(),
+            panel.grid.major.y = element_line(colour = "grey75"),
+            legend.position = "none"
+      ) +
+      scale_color_gradient(low="#393B57", high="#47A5CB")
+    )
   })
   
 }

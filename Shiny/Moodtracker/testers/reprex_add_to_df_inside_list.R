@@ -18,6 +18,8 @@ library(shiny)
 
 saved_users_list_reprex <- readRDS("C:\\Users\\Przemo\\Documents\\R\\leaRn\\Shiny\\Moodtracker\\testers\\users_list_reprex.RData")
 
+saved_users_list_reprex <- append(saved_users_list_reprex, new_registered_user)
+
 ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
