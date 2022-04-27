@@ -7,8 +7,8 @@ Link: https://przemyslawlagosz.github.io/leaRn/ <-- stuff I did :)
 ## Moodtracker App
 Code at https://github.com/PrzemyslawLagosz/leaRn/tree/main/Shiny/Moodtracker
 
-Application let you track your mood, and at comments what happend that day :)
-TO DO: Important Evenet feautre -> (adding horizontal line to highlite important dates)
+Application let you track your mood, and at comments what happend that day :)  
+**TO DO:** Important Evenet feautre -> (adding horizontal line to highlite important dates)  
 Sneak peak gif:  
 ![](https://github.com/PrzemyslawLagosz/leaRn/blob/main/Shiny/Moodtracker/moodApp_animation.gif)
 
@@ -24,6 +24,6 @@ I choosed this project with intention to practice:
 * * [Star plot script](https://github.com/PrzemyslawLagosz/leaRn/blob/main/Shiny/UFC/star_plots.R)
 * * [Script with functions, to normalize Data Frame, generate X and Y coords for choosen stats, and dynamically generate geom_points and geom_segments](https://github.com/PrzemyslawLagosz/leaRn/blob/main/Shiny/my_functions.R)
 
-TO DO: A lot eg. (imporve HTML, CSS skills)
-Sneak peak gif:
+**TO DO:** A lot eg. (imporve HTML, CSS skills)  
+Sneak peak gif:  
 ![](https://github.com/PrzemyslawLagosz/leaRn/blob/main/Shiny/UFC/UFCdashboard_animation.gif)
