@@ -1,3 +1,5 @@
+# Script to generate star plot for the first time -  by hand.
+
 library(ggplot2)
 library(tidyverse)
 source("C:/Users/Przemo/Documents/R/leaRn/Shiny/my_functions.R")

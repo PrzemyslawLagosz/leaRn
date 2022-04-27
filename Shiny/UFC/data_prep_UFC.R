@@ -1,3 +1,5 @@
+# Cleaning data from https://www.kaggle.com/datasets/rajeevw/ufcdata?select=raw_fighter_details.csv
+
 library(ggplot2)
 library(tidyverse)
 library(readr)
