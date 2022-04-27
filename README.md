@@ -1,6 +1,7 @@
 # Learn R notes
 This repository is directly connected with Rstudio, and in fact it's my notebook.  
-Link: https://przemyslawlagosz.github.io/leaRn/ <-- stuff I did :)
+Link: https://przemyslawlagosz.github.io/leaRn/ <-- stuff I did :)  
+BUG: GitHub pages doesn't applay changes in _site.yaml file
 
 08.02.2022r - comeback to R.
 
