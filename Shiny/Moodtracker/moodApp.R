@@ -1,3 +1,6 @@
+#> To work app properly, please change `saved_passwords_file_location` and `saved_users_list_file_location`
+#> file PATH in moodApp_helpers.R file
+
 library(shiny)
 library(tidyverse)
 library(shinyFeedback)
@@ -123,7 +126,7 @@ server <- function(input, output, session) {
       # Adding new registered user to saved_passwords
       new_user <- new_user_row(input$username_register, input$password1)
       passwords(rbind(passwords(), new_user))
-      write_csv(passwords(), "C:\\Users\\Przemo\\Documents\\R\\leaRn\\Shiny\\Moodtracker\\saved_passwords.csv")
+      write_csv(passwords(), saved_passwords_file_location)
       
       # Adding new registered user to users_list
       ## user_password_registered <- isolate({paste0(input$username_register, input$password1)}) # <- would like to add this as a name of DF inside new_registered_user list.
@@ -133,7 +136,7 @@ server <- function(input, output, session) {
       
       cache$saved_users <- append(cache$saved_users, new_registered_user)
       
-      saveRDS(cache$saved_users, "C:\\Users\\Przemo\\Documents\\R\\leaRn\\Shiny\\Moodtracker\\users_list.RData")
+      saveRDS(cache$saved_users, saved_users_list_file_location)
       
       switch_page("login_page")
     } else {
@@ -214,13 +217,13 @@ server <- function(input, output, session) {
     # 1st if for first time logged in users
     if (day_rate_already_exists == TRUE & date_column_length == 1){
       cache$saved_users[[loged_user_id()]][cache$saved_users[[loged_user_id()]]$date == input$date, ] <- new_day_rate()
-      saveRDS(cache$saved_users, "C:\\Users\\Przemo\\Documents\\R\\leaRn\\Shiny\\Moodtracker\\users_list.RData")
+      saveRDS(cache$saved_users, saved_users_list_file_location)
       updateTextAreaInput(inputId = "comment", value = "")
     } else if (day_rate_already_exists == TRUE) {
       showModal(modal_confirm)
     } else {
       cache$saved_users[[loged_user_id()]] <- rbind(cache$saved_users[[loged_user_id()]], new_day_rate())
-      saveRDS(cache$saved_users, "C:\\Users\\Przemo\\Documents\\R\\leaRn\\Shiny\\Moodtracker\\users_list.RData")
+      saveRDS(cache$saved_users, saved_users_list_file_location)
       updateTextAreaInput(inputId = "comment", value = "")
     }
   })
@@ -229,7 +232,7 @@ server <- function(input, output, session) {
   observeEvent(input$ok_modal_btn, {
     # It checks which row in DF$date evaluate to currently choosen date, and replace after confirmation
     cache$saved_users[[loged_user_id()]][cache$saved_users[[loged_user_id()]]$date == input$date, ] <- new_day_rate()
-    saveRDS(cache$saved_users, "C:\\Users\\Przemo\\Documents\\R\\leaRn\\Shiny\\Moodtracker\\users_list.RData")
+    saveRDS(cache$saved_users, saved_users_list_file_location)
     removeModal()
     updateTextAreaInput(inputId = "comment", value = "")
   })

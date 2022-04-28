@@ -1,3 +1,9 @@
+saved_passwords <- read_csv("C:\\Users\\Przemo\\Documents\\R\\leaRn\\Shiny\\Moodtracker\\saved_passwords.csv")
+saved_users_list <- readRDS("C:\\Users\\Przemo\\Documents\\R\\leaRn\\Shiny\\Moodtracker\\users_list.RData")
+
+saved_passwords_file_location <- "C:\\Users\\Przemo\\Documents\\R\\leaRn\\Shiny\\Moodtracker\\saved_passwords.csv" # <- Change THIS
+saved_users_list_file_location <- "C:\\Users\\Przemo\\Documents\\R\\leaRn\\Shiny\\Moodtracker\\users_list.RData" # <- Change THIS
+
 myToastOptions <- list(
   positionClass = "toast-top-right",
   progressBar = FALSE,
@@ -33,10 +39,6 @@ myToastOptions <- list(
 
 mood_logo_200 <- tags$a(tags$img(src = "mood_logo.png", height = "200", width = "200"))
 mood_logo_150 <- tags$a(tags$img(src = "mood_logo.png", height = "150", width = "150"))
-
-saved_passwords <- read_csv("C:\\Users\\Przemo\\Documents\\R\\leaRn\\Shiny\\Moodtracker\\saved_passwords.csv")
-saved_users_list <- readRDS("C:\\Users\\Przemo\\Documents\\R\\leaRn\\Shiny\\Moodtracker\\users_list.RData")
-
 
 new_user_row <- function(username, password) {
   newUserRow <- c(username, password, paste0(username, password))
