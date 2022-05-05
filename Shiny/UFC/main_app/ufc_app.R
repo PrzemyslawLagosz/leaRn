@@ -114,7 +114,7 @@ ui <-  dashboardPage (
       
       
       tabItem(tabName = "cars",
-              p("DUPA")),
+              p("NOTHING HERE")),
       
       tabItem(tabName = "about",
               fluidRow(

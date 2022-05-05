@@ -101,7 +101,7 @@ generate_geom_segments_list <- function(df, row, column = 1, color = 'black') {
                                         y    = nm[column + 1],
                                         xend = nm[column + 2], 
                                         yend = nm[column + 3]),
-                             , color = color))
+                              color = color))
     }
     column <- column + 2
   }
