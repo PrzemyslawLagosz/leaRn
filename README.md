@@ -28,3 +28,5 @@ I choosed this project with intention to practice:
 **TO DO:** A lot eg. (imporve HTML, CSS skills)  
 Sneak peak gif:  
 ![](https://github.com/PrzemyslawLagosz/leaRn/blob/main/Shiny/UFC/UFCdashboard_animation.gif)
+
+PS. Testing merging branches
