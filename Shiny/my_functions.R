@@ -1,4 +1,4 @@
-
+# To na maina
 sin_my <- function(x) {
   sin(x*(pi/180))
 }
