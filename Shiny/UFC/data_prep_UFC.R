@@ -7,7 +7,7 @@ library(dplyr)
 
 
 
-raw_fighter_details <- read_csv("Shiny/UFC/raw_fighter_details.csv")
+raw_fighter_details <- read_csv("UFC/raw_fighter_details.csv")
 
 
 # Removing rows with NA
@@ -56,13 +56,19 @@ raw_fighter_details[,3] <- lapply(raw_fighter_details[,3], as.numeric)
 length(unique(raw_fighter_details$`Weight_(lbs)`))
 
 sort(unique(raw_fighter_details$`Weight_(lbs)`))
+weights <- sort(unique(raw_fighter_details$`Weight_(lbs)`))
 
-# I decided to replace wrong values with the value above, because when we assing person to the weightclass, if it pass certain value
-# it will be asignet to the weight class above. eg. We;ve got classes 205, and 265. 
+# I decided to replace wrong values with the value above, because when we assign person to the weight class, if it pass certain value
+# it will be assigned to the weight class above. eg. We;ve got classes 205, and 265. 
 # All persons with weight above 205 are in 265 weightclass
+
+weights[weights > 205]
+weights[weights > 205 & weights <= 265]
 
 to_265 = c(220, 225, 230, 231, 234, 235, 238, 240, 241, 242, 243, 244, 245, 246,
            247, 249, 250, 253, 255, 256, 257, 258, 260, 262, 263, 264)
+
+to_265 = weights[weights > 205]
 
 to_145 = c(139, 140)
 
